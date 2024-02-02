@@ -34,6 +34,22 @@ public class PlacementSystem : MonoBehaviour
 
     private List<GameObject> placedGameObject = new();
 
+    // Singleton instance
+    public static PlacementSystem instance;
+
+    public void Awake()
+    {
+        // Initialise Singleton
+        if (instance != null)
+        {
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        instance = this;
+    }
+
     private void Start()
     {
         StopPlacement();
@@ -78,7 +94,7 @@ public class PlacementSystem : MonoBehaviour
 
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
+    public bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
