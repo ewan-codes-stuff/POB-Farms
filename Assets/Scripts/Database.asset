@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489f973540886054585001173f655fbd, type: 3}
+  m_Name: Database
+  m_EditorClassIdentifier: 
+  objectsData:
+  - <Name>k__BackingField: Ground
+    <ID>k__BackingField: 0
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 113343291176352552, guid: ed4d251fb6f6b9c4d8c04caa9798c9db, type: 3}
+  - <Name>k__BackingField: Carrot
+    <ID>k__BackingField: 1
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6457083606302852855, guid: 1152edf7560821742ba964e334399a4e, type: 3}
+  - <Name>k__BackingField: Corn
+    <ID>k__BackingField: 2
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5476059868493214689, guid: ac5962ab70158f0469cf7e191c6be5ea, type: 3}
+  - <Name>k__BackingField: Onion
+    <ID>k__BackingField: 3
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2124012242729557457, guid: 10097e587fea625478485624b3adee2b, type: 3}
+  - <Name>k__BackingField: Potato
+    <ID>k__BackingField: 4
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5137661458087601310, guid: 08f90dd62f0c03f4da1fd50e2737723a, type: 3}
+  - <Name>k__BackingField: House
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 1591959012660344789, guid: 5f07a32f12ae0c740a4687a5389ddee3, type: 3}
