@@ -36,7 +36,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void Start()
     {
-        
         StopPlacement();
 
         gridVisualization.SetActive(false);
@@ -63,7 +62,14 @@ public class PlacementSystem : MonoBehaviour
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
         foreach(Renderer rend in previewRenderer)
         {
-            rend.material.color = placementValidity ? Color.yellow : Color.red;
+            if (placementValidity)
+            {
+                rend.material.color = Color.yellow;
+            }
+            else
+            {
+                rend.material.color = Color.red;
+            }
         }
         
 
@@ -93,6 +99,8 @@ public class PlacementSystem : MonoBehaviour
         }
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
+
+        // Adds these functions to the OnClicked/OnExit Action
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
