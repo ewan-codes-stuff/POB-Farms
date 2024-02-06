@@ -116,6 +116,9 @@ public class MovementSystem : MonoBehaviour
 
     public void StartMovement()
     {
+
+        PlacementSystem.instance.InputManagerClear();
+
         StopMovement();
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
@@ -156,5 +159,12 @@ public class MovementSystem : MonoBehaviour
 
         gameObject.transform.position = grid.CellToWorld(gridPosition);
 
+    }
+
+    public void InputManagerClear()
+    {
+        StopMovement();
+        inputManager.OnClicked -= MovePlayer;
+        inputManager.OnExit -= StopMovement;
     }
 }

@@ -74,13 +74,14 @@ public class PlacementSystem : MonoBehaviour
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        Debug.Log("Grid Pos of mouse" + gridPosition);
 
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
         foreach(Renderer rend in previewRenderer)
         {
             if (placementValidity)
             {
-                rend.material.color = Color.yellow;
+                rend.material.color = Color.green;
             }
             else
             {
@@ -106,6 +107,8 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
+        MovementSystem.instance.InputManagerClear();
+
         StopPlacement();
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex < 0)
@@ -119,6 +122,7 @@ public class PlacementSystem : MonoBehaviour
         // Adds these functions to the OnClicked/OnExit Action
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+
     }
 
     private void StopPlacement()
@@ -179,5 +183,12 @@ public class PlacementSystem : MonoBehaviour
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
 
         inputManager.OnExit += StopPlacement;
+    }
+
+    public void InputManagerClear()
+    {
+        StopPlacement();
+        inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnExit -= StopPlacement;
     }
 }
