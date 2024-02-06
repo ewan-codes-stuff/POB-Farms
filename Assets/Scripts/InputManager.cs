@@ -17,6 +17,9 @@ public class InputManager : MonoBehaviour
     public event Action OnClicked, OnExit;
     private void Update()
     {
+        /////////// DEAR FUTURE ARNIE GET RID OF THE FUCKING ACTIONS ITS SO CRINGE
+
+
         if (Input.GetMouseButtonDown(0))
         {
 
