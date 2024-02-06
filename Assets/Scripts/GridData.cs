@@ -45,6 +45,26 @@ public class GridData : MonoBehaviour
     }
 }
 
+public struct GridTile
+{
+    //These values will be randomized to give the terrain variation
+    public int height;
+    public int cropYield;
+
+    public int G;
+    public int H;
+    public int F { get { return G + H; } }
+
+    //public Tile previous;
+
+    public Vector2Int position;
+    public bool traversable;
+    public bool isBlockedByEnemy;
+    
+}
+
+
+
 public class PlacementData
 {
     public List<Vector3Int> occupiedPositions;
