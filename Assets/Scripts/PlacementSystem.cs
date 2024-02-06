@@ -134,7 +134,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
         {
-            return;
+            //return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
@@ -160,11 +160,8 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceInitialObject(int ID, Vector3 pos)
     {
-
         StopPlacement();
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
-
-
 
         Vector3Int gridPosition = grid.WorldToCell(pos);
 

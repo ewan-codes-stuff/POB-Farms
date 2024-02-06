@@ -107,6 +107,7 @@ public class MovementSystem : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, placementLayerMask))
         {
+            Debug.Log(hit.collider.GetComponent<GameObject>().name);
             lastPosition = hit.point;
         }
 
@@ -138,7 +139,7 @@ public class MovementSystem : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
         {
-            return;
+            //return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
