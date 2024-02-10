@@ -26,7 +26,7 @@ public class PlantGrowth : MonoBehaviour
     private void Awake()
     {
         //Get the plant's animator
-        animator = this.GetComponent<Animator>();
+        if(this.GetComponent<Animator>() != null) animator = this.GetComponent<Animator>();
     }
 
     private void Start()
@@ -53,21 +53,6 @@ public class PlantGrowth : MonoBehaviour
             growthTurn = currentTurn - plantedTurn;
         }
 
-        if (growthCurve.Evaluate(growthTurn / turnsToGrow) >= 1f)
-        {
-            //Turn into living plant
-        }
-        else if(growthCurve.Evaluate(growthTurn / turnsToGrow) >= 0.75f)
-        {
-            //Ripe
-        }
-        else if (growthCurve.Evaluate(growthTurn / turnsToGrow) >= 0.5f)
-        {
-            //Budding
-        }
-        else if (growthCurve.Evaluate(growthTurn / turnsToGrow) >= 0.25f)
-        {
-            //Seedling
-        }
+        if(animator != null && animator.GetFloat("Growth") != null) animator.SetFloat("Growth", growthCurve.Evaluate((float)growthTurn / (float)turnsToGrow));
     }
 }
