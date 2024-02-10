@@ -49,7 +49,7 @@ public class PlantGrowth : MonoBehaviour
     //Budding
     //Ripe (final before becoming living plant)
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (currentTurn != turnManager.GetCurrentTurn())
         {
