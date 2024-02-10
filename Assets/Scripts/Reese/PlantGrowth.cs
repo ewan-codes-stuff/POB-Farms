@@ -59,9 +59,9 @@ public class PlantGrowth : MonoBehaviour
 
         if (growthTurn >= turnsToGrow)
         {
-            if(plantyBoi != null) Instantiate(plantyBoi);
+            if(plantyBoi != null) Instantiate(plantyBoi, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
-        if(animator != null && animator.GetFloat("Growth") != null) animator.SetFloat("Growth", growthCurve.Evaluate((float)growthTurn / (float)turnsToGrow));
+        if(animator != null && animator.GetFloat("Growth") != null) animator.SetFloat("Growth", growthCurve.Evaluate((float)growthTurn / ((float)turnsToGrow - 1)));
     }
 }
