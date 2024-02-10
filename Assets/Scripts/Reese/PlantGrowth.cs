@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlantGrowth : MonoBehaviour
 {
     TurnManager turnManager;
+
+    [SerializeField]
+    private GameObject plantyBoi;
 
     [SerializeField]
     private int turnsToGrow = 3;
@@ -53,6 +57,11 @@ public class PlantGrowth : MonoBehaviour
             growthTurn = currentTurn - plantedTurn;
         }
 
+        if (growthTurn >= turnsToGrow)
+        {
+            if(plantyBoi != null) Instantiate(plantyBoi);
+            Destroy(this.gameObject);
+        }
         if(animator != null && animator.GetFloat("Growth") != null) animator.SetFloat("Growth", growthCurve.Evaluate((float)growthTurn / (float)turnsToGrow));
     }
 }
