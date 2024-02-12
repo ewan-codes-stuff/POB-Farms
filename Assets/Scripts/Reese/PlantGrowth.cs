@@ -16,6 +16,9 @@ public class PlantGrowth : MonoBehaviour
     [SerializeField]
     private AnimationCurve growthCurve;
 
+    [SerializeField]
+    private float timeToAnimate = 1.0f;
+
     //Store the plant's animator
     Animator animator;
     //Store the turn the plant was planted on
@@ -27,6 +30,13 @@ public class PlantGrowth : MonoBehaviour
     //store the currentTurn
     private int currentTurn;
 
+    //Growth variables
+    private float startGrowth;
+    private float currentGrowth;
+    private float targetGrowth;
+
+    private float timer;
+
     private void Awake()
     {
         //Get the plant's animator
@@ -37,31 +47,68 @@ public class PlantGrowth : MonoBehaviour
     {
         //Setup reference to the turn manager
         turnManager = TurnManager.instance;
+
         //Get the turn the plant was placed
         currentTurn = turnManager.GetCurrentTurn();
         plantedTurn = currentTurn;
         growthTurn = currentTurn - plantedTurn;
-    }
 
-    //Grow plants through 4 basic states
-    //Sprout (inital)
-    //Seedling
-    //Budding
-    //Ripe (final before becoming living plant)
+        //Setup animation variables
+        targetGrowth = 0.0f;
+        currentGrowth = 0.0f;
+        startGrowth = 0.0f;
+    }
 
     private void FixedUpdate()
     {
+        TurnUpdate();
+        
+        AnimatePlantGrowth();
+
+        SpawnLivingPlant();
+    }
+
+    private void TurnUpdate()
+    {
         if (currentTurn != turnManager.GetCurrentTurn())
         {
+            //Update the currentTurn
             currentTurn = turnManager.GetCurrentTurn();
+            //Update how many turns since planted
             growthTurn = currentTurn - plantedTurn;
-        }
 
+            //Update the start growth to continue from current growth value
+            startGrowth = currentGrowth;
+            //Calculate the new growth target on the animation curve
+            targetGrowth = growthCurve.Evaluate((float)growthTurn / ((float)turnsToGrow - 1));
+
+            //Reset the timer
+            timer = 0;
+        }
+    }
+
+    private void AnimatePlantGrowth()
+    {
+        if (timer <= timeToAnimate) 
+        {
+            //Increment timer for smooth plant growth animation
+            timer += Time.deltaTime;
+
+            //Store the plant's current growth value
+            currentGrowth = Mathf.Lerp(startGrowth, targetGrowth, timer / timeToAnimate);
+
+            //Set the plant's animator to the current growth value
+            if (animator != null) animator.SetFloat("Growth", currentGrowth);
+        }
+    }
+
+    private void SpawnLivingPlant()
+    {
+        //Once you hit the turn for the plant to finish growing spawn the living plant
         if (growthTurn >= turnsToGrow)
         {
-            if(plantyBoi != null) Instantiate(plantyBoi, transform.position, transform.rotation);
+            if (plantyBoi != null) Instantiate(plantyBoi, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
-        if(animator != null && animator.GetFloat("Growth") != null) animator.SetFloat("Growth", growthCurve.Evaluate((float)growthTurn / ((float)turnsToGrow - 1)));
     }
 }

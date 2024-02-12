@@ -2512,6 +2512,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
+      propertyPath: timeToAnimate
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
       propertyPath: growthCurve.m_Curve.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -2647,6 +2651,10 @@ PrefabInstance:
     - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
       propertyPath: turnsToGrow
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
+      propertyPath: timeToAnimate
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4797010015484879210, guid: 1152edf7560821742ba964e334399a4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6991,6 +6999,10 @@ PrefabInstance:
     - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
       propertyPath: turnsToGrow
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
+      propertyPath: timeToAnimate
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3157257081105462983, guid: 1152edf7560821742ba964e334399a4e, type: 3}
       propertyPath: growthCurve.m_Curve.Array.size
