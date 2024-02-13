@@ -140,7 +140,7 @@ public class MovementSystem : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
         {
-            //return;
+            return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
