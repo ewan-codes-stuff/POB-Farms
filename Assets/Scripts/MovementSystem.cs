@@ -117,8 +117,6 @@ public class MovementSystem : MonoBehaviour
     public void StartMovement()
     {
 
-        PlacementSystem.instance.InputManagerClear();
-
         StopMovement();
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
@@ -129,7 +127,7 @@ public class MovementSystem : MonoBehaviour
         
     }
 
-    private void StopMovement()
+    public void StopMovement()
     {
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
@@ -161,10 +159,4 @@ public class MovementSystem : MonoBehaviour
 
     }
 
-    public void InputManagerClear()
-    {
-        StopMovement();
-        inputManager.OnClicked -= MovePlayer;
-        inputManager.OnExit -= StopMovement;
-    }
 }

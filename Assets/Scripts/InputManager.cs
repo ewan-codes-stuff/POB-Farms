@@ -15,10 +15,16 @@ public class InputManager : MonoBehaviour
     private LayerMask placementLayerMask;
 
     public event Action OnClicked, OnExit;
+
+    public InputState inputSwitch;
+    public enum InputState
+    {
+        PLACE,
+        MOVE
+    }
+
     private void Update()
     {
-        /////////// DEAR FUTURE ARNIE GET RID OF THE FUCKING ACTIONS ITS SO CRINGE
-
 
         if (Input.GetMouseButtonDown(0))
         {

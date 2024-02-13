@@ -107,8 +107,6 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
-        MovementSystem.instance.InputManagerClear();
-
         StopPlacement();
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex < 0)
@@ -125,7 +123,7 @@ public class PlacementSystem : MonoBehaviour
 
     }
 
-    private void StopPlacement()
+    public void StopPlacement()
     {
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
@@ -185,10 +183,4 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
-    public void InputManagerClear()
-    {
-        StopPlacement();
-        inputManager.OnClicked -= PlaceStructure;
-        inputManager.OnExit -= StopPlacement;
-    }
 }
