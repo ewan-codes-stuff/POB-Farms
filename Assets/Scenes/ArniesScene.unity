@@ -886,8 +886,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.020558773, y: 0.36430043, z: -0.00804448, w: 0.9310198}
   m_LocalPosition: {x: 1.85, y: -1.8, z: -0.73719454}
-  m_LocalScale: {x: 3.58, y: 4.66, z: -3.78}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.79, y: 6.235028, z: -5.0575976}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 2.53, y: 42.74, z: 0}
@@ -4979,7 +4979,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.7
+  orthographic size: 9.58
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5055,13 +5055,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1419513257}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22131558, y: 0.3715412, z: -0.09167191, w: 0.89697987}
-  m_LocalPosition: {x: -8.37, y: 5.2, z: -8.37}
+  m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
+  m_LocalPosition: {x: -8.37, y: 10.7, z: -8.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 602569874}
-  m_LocalEulerAnglesHint: {x: 27.72, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
 --- !u!1 &1442861236
 GameObject:
   m_ObjectHideFlags: 0
