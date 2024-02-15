@@ -70,7 +70,7 @@ public class PlantGrowth : MonoBehaviour
 
     private void TurnUpdate()
     {
-        if (currentTurn != turnManager.GetCurrentTurn())
+        if (currentTurn != turnManager.GetCurrentTurn() && turnManager != null)
         {
             //Update the currentTurn
             currentTurn = turnManager.GetCurrentTurn();
