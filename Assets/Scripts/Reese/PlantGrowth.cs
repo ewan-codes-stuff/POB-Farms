@@ -14,7 +14,7 @@ public class PlantGrowth : MonoBehaviour
     private int turnsToGrow = 3;
 
     [SerializeField]
-    private AnimationCurve growthCurve;
+    private AnimationCurve growthCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     [SerializeField]
     private float timeToAnimate = 1.0f;
