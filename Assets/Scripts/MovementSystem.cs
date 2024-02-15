@@ -118,6 +118,7 @@ public class MovementSystem : MonoBehaviour
     {
 
         StopMovement();
+        CameraScript.instance.zoomOnPlayer = true;
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
 
@@ -129,6 +130,7 @@ public class MovementSystem : MonoBehaviour
 
     public void StopMovement()
     {
+        CameraScript.instance.zoomOnPlayer = false;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
 

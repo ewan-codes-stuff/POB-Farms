@@ -119,6 +119,7 @@ public class PlacementSystem : MonoBehaviour
     public void StartPlacement(int ID)
     {
         StopPlacement();
+        CameraScript.instance.zoomOnPlayer = true;
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex < 0)
         {
@@ -136,6 +137,7 @@ public class PlacementSystem : MonoBehaviour
 
     public void StopPlacement()
     {
+        CameraScript.instance.zoomOnPlayer = false;
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
