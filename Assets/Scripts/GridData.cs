@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridData : MonoBehaviour
 {
-    Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    Dictionary<Vector3Int, PlacementData> placedObjects = new Dictionary<Vector3Int, PlacementData>();
 
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex)
     {
@@ -22,7 +22,7 @@ public class GridData : MonoBehaviour
 
     private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
     {
-        List<Vector3Int> returnVal = new();
+        List<Vector3Int> returnVal = new List<Vector3Int>();
         for (int x = 0; x < objectSize.x; x++)
         {
             for (int y = 0; y < objectSize.y; y++)
@@ -55,7 +55,7 @@ public struct GridTile
     public int H;
     public int F { get { return G + H; } }
 
-    //public Tile previous;
+    public Vector2Int previousTilePosition;
 
     public Vector2Int position;
     public bool traversable;

@@ -1,110 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PathFinder : MonoBehaviour
 {
-    //public List<Tile> FindPath(Tile start, Tile end)
-    //{
-    //    List<Tile> openList = new List<Tile>();
-    //    List<Tile> closedList = new List<Tile>();
+    public List<GridTile> FindPath(GridTile start, GridTile end)
+    {
+        //List of our positions
+        List<GridTile> openList = new List<GridTile>();
+        //List of positions we have processed through
+        List<GridTile> closedList = new List<GridTile>();
 
-    //    openList.Add(start);
+        openList.Add(start);
 
-    //    while (openList.Count > 0)
-    //    {
-    //        Tile currentTile = openList.OrderBy(x => x.F).First();
+        while (openList.Count > 0)
+        {
+            //Order the unprocessed tiles by the x positions 
+            GridTile currentTile = openList.OrderBy(x => x.F).First();
 
-    //        openList.Remove(currentTile);
-    //        closedList.Add(currentTile);
+            openList.Remove(currentTile);
+            closedList.Add(currentTile);
 
-    //        if (currentTile == end)
-    //        {
-    //            //finish
-    //            Debug.Log("Finished List");
-    //            return GetFinishedList(start, end);
-    //        }
-    //        var neighbourTiles = GetNeighbourTiles(currentTile);
+            if (currentTile.position == end.position)
+            {
+                //finish when reach our last position in the list and return the list
+                Debug.Log("Finished List");
+                return GetFinishedList(start, end);
+            }
+            var neighbourTiles = GetNeighbourTiles(currentTile);
 
-    //        foreach (var neighbour in neighbourTiles)
-    //        {
-    //            if (!neighbour.traversable || closedList.Contains(neighbour))
-    //            {
-    //                continue;
-    //            }
+            //foreach(var neighbour in neighbourTiles) { 
+             for(int n = 0; n <= neighbourTiles.Count; n++)
+                {
+                var neighbour = neighbourTiles[n];
 
-    //            neighbour.G = GetManhattenDistance(start, neighbour);
-    //            neighbour.H = GetManhattenDistance(end, neighbour);
+                if (!neighbour.traversable || closedList.Contains(neighbour))
+                {
+                    continue;
+                }
 
-    //            neighbour.previous = currentTile;
+                neighbour.G = GetManhattenDistance(start, neighbour);
+                neighbour.H = GetManhattenDistance(end, neighbour);
 
-    //            if (!openList.Contains(neighbour))
-    //            {
-    //                openList.Add(neighbour);
-    //            }
-    //        }
-    //    }
-    //    return new List<Tile>();
-    //}
+                neighbour.previousTilePosition = currentTile.position;
 
-    //private int GetManhattenDistance(Tile start, Tile neighbour)
-    //{
-    //    return Mathf.Abs(start.position.x - neighbour.position.x) + Mathf.Abs(start.position.y - neighbour.position.y);
-    //}
+                if (!openList.Contains(neighbour))
+                {
+                    openList.Add(neighbour);
+                }
+            }
+        }
+        return new List<GridTile>();
+    }
 
-    //private List<Tile> GetNeighbourTiles(Tile currentTile)
-    //{
-    //    var grid = GridManager.instance.tiles;
+    private int GetManhattenDistance(GridTile start, GridTile neighbour)
+    {
+        return Mathf.Abs(start.position.x - neighbour.position.x) + Mathf.Abs(start.position.y - neighbour.position.y);
+    }
 
-    //    List<Tile> neighbours = new List<Tile>();
+    private List<GridTile> GetNeighbourTiles(GridTile currentTile)
+    {
+        var grid = GameManager.instance.tileArray;
 
-    //    //Top Neighbour
-    //    Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y + 1);
+        List<GridTile> neighbours = new List<GridTile>();
 
-    //    if (grid.ContainsKey(locationToCheck))
-    //    {
-    //        neighbours.Add(grid[locationToCheck]);
-    //    }
+        //Top Neighbour
+        Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y + 1);
 
-    //    //Bottom Neighbour
-    //    locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y - 1);
+        if (grid[locationToCheck.x,locationToCheck.y].traversable&& !grid[locationToCheck.x, locationToCheck.y].isBlockedByEnemy)
+        {
+            neighbours.Add(grid[locationToCheck.x,locationToCheck.y]);
+        }
 
-    //    if (grid.ContainsKey(locationToCheck))
-    //    {
-    //        neighbours.Add(grid[locationToCheck]);
-    //    }
+        //Bottom Neighbour
+        locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y - 1);
 
-    //    //Right Neighbour
-    //    locationToCheck = new Vector2Int((int)currentTile.position.x + 1, (int)currentTile.position.y);
+        if (grid[locationToCheck.x, locationToCheck.y].traversable && !grid[locationToCheck.x, locationToCheck.y].isBlockedByEnemy)
+        {
+            neighbours.Add(grid[locationToCheck.x, locationToCheck.y]);
+        }
 
-    //    if (grid.ContainsKey(locationToCheck))
-    //    {
-    //        neighbours.Add(grid[locationToCheck]);
-    //    }
+        //Right Neighbour
+        locationToCheck = new Vector2Int((int)currentTile.position.x + 1, (int)currentTile.position.y);
 
-    //    //Left Neighbour
-    //    locationToCheck = new Vector2Int((int)currentTile.position.x - 1, (int)currentTile.position.y);
+        if (grid[locationToCheck.x, locationToCheck.y].traversable && !grid[locationToCheck.x, locationToCheck.y].isBlockedByEnemy)
+        {
+            neighbours.Add(grid[locationToCheck.x, locationToCheck.y]);
+        }
 
-    //    if (grid.ContainsKey(locationToCheck))
-    //    {
-    //        neighbours.Add(grid[locationToCheck]);
-    //    }
-    //    return neighbours;
-    //}
+        //Left Neighbour
+        locationToCheck = new Vector2Int((int)currentTile.position.x - 1, (int)currentTile.position.y);
 
-    //private List<Tile> GetFinishedList(Tile start, Tile end)
-    //{
-    //    List<Tile> finishedList = new List<Tile>();
+        if (grid[locationToCheck.x, locationToCheck.y].traversable && !grid[locationToCheck.x, locationToCheck.y].isBlockedByEnemy)
+        {
+            neighbours.Add(grid[locationToCheck.x, locationToCheck.y]);
+        }
+        return neighbours;
+    }
 
-    //    Tile currentTile = end;
+    private List<GridTile> GetFinishedList(GridTile start, GridTile end)
+    {
+        List<GridTile> finishedList = new List<GridTile>();
 
-    //    while (currentTile != start)
-    //    {
-    //        finishedList.Add(currentTile);
-    //        currentTile = currentTile.previous;
-    //    }
+        GridTile currentTile = end;
 
-    //    finishedList.Reverse();
-    //    return finishedList;
-    //}
+        while (currentTile.position != start.position)
+        {
+            finishedList.Add(currentTile);
+            currentTile = GameManager.instance.tileArray[currentTile.previousTilePosition.x, currentTile.previousTilePosition.y];
+        }
+
+        finishedList.Reverse();
+        return finishedList;
+    }
 }
