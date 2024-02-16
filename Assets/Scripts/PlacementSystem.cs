@@ -28,11 +28,11 @@ public class PlacementSystem : MonoBehaviour
     private AudioClip error;
 
 
-    private GridData floorData, furnitureData;
+    public GridData floorData, objectData;
 
     private Renderer[] previewRenderer;
 
-    private List<GameObject> placedGameObject = new List<GameObject>();
+    private List<GameObject> placedGameObject = new();
 
     // Singleton instance
     public static PlacementSystem instance;
@@ -57,7 +57,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
 
         floorData = new GridData();
-        furnitureData = new GridData();
+        objectData = new();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
 
         // Places the initial house
@@ -110,7 +110,7 @@ public class PlacementSystem : MonoBehaviour
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
 
         return selectedData.CanPlaceObejctAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
@@ -169,7 +169,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
     }
 
@@ -190,7 +190,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
 
         inputManager.OnExit += StopPlacement;
