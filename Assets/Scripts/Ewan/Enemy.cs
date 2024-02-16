@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     public Vector2Int gridPosition;
 
     [SerializeField]
+    private int enemyDetectionRadius = 2;
+
+    [SerializeField]
     private Grid grid;
 
     public bool debugPathFind = false;
@@ -20,7 +23,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //TurnManager.instance.EndTurn += 
     }
 
     // Update is called once per frame
@@ -42,11 +45,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private GridTile FindTarget(int detectionRadius)
+    private void EnemyTurnPathFind()
+    {
+        PathfindToTarget(FindTargetInRadius());
+    }
+    private GridTile FindTargetInRadius()
     {
         GridTile target;
         //Search around the enemy in it's detection radius to find either plants or the player
-        List<GridTile> neighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[gridPosition],detectionRadius);
+        List<GridTile> neighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[gridPosition],enemyDetectionRadius);
         foreach (var neighbour in neighbours)
         {
             if(neighbour.isBlockedByAlly)
