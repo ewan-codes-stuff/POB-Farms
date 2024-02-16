@@ -32,7 +32,7 @@ public class PlacementSystem : MonoBehaviour
 
     private Renderer[] previewRenderer;
 
-    private List<GameObject> placedGameObject = new();
+    private List<GameObject> placedGameObject = new List<GameObject>();
 
     // Singleton instance
     public static PlacementSystem instance;
@@ -57,7 +57,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
 
         floorData = new GridData();
-        objectData = new();
+        objectData = new GridData();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
 
         // Places the initial house
