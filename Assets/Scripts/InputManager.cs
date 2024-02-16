@@ -15,10 +15,20 @@ public class InputManager : MonoBehaviour
     private LayerMask placementLayerMask;
 
     public event Action OnClicked, OnExit;
+
+    public InputState inputSwitch;
+    public enum InputState
+    {
+        PLACE,
+        MOVE
+    }
+
     private void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
+
             OnClicked?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
