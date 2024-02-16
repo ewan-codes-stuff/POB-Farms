@@ -37,3 +37,7 @@ MonoBehaviour:
     <ID>k__BackingField: 10
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 1591959012660344789, guid: 5f07a32f12ae0c740a4687a5389ddee3, type: 3}
+  - <Name>k__BackingField: Border
+    <ID>k__BackingField: 100
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5137661458087601310, guid: b0eeced38b4bf8b41b37a562384f7a0e, type: 3}

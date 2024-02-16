@@ -60,7 +60,18 @@ public class PlacementSystem : MonoBehaviour
         furnitureData = new GridData();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
 
+        // Places the initial house
         PlaceInitialObject(10, new Vector3(-1, 0, -1));
+        
+        // Places bounds around the map so the player cant plant or move off map
+        for (int i = -7; i < 7; i++)
+        {
+            PlaceInitialObject(100, new Vector3(-7, 0, i));
+            PlaceInitialObject(100, new Vector3(6, 0, i));
+
+            PlaceInitialObject(100, new Vector3(i, 0, -7));
+            PlaceInitialObject(100, new Vector3(i, 0, 6));
+        }
     }
 
     
@@ -107,9 +118,8 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
-        MovementSystem.instance.InputManagerClear();
-
         StopPlacement();
+        CameraScript.instance.zoomOnPlayer = true;
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex < 0)
         {
@@ -125,8 +135,9 @@ public class PlacementSystem : MonoBehaviour
 
     }
 
-    private void StopPlacement()
+    public void StopPlacement()
     {
+        CameraScript.instance.zoomOnPlayer = false;
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
@@ -138,7 +149,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
         {
-            //return;
+            return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
@@ -185,10 +196,4 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
-    public void InputManagerClear()
-    {
-        StopPlacement();
-        inputManager.OnClicked -= PlaceStructure;
-        inputManager.OnExit -= StopPlacement;
-    }
 }

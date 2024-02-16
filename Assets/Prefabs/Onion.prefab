@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4869634969134469208}
+  - component: {fileID: 2596398282332850901}
+  - component: {fileID: 849127725533201120}
   m_Layer: 0
   m_Name: Onion
   m_TagString: Untagged
@@ -34,6 +36,65 @@ Transform:
   - {fileID: 3727180338877379332}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2596398282332850901
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124012242729557457}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ce58cecb7ec2df743ace205f0e03be20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &849127725533201120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124012242729557457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4fdd51a4a368334f977f76242b494dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantyBoi: {fileID: 0}
+  turnsToGrow: 5
+  growthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3464896019141789453
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,8 +124,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.45, y: -0.06, z: 0.5}
-  m_LocalScale: {x: 0.37, y: 0.206035, z: 0.30780903}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.37, y: 0.206035, z: 0.307809}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4869634969134469208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -169,7 +230,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.17979608, w: 0.983704}
   m_LocalPosition: {x: 0.49, y: 0.003999999, z: 0.5}
   m_LocalScale: {x: 0.12997273, y: 1, z: 0.16338}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4869634969134469208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20.716}
@@ -274,7 +335,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.423, y: 0.029, z: 0.5}
   m_LocalScale: {x: 0.12997273, y: 1, z: 0.16338}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4869634969134469208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

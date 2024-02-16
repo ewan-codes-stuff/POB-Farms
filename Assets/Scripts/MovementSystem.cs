@@ -117,9 +117,8 @@ public class MovementSystem : MonoBehaviour
     public void StartMovement()
     {
 
-        PlacementSystem.instance.InputManagerClear();
-
         StopMovement();
+        CameraScript.instance.zoomOnPlayer = true;
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
 
@@ -129,8 +128,9 @@ public class MovementSystem : MonoBehaviour
         
     }
 
-    private void StopMovement()
+    public void StopMovement()
     {
+        CameraScript.instance.zoomOnPlayer = false;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
 
@@ -142,7 +142,7 @@ public class MovementSystem : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
         {
-            //return;
+            return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
@@ -161,10 +161,4 @@ public class MovementSystem : MonoBehaviour
 
     }
 
-    public void InputManagerClear()
-    {
-        StopMovement();
-        inputManager.OnClicked -= MovePlayer;
-        inputManager.OnExit -= StopMovement;
-    }
 }
