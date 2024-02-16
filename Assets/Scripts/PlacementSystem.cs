@@ -28,7 +28,7 @@ public class PlacementSystem : MonoBehaviour
     private AudioClip error;
 
 
-    private GridData floorData, furnitureData;
+    public GridData floorData, objectData;
 
     private Renderer[] previewRenderer;
 
@@ -57,7 +57,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
 
         floorData = new GridData();
-        furnitureData = new();
+        objectData = new();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
 
         PlaceInitialObject(10, new Vector3(-1, 0, -1));
@@ -98,7 +98,7 @@ public class PlacementSystem : MonoBehaviour
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
 
         return selectedData.CanPlaceObejctAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
@@ -154,7 +154,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
     }
 
@@ -175,7 +175,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            furnitureData;
+            objectData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
 
         inputManager.OnExit += StopPlacement;

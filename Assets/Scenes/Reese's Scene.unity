@@ -3011,6 +3011,8 @@ MonoBehaviour:
   source: {fileID: 956542908}
   planted: {fileID: 8300000, guid: 4f3000e604146384792875232fd44e4b, type: 3}
   error: {fileID: 8300000, guid: 2b5621c7fcc32fe4e8a6fff35c2cf37a, type: 3}
+  floorData: {fileID: 0}
+  objectData: {fileID: 0}
 --- !u!82 &956542908
 AudioSource:
   m_ObjectHideFlags: 0

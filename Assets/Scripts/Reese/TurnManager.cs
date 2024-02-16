@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using UnityEngine.EventSystems;
 
 public class TurnManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TurnManager : MonoBehaviour
     public static TurnManager instance;
 
     private int currentTurn;
+
+    public event Action EndTurn;
 
     private void Awake()
     {
@@ -24,14 +27,16 @@ public class TurnManager : MonoBehaviour
     public void Start()
     {
         ResetCurrentTurn();
+
+        EndTurn += IncrementCurrentTurn;
     }
 
     //Update used for testing turns
     public void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space)) 
-        { 
-            IncrementCurrentTurn();
+        {
+            EndTurn?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
