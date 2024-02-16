@@ -39,6 +39,12 @@ public class MovementSystem : MonoBehaviour
     [SerializeField]
     private AudioClip error;
 
+    public bool movePlayer = false;
+    public Vector3 playerToMovePos;
+    public Vector3 initialPlayerPos;
+    float timeElapsed = 0;
+    public float lerpDuration = 3;
+
     // Singleton instance
     public static MovementSystem instance;
 
@@ -92,6 +98,21 @@ public class MovementSystem : MonoBehaviour
 
         mouseIndicator.transform.position = mousePosition;
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+
+        if (movePlayer)
+        {
+            if (timeElapsed < lerpDuration)
+            {
+                gameObject.transform.position = Vector3.Lerp(initialPlayerPos, playerToMovePos, timeElapsed / lerpDuration);
+                timeElapsed += Time.deltaTime;
+            }
+            else
+            {
+                transform.position = playerToMovePos;
+                timeElapsed = 0;
+                movePlayer = false;
+            }
+        }
     }
 
 
@@ -157,7 +178,10 @@ public class MovementSystem : MonoBehaviour
         source.clip = shuffle;
         source.Play();
 
-        gameObject.transform.position = grid.CellToWorld(gridPosition);
+        initialPlayerPos = gameObject.transform.position;
+        playerToMovePos = grid.CellToWorld(gridPosition);
+        movePlayer = true;
+        //gameObject.transform.position = grid.CellToWorld(gridPosition);
 
     }
 
