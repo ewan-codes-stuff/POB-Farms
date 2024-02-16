@@ -14,6 +14,7 @@ public class CameraScript : MonoBehaviour
 
 
     float timeElapsed;
+    float reverseTimeElapsed;
     public float lerpDuration = 3;
 
 
@@ -46,6 +47,8 @@ public class CameraScript : MonoBehaviour
     {
         if (zoomOnPlayer)
         {
+            reverseTimeElapsed = 0;
+
             Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
             if (timeElapsed < lerpDuration)
             {
@@ -62,8 +65,18 @@ public class CameraScript : MonoBehaviour
         else
         {
             timeElapsed = 0;
-            gameObject.transform.position = new Vector3(InitialPos.x, gameObject.transform.position.y, InitialPos.z);
-            gameObject.GetComponent<Camera>().orthographicSize = initialSize;
+
+            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
+            if (reverseTimeElapsed < lerpDuration)
+            {
+                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(5, initialSize, reverseTimeElapsed / lerpDuration);
+                transform.position = Vector3.Lerp(TargetPos, InitialPos, reverseTimeElapsed / lerpDuration);
+                reverseTimeElapsed += Time.deltaTime;
+            }
+            else
+            {
+                transform.position = InitialPos;
+            }
         }
     }
 }
