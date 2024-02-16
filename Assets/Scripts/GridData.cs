@@ -45,8 +45,9 @@ public class GridData : MonoBehaviour
     }
 }
 
-public struct GridTile
+public class GridTile
 {
+    public string name;
     //These values will be randomized to give the terrain variation
     public int height;
     public int cropYield;
@@ -55,11 +56,12 @@ public struct GridTile
     public int H;
     public int F { get { return G + H; } }
 
-    public Vector2Int previousTilePosition;
+    public GridTile previous;
 
     public Vector2Int position;
     public bool traversable;
     public bool isBlockedByEnemy;
+    public bool isBlockedByAlly;
     
 }
 

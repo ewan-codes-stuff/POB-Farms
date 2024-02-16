@@ -6,12 +6,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject ground;
+    public GameObject playerBase;
     public GameObject test;
 
-    public GridTile[,] tileArray;
+    public Dictionary<Vector2Int,GridTile> tileArray;
     // Start is called before the first frame update
     void Start()
     {
+        if (instance != null)
+        {
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+        }
+        instance = this;
         CreateGridArray();
     }
 
@@ -28,22 +38,30 @@ public class GameManager : MonoBehaviour
         int x = (int)(ground.transform.localScale.x * 10);
         int z = (int)(ground.transform.localScale.z * 10);
 
-        tileArray = new GridTile[x, z];
+        tileArray = new Dictionary<Vector2Int, GridTile>();
         for (int i = 0 ; i < x; i++)
         {
             for (int j = 0; j < z; j++)
             {
-                tileArray[i, j].position = new Vector2Int(i - (x / 2), j - (z / 2));
-                tileArray[i, j].traversable = true;
+                var newTile = new GridTile();
+                newTile.name = $"Tile {i}{j}";
+                newTile.position = new Vector2Int(i - (x / 2), j - (z / 2));
+                newTile.traversable = true;
+                tileArray[new Vector2Int(i, j)] = newTile;
+                //tileArray[i, j].position = new Vector2Int(i - (x / 2), j - (z / 2));
+                //tileArray[i, j].traversable = true;
             }
         }
-        for (int i = 0; i < x; i++)
-        {
-            for (int j = 0; j < z; j++)
-            {
-                Instantiate(test, new Vector3(tileArray[i,j].position.x, ground.transform.position.y + 1, tileArray[i,j].position.y),Quaternion.identity);
-            } 
-        }
+
+        //Debug
+        //for (int i = 0; i < x; i++)
+        //{
+        //    for (int j = 0; j < z; j++)
+        //    {
+        //        GameObject debugCube = Instantiate(test, new Vector3(tileArray[new Vector2Int(i, j)].position.x, ground.transform.position.y + 1, tileArray[new Vector2Int(i, j)].position.y), Quaternion.identity);
+        //        debugCube.name = $"Tile {i}{j}";
+        //    }
+        //}
 
     }
 }
