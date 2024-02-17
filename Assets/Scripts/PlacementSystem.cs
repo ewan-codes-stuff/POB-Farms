@@ -79,14 +79,15 @@ public class PlacementSystem : MonoBehaviour
     
     private void Update()
     {
+        // Quick check to see if input is valid
         if(selectedObjectIndex < 0)
         {
             return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        //Debug.Log("Grid Pos of mouse" + gridPosition);
 
+        // Checks if the placement position is valid
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
         foreach(Renderer rend in previewRenderer)
         {
@@ -100,7 +101,7 @@ public class PlacementSystem : MonoBehaviour
             }
         }
         
-
+        // Positions the indicators for when moving the placement
         mouseIndicator.transform.position = mousePosition;
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
 
@@ -108,6 +109,7 @@ public class PlacementSystem : MonoBehaviour
 
     public bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
+        // Checks if the object exists in the placement position
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
             objectData;
@@ -118,14 +120,22 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
+        // Initially stops placement to make sure all variables are reset just incase
         StopPlacement();
+
+        // Zooms in on player for a cool effect
         CameraScript.instance.zoomOnPlayer = true;
+
+        // Makes sure ID for the placed object is valid
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex < 0)
         {
             Debug.LogError($"No ID dound {ID}");
+            // Return out as place is not valid
             return;
         }
+
+        // Activates the grid for the player to see
         gridVisualization.SetActive(true);
         cellIndicator.SetActive(true);
 
@@ -137,32 +147,40 @@ public class PlacementSystem : MonoBehaviour
 
     public void StopPlacement()
     {
+        // Resets all initial values 
         CameraScript.instance.zoomOnPlayer = false;
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
+
+        // Removes these functions to the OnClicked/OnExit Action
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
     }
 
     private void PlaceStructure()
     {
+        // Gets the cost of the plant being attempted to be selected
         int plantCost = 0;
-
         if (database.objectsData[selectedObjectIndex].Prefab.GetComponent<Plant>())
         {
             plantCost = database.objectsData[selectedObjectIndex].Prefab.GetComponent<Plant>().GetCost();
         }
         
+        // Checks if player has enough currency to place object
         if (plantCost <= Player.instance.GetCurrency()) 
         { 
+            // Doesnt do anything if player is hovering over UI elements
             if (inputManager.IsPointerOverUI())
             {
                 return;
             }
+
+            // Finds the position on the grid
             Vector3 mousePosition = inputManager.GetSelectedMapPosition();
             Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
+            // Compares the position being attmepted to place on to the dictionary to see if its valid
             bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
             if(placementValidity == false)
             {
@@ -171,11 +189,14 @@ public class PlacementSystem : MonoBehaviour
                 return;
             }
 
+            // Placement begins so depreciate currency, play audio and instantate the releveant vegeteble
             Player.instance.DecreaseCurrency(plantCost);
             source.clip = planted;
             source.Play(); 
             GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
             newObject.transform.position = grid.CellToWorld(gridPosition);
+
+            // Adding it to the dictionary of placed objects
             placedGameObject.Add(newObject);
             GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
                 floorData :
@@ -184,6 +205,7 @@ public class PlacementSystem : MonoBehaviour
         }
         else
         {
+            // If not enough currency then play error sound
             source.clip = error;
             source.Play();
         }
@@ -191,16 +213,23 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceInitialObject(int ID, Vector3 pos)
     {
+        // Initially stops placement to make sure all variables are reset just incase
         StopPlacement();
+
+        // Gets ID of the object being placed
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
 
+        // Gets the position on the grid from worldspace
         Vector3Int gridPosition = grid.WorldToCell(pos);
 
+        // Checks the object can actually be placed
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
         if (placementValidity == false)
         {
             return;
         }
+
+        // Instantiates the object and adds it to the list of placed objects
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
         newObject.transform.position = grid.CellToWorld(gridPosition);
         placedGameObject.Add(newObject);

@@ -10,7 +10,7 @@ public class SpriteCorrector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //cam = Camera.current;
     }
 
     // Update is called once per frame
