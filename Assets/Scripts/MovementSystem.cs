@@ -30,6 +30,7 @@ public class MovementSystem : MonoBehaviour
 
     private Renderer[] previewRenderer;
 
+    public SpriteRenderer playerSprite;
 
     [SerializeField]
     private AudioSource source;
@@ -195,6 +196,26 @@ public class MovementSystem : MonoBehaviour
 
         initialPlayerPos = gameObject.transform.position;
         playerToMovePos = grid.CellToWorld(gridPosition);
+
+        if((playerToMovePos.x != initialPlayerPos.x && playerToMovePos.z != initialPlayerPos.z))
+        {
+            // No need to do anything
+        }
+        else
+        {
+            if (((playerToMovePos.x == initialPlayerPos.x && (playerToMovePos.z > initialPlayerPos.z)) || playerToMovePos.x < initialPlayerPos.x))
+            {
+                playerSprite.flipX = false;
+            }
+            else
+            {
+                playerSprite.flipX = true;
+            }
+        }
+        
+
+        
+
         movePlayer = true;
 
     }
