@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class Plant : MonoBehaviour
+public class Plant : Entity
 {
     TurnManager turnManager;
 

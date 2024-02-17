@@ -171,7 +171,7 @@ public class PlacementSystem : MonoBehaviour
                 return;
             }
 
-            Player.instance.Pay(plantCost);
+            Player.instance.DecreaseCurrency(plantCost);
             source.clip = planted;
             source.Play(); 
             GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);

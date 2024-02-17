@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
 
-    private int currency = 10;
+    private int soyl = 10;
 
     private void Awake()
     {
@@ -20,17 +20,17 @@ public class Player : MonoBehaviour
 
     public int GetCurrency()
     {
-        return currency;
+        return soyl;
     }
 
-    public void Pay(int ammount)
+    public void DecreaseCurrency(int ammount)
     {
-        currency -= ammount;
-        if(currency < 0) currency = 0;
+        soyl -= ammount;
+        if(soyl < 0) soyl = 0;
     }
 
     public void AddCurrency(int ammount)
     {
-        currency += ammount;
+        soyl += ammount;
     }
 }
