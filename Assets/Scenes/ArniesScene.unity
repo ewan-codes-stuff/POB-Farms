@@ -6499,7 +6499,7 @@ MonoBehaviour:
   movePlayer: 0
   playerToMovePos: {x: 0, y: 0, z: 0}
   initialPlayerPos: {x: 0, y: 0, z: 0}
-  lerpDuration: 0.25
+  lerpDuration: 0.1
 --- !u!82 &1599761957
 AudioSource:
   m_ObjectHideFlags: 0

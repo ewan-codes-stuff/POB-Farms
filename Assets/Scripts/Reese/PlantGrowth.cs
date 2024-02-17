@@ -107,6 +107,7 @@ public class PlantGrowth : MonoBehaviour
         //Once you hit the turn for the plant to finish growing spawn the living plant
         if (growthTurn >= turnsToGrow)
         {
+            PlacementSystem.instance.furnitureData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(gameObject.transform.position), new Vector2Int(1,1));
             if (plantyBoi != null) Instantiate(plantyBoi, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }

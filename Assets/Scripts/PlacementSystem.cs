@@ -10,7 +10,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private InputManager inputManager;
     [SerializeField]
-    private Grid grid;
+    public Grid grid;
 
     [SerializeField]
     private ObjectsDatabaseSO database;
@@ -28,7 +28,7 @@ public class PlacementSystem : MonoBehaviour
     private AudioClip error;
 
 
-    private GridData floorData, furnitureData;
+    public GridData floorData, furnitureData;
 
     private Renderer[] previewRenderer;
 

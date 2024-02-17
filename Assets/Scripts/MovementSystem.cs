@@ -43,6 +43,7 @@ public class MovementSystem : MonoBehaviour
     public Vector3 playerToMovePos;
     public Vector3 initialPlayerPos;
     float timeElapsed = 0;
+    float moveDelayTimer = 0;
     public float lerpDuration = 3;
 
     // Singleton instance
@@ -101,16 +102,30 @@ public class MovementSystem : MonoBehaviour
 
         if (movePlayer)
         {
+            // Lerps the player to move to the tile its targeting
             if (timeElapsed < lerpDuration)
             {
+                cellIndicator.SetActive(false);
+                gridVisualization.SetActive(false);
                 gameObject.transform.position = Vector3.Lerp(initialPlayerPos, playerToMovePos, timeElapsed / lerpDuration);
                 timeElapsed += Time.deltaTime;
             }
             else
             {
-                transform.position = playerToMovePos;
-                timeElapsed = 0;
-                movePlayer = false;
+                moveDelayTimer += Time.deltaTime;
+
+                // Adds a little bit of a delay before resetting the movement
+                if (moveDelayTimer > 0.25f)
+                {
+                    cellIndicator.SetActive(true);
+                    gridVisualization.SetActive(true);
+                    transform.position = playerToMovePos;
+                    timeElapsed = 0;
+                    moveDelayTimer = 0;
+                    movePlayer = false;
+                    TurnManager.instance.IncrementCurrentTurn();
+                }
+                
             }
         }
     }
@@ -181,7 +196,6 @@ public class MovementSystem : MonoBehaviour
         initialPlayerPos = gameObject.transform.position;
         playerToMovePos = grid.CellToWorld(gridPosition);
         movePlayer = true;
-        //gameObject.transform.position = grid.CellToWorld(gridPosition);
 
     }
 
