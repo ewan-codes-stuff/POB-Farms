@@ -22,7 +22,6 @@ public class PathFinder : MonoBehaviour
             if (currentTile == end)
             {
                 //finish
-                Debug.Log("Finished List");
                 return GetFinishedList(start, end);
             }
             var neighbourTiles = GetNeighbourTiles(currentTile,1);
@@ -38,7 +37,6 @@ public class PathFinder : MonoBehaviour
                 neighbour.H = GetManhattenDistance(end, neighbour);
 
                 neighbour.previous = currentTile;
-                Debug.Log(neighbour.previous);
 
                 if (!openList.Contains(neighbour))
                 {
@@ -105,7 +103,7 @@ public class PathFinder : MonoBehaviour
         List<GridTile> finishedList = new List<GridTile>();
 
         GridTile currentTile = target;
-        Debug.Log(currentTile.position);
+        //Debug.Log(currentTile.position);
         int count = 0;
         while (currentTile.position != start.position && count<60)
         {

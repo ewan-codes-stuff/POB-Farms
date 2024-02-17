@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
                 var newTile = new GridTile();
                 newTile.name = $"Tile {i}{j}";
                 newTile.position = new Vector2Int(i - (x / 2), j - (z / 2));
+                newTile.gridPosition = new Vector2Int(i, j);
                 newTile.traversable = true;
                 tileArray[new Vector2Int(i, j)] = newTile;
                 //tileArray[i, j].position = new Vector2Int(i - (x / 2), j - (z / 2));

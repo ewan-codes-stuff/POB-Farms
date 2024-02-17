@@ -59,6 +59,7 @@ public class GridTile
     public GridTile previous;
 
     public Vector2Int position;
+    public Vector2Int gridPosition;
     public bool traversable;
     public bool isBlockedByEnemy;
     public bool isBlockedByAlly;

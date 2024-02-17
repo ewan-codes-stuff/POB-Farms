@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     List<GridTile> path;
     List<GridTile> previousPath = new List<GridTile>();
 
+    [SerializeField]
+    protected bool isAlly = false;
+
     public Vector2Int gridPosition;
 
     [SerializeField]
@@ -36,16 +39,19 @@ public class Enemy : MonoBehaviour
         //gridPosition = new Vector2Int(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2));
         //gridPosition = new Vector2Int((int)(grid.WorldToCell(transform.position).x + (GameManager.instance.ground.transform.localScale.x*10/2)), (int)(grid.WorldToCell(transform.position).z + (GameManager.instance.ground.transform.localScale.z*10 / 2)));
         gridPosition = new Vector2Int((int)(transform.position.x + (GameManager.instance.ground.transform.localScale.x * 10 / 2)), (int)(transform.position.z + (GameManager.instance.ground.transform.localScale.z * 10 / 2)));
-        //Debug.Log("Current Grid Pos: " + gridPosition);
+        Debug.Log("Update Grid Pos: " + gridPosition);
+        GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = !isAlly;
+        GameManager.instance.tileArray[gridPosition].isBlockedByAlly = isAlly;
         //Debug.Log("Current Tile Pos: " + GameManager.instance.tileArray[gridPosition.x, gridPosition.y].position);
-        if(debugPathFind)
+        if (debugPathFind)
         {
-            PathfindToTarget(GameManager.instance.tileArray[new Vector2Int(5,5)]);
+            //PathfindToTarget(GameManager.instance.tileArray[new Vector2Int(5,5)]);
+            EnemyTurnPathFind();
             debugPathFind = false;
         }
     }
 
-    private void EnemyTurnPathFind()
+    public void EnemyTurnPathFind()
     {
         PathfindToTarget(FindTargetInRadius());
     }
@@ -58,13 +64,13 @@ public class Enemy : MonoBehaviour
         {
             if(neighbour.isBlockedByAlly)
             {
+                Debug.Log("Found new target plant;");
                 target = neighbour;
                 return target;
             }
         }
         //If it can't find any plants or the player then it'll default to the player's base.
-        //target = GameManager.instance.tileArray[(int)GameManager.instance.playerBase.transform.position.x,
-        //    (int)GameManager.instance.playerBase.transform.position.z];
+        //currently a debug location
         int debugTargetX = (int)GameManager.instance.ground.transform.localScale.x*10/2;
         int debugTargetY = (int)GameManager.instance.ground.transform.localScale.z*10/2;
         target = GameManager.instance.tileArray[new Vector2Int(debugTargetX,debugTargetY)];
@@ -76,20 +82,21 @@ public class Enemy : MonoBehaviour
 
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)].name);
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)]);
-        path = pathFinder.FindPath(GameManager.instance.tileArray[gridPosition], GameManager.instance.tileArray[new Vector2Int(5,5)]);
-        Debug.Log(path[0].position);
-        Vector2 pathDifference = path[0].position - gridPosition;
-        Debug.Log(pathDifference);
-        for (int i = 0; i < path.Count; i++)
-        {
-            Debug.Log(path[i]);
-        }
-        gameObject.transform.position = new Vector3(path[0].position.x,1.0f,path[0].position.y);
+        path = pathFinder.FindPath(GameManager.instance.tileArray[gridPosition], target);
+        
+        Vector2 pathDifference = path[0].gridPosition - gridPosition;
 
+        //Add current position to list of where I've been
         previousPath.Add(path[0]);
-        GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = true;
+        //Update previous tile so it is no longer blocked by enemy
+        GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = !isAlly;
+        GameManager.instance.tileArray[gridPosition].isBlockedByAlly = isAlly;
+        //Move Enemy position in world and in grid space
+        gameObject.transform.position = new Vector3(path[0].position.x, 1.0f, path[0].position.y);
         gridPosition += new Vector2Int((int)pathDifference.x,(int)pathDifference.y);
-        //gridPosition = COmpare previous position to where you are now
+        //Update new tile to be blocked by enemy
+        GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = !isAlly;
+        GameManager.instance.tileArray[gridPosition].isBlockedByAlly = isAlly;
 
         path.RemoveAt(0);
         debugPathFind = false;
