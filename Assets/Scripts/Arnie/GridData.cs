@@ -73,9 +73,9 @@ public class GridTile
 
     public Vector2Int position;
     public Vector2Int gridPosition;
+    public Entity entity;
     public bool traversable;
-    public bool isBlockedByEnemy;
-    public bool isBlockedByAlly;
+    public bool isBlockedByEntity = false;
     
 }
 
