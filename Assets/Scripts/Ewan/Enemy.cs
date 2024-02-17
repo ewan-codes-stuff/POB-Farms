@@ -74,16 +74,17 @@ public class Enemy : MonoBehaviour
         int debugTargetX = (int)GameManager.instance.ground.transform.localScale.x*10/2;
         int debugTargetY = (int)GameManager.instance.ground.transform.localScale.z*10/2;
         target = GameManager.instance.tileArray[new Vector2Int(debugTargetX,debugTargetY)];
+        Debug.Log("Target Grid Position: " + target.gridPosition);
+        Debug.Log("Target Tile: " + target.name);
         return target;
     }
 
     void PathfindToTarget(GridTile target)
     {
-
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)].name);
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)]);
         path = pathFinder.FindPath(GameManager.instance.tileArray[gridPosition], target);
-        
+
         Vector2 pathDifference = path[0].gridPosition - gridPosition;
 
         //Add current position to list of where I've been
@@ -92,7 +93,7 @@ public class Enemy : MonoBehaviour
         GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = !isAlly;
         GameManager.instance.tileArray[gridPosition].isBlockedByAlly = isAlly;
         //Move Enemy position in world and in grid space
-        gameObject.transform.position = new Vector3(path[0].position.x, 1.0f, path[0].position.y);
+        gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
         gridPosition += new Vector2Int((int)pathDifference.x,(int)pathDifference.y);
         //Update new tile to be blocked by enemy
         GameManager.instance.tileArray[gridPosition].isBlockedByEnemy = !isAlly;

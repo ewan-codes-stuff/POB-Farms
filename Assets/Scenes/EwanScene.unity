@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 109231981}
   serializedVersion: 2
   m_LocalRotation: {x: 0.20944786, y: -0, z: -0, w: 0.97781986}
-  m_LocalPosition: {x: 1.5, y: -5.3402076, z: 2.5}
+  m_LocalPosition: {x: 3.5, y: -5.3402076, z: 2.5}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3863,6 +3863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfDayTurns: 10
+  daylightIntensity: 0.8
+  nightBrightness: 5
 --- !u!1 &914771692
 GameObject:
   m_ObjectHideFlags: 0
@@ -6783,6 +6785,7 @@ GameObject:
   - component: {fileID: 1600522386}
   - component: {fileID: 1600522385}
   - component: {fileID: 1600522384}
+  - component: {fileID: 1600522387}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6910,6 +6913,10 @@ MonoBehaviour:
   source: {fileID: 1600522384}
   shuffle: {fileID: 8300000, guid: 34506a6f67ca271478489c00b0b2bd59, type: 3}
   error: {fileID: 8300000, guid: 2b5621c7fcc32fe4e8a6fff35c2cf37a, type: 3}
+  movePlayer: 0
+  playerToMovePos: {x: 0, y: 0, z: 0}
+  initialPlayerPos: {x: 0, y: 0, z: 0}
+  lerpDuration: 30
 --- !u!4 &1600522386
 Transform:
   m_ObjectHideFlags: 0
@@ -6930,6 +6937,18 @@ Transform:
   - {fileID: 1142785139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1600522387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600522383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4920a1229174240bf88bede32b082a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1607390371
 GameObject:
   m_ObjectHideFlags: 0

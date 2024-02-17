@@ -63,36 +63,39 @@ public class PathFinder : MonoBehaviour
 
         List<GridTile> neighbours = new List<GridTile>();
 
-        //Top Neighbour
-        Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y + 1);
-
-        if (grid.ContainsKey(locationToCheck))
+        for (int c = 0; c <= neighbourRange; c++)
         {
-            neighbours.Add(grid[locationToCheck]);
-        }
+            //Top Neighbour
+            Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y + c);
 
-        //Bottom Neighbour
-        locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y  - 1);
+            if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
+            {
+                neighbours.Add(grid[locationToCheck]);
+            }
 
-        if (grid.ContainsKey(locationToCheck))
-        {
-            neighbours.Add(grid[locationToCheck]);
-        }
+            //Bottom Neighbour
+            locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y - c);
 
-        //Right Neighbour
-        locationToCheck = new Vector2Int((int)currentTile.position.x + 1 + xOffset, yOffset + (int)currentTile.position.y );
+            if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
+            {
+                neighbours.Add(grid[locationToCheck]);
+            }
 
-        if (grid.ContainsKey(locationToCheck))
-        {
-            neighbours.Add(grid[locationToCheck]);
-        }
+            //Right Neighbour
+            locationToCheck = new Vector2Int((int)currentTile.position.x + c + xOffset, yOffset + (int)currentTile.position.y);
 
-        //Left Neighbour
-        locationToCheck = new Vector2Int((int)currentTile.position.x - 1 + xOffset, yOffset + (int)currentTile.position.y);
+            if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
+            {
+                neighbours.Add(grid[locationToCheck]);
+            }
 
-        if (grid.ContainsKey(locationToCheck))
-        {
-            neighbours.Add(grid[locationToCheck]);
+            //Left Neighbour
+            locationToCheck = new Vector2Int((int)currentTile.position.x - c + xOffset, yOffset + (int)currentTile.position.y);
+
+            if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
+            {
+                neighbours.Add(grid[locationToCheck]);
+            }
         }
 
         return neighbours;
@@ -104,13 +107,11 @@ public class PathFinder : MonoBehaviour
 
         GridTile currentTile = target;
         //Debug.Log(currentTile.position);
-        int count = 0;
-        while (currentTile.position != start.position && count<60)
+        while (currentTile.position != start.position)
         {
             finishedList.Add(currentTile);
 
             currentTile = currentTile.previous;
-            count += 1;
               
         }
 
