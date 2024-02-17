@@ -48,4 +48,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public GridData GetObjectData()
+    {
+        return PlacementSystem.instance.objectData;
+    }
+
+    public Grid GetGrid()
+    {
+        return PlacementSystem.instance.grid;
+    }
+
+    public List<GameObject> GetPlacedObjects()
+    {
+        return PlacementSystem.instance.placedGameObject;
+    }
 }

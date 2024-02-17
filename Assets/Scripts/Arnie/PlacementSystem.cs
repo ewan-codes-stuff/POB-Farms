@@ -32,7 +32,7 @@ public class PlacementSystem : MonoBehaviour
 
     private Renderer[] previewRenderer;
 
-    private List<GameObject> placedGameObject = new List<GameObject>();
+    public List<GameObject> placedGameObject = new List<GameObject>();
 
     // Singleton instance
     public static PlacementSystem instance;
@@ -180,7 +180,7 @@ public class PlacementSystem : MonoBehaviour
             Vector3 mousePosition = inputManager.GetSelectedMapPosition();
             Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-            // Compares the position being attmepted to place on to the dictionary to see if its valid
+            // Compares the position being attempted to place on to the dictionary to see if its valid
             bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
             if(placementValidity == false)
             {
