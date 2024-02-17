@@ -14,7 +14,7 @@ public class TurnManager : MonoBehaviour
 
     private int currentTurn;
 
-    public event Action EndTurn;
+    public event Action EndTurnEvent;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
     {
         ResetCurrentTurn();
         Debug.Log(currentTurn % numOfDayTurns);
-        EndTurn += IncrementCurrentTurn;
+        EndTurnEvent += IncrementCurrentTurn;
     }
 
     //Update used for testing turns
@@ -38,7 +38,7 @@ public class TurnManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space)) 
         {
-            EndTurn?.Invoke();
+            EndTurnEvent?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -64,5 +64,10 @@ public class TurnManager : MonoBehaviour
     public void ResetCurrentTurn()
     {
         currentTurn = 0;
+    }
+
+    public void EndTurn()
+    {
+        EndTurnEvent?.Invoke();
     }
 }
