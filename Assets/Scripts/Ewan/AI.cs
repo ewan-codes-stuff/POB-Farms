@@ -23,8 +23,7 @@ public class AI : Entity
         Debug.Log("Update Grid Pos: " + GetGridPosition());
         //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         //GameManager.instance.tileArray[GetGridPosition()].entity = this;
-
-        //PlacementSystem.instance.objectData.AddObjectAt(grid.WorldToCell(transform.position),new Vector2Int(1,1),100,)
+        AddAIToArnieGrid();
     }
 
     // Update is called once per frame
@@ -49,7 +48,16 @@ public class AI : Entity
             debugPathFind = false;
         }
     }
-
+    public void AddAIToArnieGrid()
+    {
+        GameManager.instance.GetPlacedObjects().Add(gameObject);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+    }
+    public void RemoveAIFromArnieGrid()
+    {
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
+    }
     public void EnemyTurnPathFind()
     {
         pathFinder.PathfindToTarget(this,FindTargetInRadius());

@@ -177,8 +177,10 @@ public class PathFinder : MonoBehaviour
         previousPath.Add(path[0]);
         //Update previous tile so it is no longer blocked by enemy
         GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = false;
+        self.RemoveAIFromArnieGrid();
         //Move Enemy position in world and in grid space
         gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
+        self.AddAIToArnieGrid();
         self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
         //Update new tile to be blocked by enemy
         GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = true;
