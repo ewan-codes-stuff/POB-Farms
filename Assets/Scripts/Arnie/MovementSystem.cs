@@ -30,6 +30,7 @@ public class MovementSystem : MonoBehaviour
 
     private Renderer[] previewRenderer;
 
+    public SpriteRenderer playerSprite;
 
     [SerializeField]
     private AudioSource source;
@@ -195,6 +196,28 @@ public class MovementSystem : MonoBehaviour
 
         initialPlayerPos = gameObject.transform.position;
         playerToMovePos = grid.CellToWorld(gridPosition);
+
+        // Checks the Directly above and below positions isometrically and makes it so the player doesnt flip in those positions
+        if ((playerToMovePos.x > initialPlayerPos.x && playerToMovePos.z > initialPlayerPos.z) || (playerToMovePos.x < initialPlayerPos.x && playerToMovePos.z < initialPlayerPos.z))
+        {
+            // No need to do anything
+        }
+        else
+        {
+            // Checks which way the player is moving and flips the sprite accordingly
+            if (((playerToMovePos.x < initialPlayerPos.x) || (playerToMovePos.z > initialPlayerPos.z)))
+            {
+                playerSprite.flipX = false;
+            }
+            else
+            {
+                playerSprite.flipX = true;
+            }
+        }
+        
+
+        
+
         movePlayer = true;
 
     }
