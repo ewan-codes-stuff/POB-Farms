@@ -492,7 +492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fdd51a4a368334f977f76242b494dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantyBoi: {fileID: 1256836694260690108, guid: 80840c76d0171474191a5b5255ca14a6, type: 3}
+  HP: 3
+  plantyBoi: {fileID: 3192073122723334774, guid: 8f3e6725cc451f04392143a59d41eb42, type: 3}
   turnsToGrow: 5
   growthCurve:
     serializedVersion: 2
@@ -500,18 +501,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0.43090457
+      outSlope: 0.43090457
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.081632644
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0

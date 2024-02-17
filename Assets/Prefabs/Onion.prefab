@@ -69,7 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fdd51a4a368334f977f76242b494dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantyBoi: {fileID: 1256836694260690108, guid: 80840c76d0171474191a5b5255ca14a6, type: 3}
+  HP: 3
+  plantyBoi: {fileID: 3192073122723334774, guid: 8f3e6725cc451f04392143a59d41eb42, type: 3}
   turnsToGrow: 5
   growthCurve:
     serializedVersion: 2
