@@ -5,9 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class PlantGrowth : MonoBehaviour
+public class Plant : MonoBehaviour
 {
     TurnManager turnManager;
+
+    [SerializeField]
+    private const int cost = 5;
 
     [SerializeField]
     private GameObject plantyBoi;
@@ -115,5 +118,10 @@ public class PlantGrowth : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
+
+    public int GetCost()
+    {
+        return cost;
     }
 }
