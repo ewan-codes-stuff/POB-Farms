@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public static Player instance;
 
-    private int soyl = 10;
+    private int wollars = 10;
 
     private void Awake()
     {
+        //Setup the Player instance
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
@@ -19,18 +20,23 @@ public class Player : MonoBehaviour
     }
 
     public int GetCurrency()
-    {
-        return soyl;
+    {   
+        //Getter for currency on player
+        return wollars;
     }
 
     public void DecreaseCurrency(int ammount)
     {
-        soyl -= ammount;
-        if(soyl < 0) soyl = 0;
+        //Remove Currency from Player
+        wollars -= ammount;
+
+        //Ensure currency remains at 0 minimum
+        if(wollars < 0) wollars = 0;
     }
 
     public void AddCurrency(int ammount)
     {
-        soyl += ammount;
+        //Add Currency to Player
+        wollars += ammount;
     }
 }
