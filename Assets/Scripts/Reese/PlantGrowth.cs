@@ -1,7 +1,9 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PlantGrowth : MonoBehaviour
 {
@@ -105,9 +107,12 @@ public class PlantGrowth : MonoBehaviour
     private void SpawnLivingPlant()
     {
         //Once you hit the turn for the plant to finish growing spawn the living plant
-        if (growthTurn >= turnsToGrow)
+        if (growthTurn >= plantedTurn + turnsToGrow)
         {
-            if (plantyBoi != null) Instantiate(plantyBoi, transform.position, transform.rotation);
+            if (plantyBoi != null) 
+            {
+                Instantiate(plantyBoi, transform.position, transform.rotation);
+            }
             Destroy(this.gameObject);
         }
     }
