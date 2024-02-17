@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject ground;
-    public GameObject playerBase;
-    public GameObject test;
 
     public Dictionary<Vector2Int, GridTile> tileArray;
     // Start is called before the first frame update
@@ -28,7 +26,7 @@ public class GameManager : MonoBehaviour
     {
         CreateGridArray();
     }
-
+          
     void CreateGridArray()
     {
         //Get the size of the ground and how many grid squares there are based off of it
