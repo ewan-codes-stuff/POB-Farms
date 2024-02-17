@@ -6496,6 +6496,10 @@ MonoBehaviour:
   source: {fileID: 1599761957}
   shuffle: {fileID: 8300000, guid: 34506a6f67ca271478489c00b0b2bd59, type: 3}
   error: {fileID: 8300000, guid: 2b5621c7fcc32fe4e8a6fff35c2cf37a, type: 3}
+  movePlayer: 0
+  playerToMovePos: {x: 0, y: 0, z: 0}
+  initialPlayerPos: {x: 0, y: 0, z: 0}
+  lerpDuration: 0.1
 --- !u!82 &1599761957
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6508,7 +6512,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2b5621c7fcc32fe4e8a6fff35c2cf37a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.59
   m_Pitch: 1
   Loop: 0
   Mute: 0

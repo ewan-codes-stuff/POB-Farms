@@ -10,7 +10,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private InputManager inputManager;
     [SerializeField]
-    private Grid grid;
+    public Grid grid;
 
     [SerializeField]
     private ObjectsDatabaseSO database;
@@ -28,11 +28,11 @@ public class PlacementSystem : MonoBehaviour
     private AudioClip error;
 
 
-    public GridData floorData, objectData;
+    public GridData floorData, furnitureData;
 
     private Renderer[] previewRenderer;
 
-    private List<GameObject> placedGameObject = new List<GameObject>();
+    private List<GameObject> placedGameObject = new();
 
     // Singleton instance
     public static PlacementSystem instance;
@@ -57,7 +57,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
 
         floorData = new GridData();
-        objectData = new GridData();
+        furnitureData = new();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
 
         // Places the initial house
@@ -110,7 +110,7 @@ public class PlacementSystem : MonoBehaviour
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            objectData;
+            furnitureData;
 
         return selectedData.CanPlaceObejctAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
@@ -169,7 +169,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            objectData;
+            furnitureData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
     }
 
@@ -190,7 +190,7 @@ public class PlacementSystem : MonoBehaviour
         placedGameObject.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :
-            objectData;
+            furnitureData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
 
         inputManager.OnExit += StopPlacement;

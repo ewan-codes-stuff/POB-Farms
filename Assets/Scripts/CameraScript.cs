@@ -14,7 +14,7 @@ public class CameraScript : MonoBehaviour
 
 
     float timeElapsed;
-    float reverseTimeElapsed;
+    float reverseTimeElapsed = 5;
     public float lerpDuration = 3;
 
 

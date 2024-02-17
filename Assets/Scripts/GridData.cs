@@ -20,6 +20,19 @@ public class GridData : MonoBehaviour
 
     }
 
+    public void RemoveObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
+    {
+        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        foreach (var pos in positionToOccupy)
+        {
+            if (placedObjects.ContainsKey(pos))
+            {
+                placedObjects.Remove(pos);
+            }
+        }
+
+    }
+
     private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
     {
         List<Vector3Int> returnVal = new List<Vector3Int>();

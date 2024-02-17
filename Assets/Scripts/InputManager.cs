@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
 
             OnClicked?.Invoke();
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
             OnExit?.Invoke();
         }
