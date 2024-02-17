@@ -41,8 +41,8 @@ public class EnemyManager : MonoBehaviour
         {
             AI spawnedEnemy = GameObject.Instantiate(enemyList[0], new Vector3(GMtileArray[new Vector2Int(randPosX, randPosY)].position.x,GameManager.instance.ground.transform.position.y, GMtileArray[new Vector2Int(randPosX, randPosY)].position.y), Quaternion.identity, enemyParent.transform);
             spawnedEnemy.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
-            spawnedEnemy.gridPosition = new Vector2Int(randPosX, randPosY);
-            Debug.Log(spawnedEnemy.gridPosition);
+            spawnedEnemy.SetGridPosition(new Vector2Int(randPosX, randPosY));
+            Debug.Log(spawnedEnemy.GetGridPosition());
             enemyAliveList.Add(spawnedEnemy);
         }
 

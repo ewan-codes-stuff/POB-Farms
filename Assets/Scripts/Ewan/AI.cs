@@ -35,9 +35,9 @@ public class AI : Entity
         //gridPosition = GameManager.instance.tileArray[grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2)].position;
         //gridPosition = new Vector2Int(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2));
         //gridPosition = new Vector2Int((int)(grid.WorldToCell(transform.position).x + (GameManager.instance.ground.transform.localScale.x*10/2)), (int)(grid.WorldToCell(transform.position).z + (GameManager.instance.ground.transform.localScale.z*10 / 2)));
-        gridPosition = new Vector2Int((int)(transform.position.x + (GameManager.instance.ground.transform.localScale.x * 10 / 2)), (int)(transform.position.z + (GameManager.instance.ground.transform.localScale.z * 10 / 2)));
-        Debug.Log("Update Grid Pos: " + gridPosition);
-        GameManager.instance.tileArray[gridPosition].isBlockedByEntity = true;
+        SetGridPosition(new Vector2Int((int)(transform.position.x + (GameManager.instance.ground.transform.localScale.x * 10 / 2)), (int)(transform.position.z + (GameManager.instance.ground.transform.localScale.z * 10 / 2))));
+        Debug.Log("Update Grid Pos: " + GetGridPosition());
+        GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         //Debug.Log("Current Tile Pos: " + GameManager.instance.tileArray[gridPosition.x, gridPosition.y].position);
         if (debugPathFind)
         {
@@ -56,9 +56,9 @@ public class AI : Entity
         GridTile target;
         List<GridTile> targetList = new List<GridTile>();
         //Search around the enemy in it's detection radius to find either plants or the player
-        for (int x = gridPosition.x - AIDetectionRadius; x <= gridPosition.x + AIDetectionRadius; x++)
+        for (int x = GetGridPosition().x - AIDetectionRadius; x <= GetGridPosition().x + AIDetectionRadius; x++)
         {
-            for (int y = gridPosition.y - AIDetectionRadius; y <= gridPosition.y + AIDetectionRadius; y++)
+            for (int y = GetGridPosition().y - AIDetectionRadius; y <= GetGridPosition().y + AIDetectionRadius; y++)
             {
                 if(GameManager.instance.tileArray.ContainsKey(new Vector2Int(x, y)))
                 {
@@ -66,14 +66,14 @@ public class AI : Entity
                     {
                         
                         Debug.Log("Found new target plant;");
-                        if (!isAlly && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.isAlly())
+                        if (!isAlly && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly())
                         {
-                            targetList.Add(GameManager.instance.tileArray[new Vector2Int(gridPosition.x + AIDetectionRadius, gridPosition.y + AIDetectionRadius)]);
+                            targetList.Add(GameManager.instance.tileArray[new Vector2Int(GetGridPosition().x + AIDetectionRadius, GetGridPosition().y + AIDetectionRadius)]);
                             
                         }
-                        if (isAlly && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.isAlly == false)
+                        if (isAlly && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly() == false)
                         {
-                            targetList.Add(GameManager.instance.tileArray[new Vector2Int(gridPosition.x + AIDetectionRadius, gridPosition.y + AIDetectionRadius)]);
+                            targetList.Add(GameManager.instance.tileArray[new Vector2Int(GetGridPosition().x + AIDetectionRadius, GetGridPosition().y + AIDetectionRadius)]);
                             
                         }
                     }

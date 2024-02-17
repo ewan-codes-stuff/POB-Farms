@@ -169,19 +169,19 @@ public class PathFinder : MonoBehaviour
     {
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)].name);
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)]);
-        path = FindPath(GameManager.instance.tileArray[self.gridPosition], target);
+        path = FindPath(GameManager.instance.tileArray[self.GetGridPosition()], target);
 
-        Vector2 pathDifference = path[0].gridPosition - self.gridPosition;
+        Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
 
         //Add current position to list of where I've been
         previousPath.Add(path[0]);
         //Update previous tile so it is no longer blocked by enemy
-        GameManager.instance.tileArray[self.gridPosition].isBlockedByEntity = false;
+        GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = false;
         //Move Enemy position in world and in grid space
         gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
-        self.gridPosition += new Vector2Int((int)pathDifference.x, (int)pathDifference.y);
+        self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
         //Update new tile to be blocked by enemy
-        GameManager.instance.tileArray[self.gridPosition].isBlockedByEntity = true;
+        GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = true;
 
         path.RemoveAt(0);
     }
