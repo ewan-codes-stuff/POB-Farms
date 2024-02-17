@@ -58,10 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 3
+  gridPosition: {x: 0, y: 0}
   pathFinder: {fileID: 8258426683257605727}
   isAlly: 0
-  gridPosition: {x: 0, y: 0}
-  enemyDetectionRadius: 2
+  AIDetectionRadius: 2
   grid: {fileID: 0}
   debugPathFind: 0
   test: {fileID: 9086099823709634388, guid: 4a62881398d2107408aea511d0ef7779, type: 3}

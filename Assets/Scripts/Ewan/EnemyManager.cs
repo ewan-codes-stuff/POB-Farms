@@ -6,8 +6,8 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     GameObject enemyParent;
-    public List<Enemy> enemyList;
-    public List<Enemy> enemyAliveList;
+    public List<AI> enemyList;
+    public List<AI> enemyAliveList;
     public int maxSpawnCount = 1;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             DebugEnemySpawn();
-            Debug.Log("E key pressed");
+            Debug.Log("Escape key pressed");
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -39,7 +39,7 @@ public class EnemyManager : MonoBehaviour
         int randPosY = Random.Range(0, (int)GameManager.instance.ground.transform.localScale.z * 10);
         for (int e = 0; e < maxSpawnCount; e++)
         {
-            Enemy spawnedEnemy = GameObject.Instantiate(enemyList[0], new Vector3(GMtileArray[new Vector2Int(randPosX, randPosY)].position.x,GameManager.instance.ground.transform.position.y, GMtileArray[new Vector2Int(randPosX, randPosY)].position.y), Quaternion.identity, enemyParent.transform);
+            AI spawnedEnemy = GameObject.Instantiate(enemyList[0], new Vector3(GMtileArray[new Vector2Int(randPosX, randPosY)].position.x,GameManager.instance.ground.transform.position.y, GMtileArray[new Vector2Int(randPosX, randPosY)].position.y), Quaternion.identity, enemyParent.transform);
             spawnedEnemy.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
             spawnedEnemy.gridPosition = new Vector2Int(randPosX, randPosY);
             Debug.Log(spawnedEnemy.gridPosition);
@@ -50,7 +50,7 @@ public class EnemyManager : MonoBehaviour
     }
     void DebugEnemyPathFind()
     {
-        foreach(Enemy e in enemyAliveList)
+        foreach(AI e in enemyAliveList)
         {
             e.EnemyTurnPathFind();
         }

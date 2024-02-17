@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathFinder: {fileID: 109231987}
-  isAlly: 1
+  isAlly: 0
   gridPosition: {x: 0, y: 0}
   enemyDetectionRadius: 2
   grid: {fileID: 557058329}
@@ -756,6 +756,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 557058329}
+    - target: {fileID: -9211628978865536208, guid: 5869fbff2df41804e8a4c8c0f7ac20db, type: 3}
+      propertyPath: enemyDetectionRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 810190970394705056, guid: 5869fbff2df41804e8a4c8c0f7ac20db, type: 3}
       propertyPath: m_Name
       value: Enemy

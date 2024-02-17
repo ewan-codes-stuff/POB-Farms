@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugAlly : Enemy
+public class DebugAlly : AI
 {
     private void Start()
     {
-        isAlly = true;
+     //   isAlly = true;
     }
 }

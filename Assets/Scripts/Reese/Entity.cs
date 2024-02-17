@@ -6,6 +6,6 @@ public class Entity : MonoBehaviour
 {
     [SerializeField] private int HP = 3;
 
-    private Vector2Int gridPosition;
+    public Vector2Int gridPosition;
     private int currentHP;
 }
