@@ -110,8 +110,10 @@ public class Plant : MonoBehaviour
     private void SpawnLivingPlant()
     {
         //Once you hit the turn for the plant to finish growing spawn the living plant
-        if (growthTurn >= plantedTurn + turnsToGrow)
+        if (currentTurn >= plantedTurn + turnsToGrow)
         {
+            //When turning into an ally pay out cash reward
+            Player.instance.AddCurrency(cost * 2);
             if (plantyBoi != null) 
             {
                 Instantiate(plantyBoi, transform.position, transform.rotation);
