@@ -116,6 +116,7 @@ public class Plant : Entity
             Player.instance.AddCurrency(cost * 2);
             if (plantyBoi != null) 
             {
+                PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
                 Instantiate(plantyBoi, transform.position, transform.rotation);
             }
             Destroy(this.gameObject);
