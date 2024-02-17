@@ -75,7 +75,7 @@ public class GridTile
     public Vector2Int gridPosition;
     public Entity entity;
     public bool traversable;
-    public bool isBlockedByEntity;
+    public bool isBlockedByEntity = false;
     
 }
 
