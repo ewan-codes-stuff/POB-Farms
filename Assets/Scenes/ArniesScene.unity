@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -767,7 +767,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 234948939}
   - component: {fileID: 234948938}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -864,7 +864,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dfbdd6ce49b338e4688bcfd6af498448, type: 2}
+  - {fileID: 2100000, guid: 0bedd4452f584ab438bfa9e265439413, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -903,11 +903,11 @@ Transform:
   m_GameObject: {fileID: 234948937}
   serializedVersion: 2
   m_LocalRotation: {x: 0.020558773, y: 0.36430043, z: -0.00804448, w: 0.9310198}
-  m_LocalPosition: {x: 1.85, y: -1.8, z: -0.73719454}
-  m_LocalScale: {x: 4.79, y: 6.235028, z: -5.0575976}
+  m_LocalPosition: {x: 1.5416665, y: -1.4999998, z: -0.61432874}
+  m_LocalScale: {x: 3.9916663, y: 5.1958556, z: -4.2146645}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 512528720}
   m_LocalEulerAnglesHint: {x: 2.53, y: 42.74, z: 0}
 --- !u!1 &242808292
 GameObject:
@@ -1955,7 +1955,7 @@ GameObject:
   - component: {fileID: 512528718}
   - component: {fileID: 512528717}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Enviroment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2047,6 +2047,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2017755845}
+  - {fileID: 234948941}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &520110630
@@ -5571,6 +5572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4920a1229174240bf88bede32b082a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 3
 --- !u!1 &1617448174
 GameObject:
   m_ObjectHideFlags: 0
@@ -6957,7 +6959,7 @@ GameObject:
   - component: {fileID: 2017755844}
   - component: {fileID: 2017755843}
   - component: {fileID: 2017755842}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7897,6 +7899,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7403236634988481518, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403236634988481518, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403236634988481518, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8047,7 +8061,6 @@ SceneRoots:
   - {fileID: 512528720}
   - {fileID: 422362624}
   - {fileID: 1599761955}
-  - {fileID: 234948941}
   - {fileID: 1021445189}
   - {fileID: 1350082102}
   - {fileID: 476535011}

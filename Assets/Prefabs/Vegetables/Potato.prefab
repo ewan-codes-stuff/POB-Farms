@@ -1452,7 +1452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
-  plantyBoi: {fileID: 3192073122723334774, guid: 8f3e6725cc451f04392143a59d41eb42, type: 3}
+  plantyBoi: {fileID: 9107897132236983290, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
   turnsToGrow: 5
   growthCurve:
     serializedVersion: 2
