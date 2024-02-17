@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridData : MonoBehaviour
 {
-    Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    Dictionary<Vector3Int, PlacementData> placedObjects = new Dictionary<Vector3Int, PlacementData>();
 
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex)
     {
@@ -35,7 +35,7 @@ public class GridData : MonoBehaviour
 
     private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
     {
-        List<Vector3Int> returnVal = new();
+        List<Vector3Int> returnVal = new List<Vector3Int>();
         for (int x = 0; x < objectSize.x; x++)
         {
             for (int y = 0; y < objectSize.y; y++)
@@ -57,6 +57,29 @@ public class GridData : MonoBehaviour
         return true;
     }
 }
+
+public class GridTile
+{
+    public string name;
+    //These values will be randomized to give the terrain variation
+    public int height;
+    public int cropYield;
+
+    public int G;
+    public int H;
+    public int F { get { return G + H; } }
+
+    public GridTile previous;
+
+    public Vector2Int position;
+    public Vector2Int gridPosition;
+    public bool traversable;
+    public bool isBlockedByEnemy;
+    public bool isBlockedByAlly;
+    
+}
+
+
 
 public class PlacementData
 {
