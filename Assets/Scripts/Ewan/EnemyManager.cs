@@ -35,8 +35,8 @@ public class EnemyManager : MonoBehaviour
     {
         var GMtileArray = GameManager.instance.tileArray;
 
-        int randPosX = Random.Range(0, (int)GameManager.instance.ground.transform.localScale.x*10);
-        int randPosY = Random.Range(0, (int)GameManager.instance.ground.transform.localScale.z * 10);
+        int randPosX = Random.Range((int)-((GameManager.instance.ground.transform.localScale.x * 10)/2)+1, (int)((GameManager.instance.ground.transform.localScale.x*10)/2)-1);
+        int randPosY = Random.Range((int)-((GameManager.instance.ground.transform.localScale.z * 10) / 2) + 1, (int)((GameManager.instance.ground.transform.localScale.z * 10) / 2)-1);
         for (int e = 0; e < maxSpawnCount; e++)
         {
             AI spawnedEnemy = GameObject.Instantiate(enemyList[0], new Vector3(GMtileArray[new Vector2Int(randPosX, randPosY)].position.x,GameManager.instance.ground.transform.position.y, GMtileArray[new Vector2Int(randPosX, randPosY)].position.y), Quaternion.identity, enemyParent.transform);
