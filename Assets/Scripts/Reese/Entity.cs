@@ -7,7 +7,7 @@ public class Entity : MonoBehaviour
 {
     [SerializeField] private int HP = 3;
 
-    private bool Ally = true;
+    [SerializeField]private bool Ally = true;
 
     //Stores my position on the grid
     private Vector2Int gridPosition;

@@ -38,15 +38,6 @@ public class TurnManager : MonoBehaviour
         turnsTillNight = dayLength;
     }
 
-    //Update used for testing turns
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            ResetCurrentTurn();
-        }
-    }
-
     public int GetCurrentTurn()
     {
         return currentTurn;
@@ -62,14 +53,14 @@ public class TurnManager : MonoBehaviour
     private void StartNight()
     {
         isNight = true;
-        light.transform.eulerAngles = new Vector3(-180.0f, -30.0f, 0.0f);
+        UpdateLight();
     }
 
     public void EndNight()
     {
         isNight = false;
         turnsTillNight = currentTurn + dayLength;
-        light.transform.eulerAngles = new Vector3(50.0f, -30.0f, 0.0f);
+        UpdateLight();
     }
 
     private void ResetCurrentTurn()
@@ -86,6 +77,13 @@ public class TurnManager : MonoBehaviour
 
     private void UpdateLight()
     {
-
+        if (isNight)
+        {
+            light.transform.eulerAngles = new Vector3(-180.0f, -30.0f, 0.0f);
+        }
+        else
+        {
+            light.transform.eulerAngles = new Vector3(50.0f, -30.0f, 0.0f);
+        }
     }
 }
