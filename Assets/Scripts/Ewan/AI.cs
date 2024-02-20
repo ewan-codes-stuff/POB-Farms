@@ -15,6 +15,7 @@ public class AI : Entity
 
     public bool debugPathFind = false;
     public GameObject test;
+    bool lateStart = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,19 +24,25 @@ public class AI : Entity
         Debug.Log("Update Grid Pos: " + GetGridPosition());
         //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         //GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        AddAIToArnieGrid();
+        //AddAIToArnieGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //DEBUG FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if(!lateStart)
+        {
+            AddAIToArnieGrid();
+            lateStart = true;
+        }
+        //DEBUG FUNCTION DELETE AFTER USE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //Debug.Log(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0)/2));
-        
+
         //gridPosition = GameManager.instance.tileArray[grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2)].position;
         //gridPosition = new Vector2Int(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2));
         //gridPosition = new Vector2Int((int)(grid.WorldToCell(transform.position).x + (GameManager.instance.ground.transform.localScale.x*10/2)), (int)(grid.WorldToCell(transform.position).z + (GameManager.instance.ground.transform.localScale.z*10 / 2)));
-        SetGridPosition(new Vector2Int((int)(transform.position.x + (GameManager.instance.ground.transform.localScale.x * 10 / 2)), (int)(transform.position.z + (GameManager.instance.ground.transform.localScale.z * 10 / 2))));
+        SetGridPosition(new Vector2Int((int)(transform.position.x), (int)(transform.position.z)));
         Debug.Log("Update Grid Pos: " + GetGridPosition());
         GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
@@ -51,7 +58,7 @@ public class AI : Entity
     public void AddAIToArnieGrid()
     {
         GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
     }
     public void RemoveAIFromArnieGrid()
     {
