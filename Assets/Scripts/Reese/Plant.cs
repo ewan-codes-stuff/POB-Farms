@@ -118,7 +118,18 @@ public class Plant : Entity
             {
                 PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
                 GameObject temp = Instantiate(plantyBoi, transform.position, transform.rotation);
-                temp.GetComponent<Entity>().SetGridPosition(this.GetGridPosition());
+
+                //Setup the new GameObject's GridPosition
+                if (temp.GetComponent<Entity>()) { temp.GetComponent<Entity>().SetGridPosition(GetGridPosition()); }
+
+                //Add the living Carrot to the placed objects list
+                GameManager.instance.GetPlacedObjects().Add(temp);
+
+                //Add to object data
+                GameManager.instance.GetObjectData().AddObjectAt(new Vector3Int(GetGridPosition().x, 0, GetGridPosition().y) , new Vector2Int(1,1), 2100, GameManager.instance.GetPlacedObjects().Count - 1);
+
+                //Add to this stupid other thing
+                GameManager.instance.tileArray[GetGridPosition()].entity = temp.GetComponent<Entity>();
             }
             Destroy(this.gameObject);
         }
