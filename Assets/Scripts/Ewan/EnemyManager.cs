@@ -29,6 +29,11 @@ public class EnemyManager : MonoBehaviour
             DebugEnemyPathFind();
             Debug.Log("P key pressed");
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GridManager.UpdateGridForPlacedObjects();
+        }
+
     }
 
     void DebugEnemySpawn()
