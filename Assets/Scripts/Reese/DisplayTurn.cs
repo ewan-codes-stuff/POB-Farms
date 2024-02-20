@@ -12,19 +12,21 @@ public class DisplayTurn : MonoBehaviour
     public void Start()
     {
         turnManager = TurnManager.instance;
+        turnManager.EndTurnEvent += UpdateTurnDisplay;
+        UpdateTurnDisplay();
     }
 
-    public void FixedUpdate()
+    private void UpdateTurnDisplay()
     {
         if (this.gameObject.GetComponent<Text>() != null)
         {
             //Get the text component of the connected object and update it to equal the current turn
-            this.gameObject.GetComponent<Text>().text = "Turn: " + turnManager.GetCurrentTurn().ToString();
+            this.gameObject.GetComponent<Text>().text = (turnManager.GetCurrentTurn()).ToString();
         }
         else if (this.gameObject.GetComponent<TextMeshProUGUI>() != null)
         {
             //Get the textMeshPro component of the connected object and update it to equal the current turn
-            this.gameObject.GetComponent<TextMeshProUGUI>().text = "Turn: " + turnManager.GetCurrentTurn().ToString();
+            this.gameObject.GetComponent<TextMeshProUGUI>().text = (turnManager.GetCurrentTurn()).ToString();
         }
     }
 }

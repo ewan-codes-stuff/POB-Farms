@@ -1087,9 +1087,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66960340fb9a4149abd310c855abb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfDayTurns: 10
+  dayLength: 9
   daylightIntensity: 0.8
   nightBrightness: 5
+  light: {fileID: 167456587}
 --- !u!1 &275837137
 GameObject:
   m_ObjectHideFlags: 0

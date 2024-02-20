@@ -124,7 +124,7 @@ public class MovementSystem : MonoBehaviour
                     timeElapsed = 0;
                     moveDelayTimer = 0;
                     movePlayer = false;
-                    TurnManager.instance.IncrementCurrentTurn();
+                    TurnManager.instance.EndTurn();
                 }
                 
             }

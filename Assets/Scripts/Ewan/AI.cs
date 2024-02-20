@@ -100,6 +100,7 @@ public class AI : Entity
                 }
             }
         }
+
         if(targetList.Count != 0)
         {
             target = targetList[Random.Range(0, targetList.Count)];
