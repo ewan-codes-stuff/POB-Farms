@@ -116,12 +116,40 @@ public class Plant : Entity
             Player.instance.AddCurrency(cost * 2);
             if (plantyBoi != null) 
             {
-                PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
-                GameObject temp = Instantiate(plantyBoi, transform.position, transform.rotation);
-                temp.GetComponent<Entity>().SetGridPosition(this.GetGridPosition());
+
+                RemoveFromGrid();
+                //Spawn and add the new plant to the grid system
+                AddToGrid(Instantiate(plantyBoi, transform.position, transform.rotation));
             }
             Destroy(this.gameObject);
         }
+    }
+
+    private void RemoveFromGrid()
+    {
+        //Remove this gameobject from the placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+
+        //Remove the existing plant from the gridData
+        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
+
+        //Remove from this stupid other thing
+        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+    }
+
+    public void AddToGrid(GameObject temp)
+    {
+        //Setup the new GameObject's GridPosition
+        if (temp.GetComponent<Entity>()) { temp.GetComponent<Entity>().SetGridPosition(GetGridPosition()); }
+
+        //Add the living Carrot to the placed objects list
+        GameManager.instance.GetPlacedObjects().Add(temp);
+
+        //Add to object data
+        GameManager.instance.GetObjectData().AddObjectAt(new Vector3Int(GetGridPosition().x, 0, GetGridPosition().y), new Vector2Int(1, 1), 2100, GameManager.instance.GetPlacedObjects().Count - 1);
+
+        //Add to this stupid other thing
+        GameManager.instance.tileArray[GetGridPosition()].entity = temp.GetComponent<Entity>();
     }
 
     public int GetCost()
