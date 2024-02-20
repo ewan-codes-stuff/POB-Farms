@@ -194,6 +194,8 @@ public class PlacementSystem : MonoBehaviour
             source.clip = planted;
             source.Play(); 
             GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
+            //Save object's Grid pos to the entity
+            if(newObject.GetComponent<Entity>() != null) { newObject.GetComponent<Entity>().SetGridPosition(new Vector2Int(gridPosition.x, gridPosition.z)); }
             newObject.transform.position = grid.CellToWorld(gridPosition);
 
             // Adding it to the dictionary of placed objects

@@ -117,7 +117,8 @@ public class Plant : Entity
             if (plantyBoi != null) 
             {
                 PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
-                Instantiate(plantyBoi, transform.position, transform.rotation);
+                GameObject temp = Instantiate(plantyBoi, transform.position, transform.rotation);
+                temp.GetComponent<Entity>().SetGridPosition(this.GetGridPosition());
             }
             Destroy(this.gameObject);
         }
