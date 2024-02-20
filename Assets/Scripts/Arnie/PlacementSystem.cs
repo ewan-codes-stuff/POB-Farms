@@ -201,7 +201,7 @@ public class PlacementSystem : MonoBehaviour
             // Adding it to the dictionary of placed objects
             placedGameObject.Add(newObject);
             GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
-                floorData :
+                floorData:
                 objectData;
             selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObject.Count - 1);
         }
