@@ -1103,7 +1103,6 @@ MonoBehaviour:
   dayLength: 9
   daylightIntensity: 0.8
   nightBrightness: 5
-  light: {fileID: 167456587}
 --- !u!1 &275837137
 GameObject:
   m_ObjectHideFlags: 0
