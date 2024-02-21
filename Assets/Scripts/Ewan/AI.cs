@@ -37,60 +37,66 @@ public class AI : Entity
             lateStart = true;
         }
         //DEBUG FUNCTION DELETE AFTER USE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //Debug.Log(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0)/2));
 
-        //gridPosition = GameManager.instance.tileArray[grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2)].position;
-        //gridPosition = new Vector2Int(grid.WorldToCell(transform.position).x + (GameManager.instance.tileArray.GetLength(0) / 2), grid.WorldToCell(transform.position).z + (GameManager.instance.tileArray.GetLength(1) / 2));
-        //gridPosition = new Vector2Int((int)(grid.WorldToCell(transform.position).x + (GameManager.instance.ground.transform.localScale.x*10/2)), (int)(grid.WorldToCell(transform.position).z + (GameManager.instance.ground.transform.localScale.z*10 / 2)));
         SetGridPosition(new Vector2Int((int)(transform.position.x), (int)(transform.position.z)));
-        Debug.Log("Update Grid Pos: " + GetGridPosition());
+
         GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        //Debug.Log("Current Tile Pos: " + GameManager.instance.tileArray[gridPosition.x, gridPosition.y].position);
+
+        //Debug Path Find for testing
         if (debugPathFind)
         {
-            //PathfindToTarget(GameManager.instance.tileArray[new Vector2Int(5,5)]);
             SetAlly(false);
-            EnemyTurnPathFind();
+            AITurn();
             debugPathFind = false;
         }
     }
     public void AddAIToArnieGrid()
     {
+        //Add to Unity Grid
         GameManager.instance.GetPlacedObjects().Add(gameObject);
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
     }
     public void RemoveAIFromArnieGrid()
     {
+        //Remove to Unity Grid
         GameManager.instance.GetPlacedObjects().Remove(gameObject);
         GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
     }
-    public void EnemyTurnPathFind()
+    public void AITurn()
     {
-        pathFinder.PathfindToTarget(this,FindTargetInRadius());
+        GridTile target = FindTargetInRadius();
+        if(Vector2Int.Distance(target.gridPosition,GetGridPosition()) <= 1.0f)
+        {
+            Attack(this,target.entity);
+        }
+        else if (target != null) 
+        {
+            pathFinder.PathfindToTarget(this,target);
+        }
     }
     private GridTile FindTargetInRadius()
     {
-        GridTile target;
+        GridTile target = null;
         List<GridTile> targetList = new List<GridTile>();
         //Search around the enemy in it's detection radius to find either plants or the player
         for (int x = GetGridPosition().x - AIDetectionRadius; x <= GetGridPosition().x + AIDetectionRadius; x++)
         {
             for (int y = GetGridPosition().y - AIDetectionRadius; y <= GetGridPosition().y + AIDetectionRadius; y++)
-            {
+            {   //If the location is actually in the Tile Dictionary
                 if(GameManager.instance.tileArray.ContainsKey(new Vector2Int(x, y)))
-                {
-                    Debug.Log("Tile to Check: "+GameManager.instance.tileArray[new Vector2Int(x, y)].gridPosition);
-                    if (GameManager.instance.tileArray[new Vector2Int(x, y)].isBlockedByEntity && GameManager.instance.tileArray[new Vector2Int(x, y)] !=GameManager.instance.tileArray[GetGridPosition()])
+                {   //Check the tile is occupied by an entity and the entity is not self
+                    if (GameManager.instance.tileArray[new Vector2Int(x, y)].entity != null && GameManager.instance.tileArray[new Vector2Int(x, y)] !=GameManager.instance.tileArray[GetGridPosition()])
                     {
-                        
-                        Debug.Log("Found new target plant;");
-                        Debug.Log(GameManager.instance.tileArray[new Vector2Int(x, y)].gridPosition);
+                        //Differing If statements based on whether the AI is enemy or ally
+
+                        //If Self is an enemy and the target is an ally, add it to list of targets
                         if (!IsAlly() && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly())
                         {
                             targetList.Add(GameManager.instance.tileArray[new Vector2Int(x, y)]);
                             
                         }
+                        //If Self is an ally and the target is an enemy, add it to list of targets
                         if (IsAlly() && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly() == false)
                         {
                             targetList.Add(GameManager.instance.tileArray[new Vector2Int(x, y)]);
@@ -100,19 +106,39 @@ public class AI : Entity
                 }
             }
         }
-        if(targetList.Count != 0)
+        if (!IsAlly())
+        {
+            targetList.Add(GameManager.instance.tileArray[new Vector2Int(-1,-1)]);
+            targetList.Add(GameManager.instance.tileArray[new Vector2Int(-1,0)]);
+            targetList.Add(GameManager.instance.tileArray[new Vector2Int(0,0)]);
+            targetList.Add(GameManager.instance.tileArray[new Vector2Int(0,-1)]);
+            int checkValue = 10;
+            foreach(GridTile tile in targetList)
+            {
+                float currentDistance = Vector2Int.Distance(tile.gridPosition, GetGridPosition());
+                if(checkValue > currentDistance)
+                {
+                    target = tile;
+                }
+            }
+            return target;
+        }
+        if (targetList.Count != 0)
         {
             target = targetList[Random.Range(0, targetList.Count)];
             return target;
         }
         //If it can't find any plants or the player then it'll default to the player's base.
-        //currently a debug location
-        int debugTargetX = (int)GameManager.instance.ground.transform.localScale.x*10/2;
-        int debugTargetY = (int)GameManager.instance.ground.transform.localScale.z*10/2;
-        target = GameManager.instance.tileArray[new Vector2Int(debugTargetX,debugTargetY)];
-        Debug.Log("Target Grid Position: " + target.gridPosition);
-        Debug.Log("Target Tile: " + target.name);
+        //currently a debug location 
+        
+
         return target;
+    }
+
+    void Attack(Entity self, Entity targetEntity)
+    {
+        Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
+        targetEntity.TakeDamage(1);
     }
 
     

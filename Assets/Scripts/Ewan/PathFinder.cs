@@ -93,54 +93,51 @@ public class PathFinder : MonoBehaviour
 
         List<GridTile> neighbours = new List<GridTile>();
 
-        for (int c = 0; c <= neighbourRange; c++)
+        for (int currentLookingDistance = 0; currentLookingDistance <= neighbourRange; currentLookingDistance++)
         {
             //Top Neighbour
-            Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y + c);
+            Vector2Int locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y + currentLookingDistance);
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                neighbours.Add(grid[locationToCheck]);
-            }
-
-            ////Top-Left Neighbour
-            //locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y - c);
-
-            //if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
-            //{
-            //    neighbours.Add(grid[locationToCheck]);
-            //}
-
-            //Top-Right Neighbour
-            locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y - c);
-
-            if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
-            {
-                neighbours.Add(grid[locationToCheck]);
+                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
+                {
+                    neighbours.Add(grid[locationToCheck]);
+                }
             }
 
             //Bottom Neighbour
-            locationToCheck = new Vector2Int((int)currentTile.position.x + xOffset, yOffset + (int)currentTile.position.y - c);
+            locationToCheck = new Vector2Int((int)currentTile.position.x, (int)currentTile.position.y - currentLookingDistance);
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                neighbours.Add(grid[locationToCheck]);
+                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
+                {
+                    neighbours.Add(grid[locationToCheck]);
+                }
             }
 
             //Right Neighbour
-            locationToCheck = new Vector2Int((int)currentTile.position.x + c + xOffset, yOffset + (int)currentTile.position.y);
+            locationToCheck = new Vector2Int((int)currentTile.position.x + currentLookingDistance, (int)currentTile.position.y);
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                neighbours.Add(grid[locationToCheck]);
+                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
+                {
+                    neighbours.Add(grid[locationToCheck]);
+                }
+                
             }
 
             //Left Neighbour
-            locationToCheck = new Vector2Int((int)currentTile.position.x - c + xOffset, yOffset + (int)currentTile.position.y);
+            locationToCheck = new Vector2Int((int)currentTile.position.x - currentLookingDistance, (int)currentTile.position.y);
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                neighbours.Add(grid[locationToCheck]);
+                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
+                {
+                    neighbours.Add(grid[locationToCheck]);
+                }
             }
         }
 
@@ -173,18 +170,23 @@ public class PathFinder : MonoBehaviour
 
         Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
 
-        //Add current position to list of where I've been
-        previousPath.Add(path[0]);
-        //Update previous tile so it is no longer blocked by enemy
-        GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = false;
-        self.RemoveAIFromArnieGrid();
-        //Move Enemy position in world and in grid space
-        gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
-        self.AddAIToArnieGrid();
-        self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
-        //Update new tile to be blocked by enemy
-        GameManager.instance.tileArray[self.GetGridPosition()].isBlockedByEntity = true;
-
+        //if(path[0])
+        // If Unity Grid is occupied by an object
+        // You cannot go there
+        if (path[0].entity != null)
+        {
+            //Add current position to list of where I've been
+            previousPath.Add(path[0]);
+            //Update previous tile so it is no longer blocked by enemy
+            GameManager.instance.tileArray[self.GetGridPosition()].entity = null;
+            self.RemoveAIFromArnieGrid();
+            //Move Enemy position in world and in grid space
+            gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
+            self.AddAIToArnieGrid();
+            self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
+            //Update new tile to be blocked by enemy
+            GameManager.instance.tileArray[self.GetGridPosition()].entity = self;
+        }
         path.RemoveAt(0);
     }
 

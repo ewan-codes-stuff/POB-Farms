@@ -24,9 +24,10 @@ public class GridManager : MonoBehaviour
                 GameManager.instance.tileArray[new Vector2Int(i, j)] = newTile;
             }
         }
+        
     }
 
-    public static void UpdateGridForPlacedObjects()
+    public static void UpdateGridForHouse()
     {
         foreach(GameObject placedObject in PlacementSystem.instance.placedGameObject)
         {
@@ -36,10 +37,14 @@ public class GridManager : MonoBehaviour
 
                 Grid localGrid = GameManager.instance.GetGrid();
                 //localGrid.WorldToCell(placedObject.transform.position);
-                GameManager.instance.tileArray[new Vector2Int(localGrid.WorldToCell(placedObject.transform.position).x, localGrid.WorldToCell(placedObject.transform.position).z)].isBlockedByEntity = true;
+                GameManager.instance.tileArray[new Vector2Int(0,0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+                GameManager.instance.tileArray[new Vector2Int(-1,0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+                GameManager.instance.tileArray[new Vector2Int(0,-1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+                GameManager.instance.tileArray[new Vector2Int(-1,-1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
                 //every other cell should be traversable
                 Debug.Log("Grid Position Blocked by Entity: " + localGrid.WorldToCell(placedObject.transform.position));
             }
         }
+        Debug.Log(PlacementSystem.instance.placedGameObject[0].gameObject.name);
     }
 }

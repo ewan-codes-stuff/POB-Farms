@@ -31,7 +31,7 @@ public class EnemyManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GridManager.UpdateGridForPlacedObjects();
+            GridManager.UpdateGridForHouse();
         }
 
     }
@@ -50,14 +50,12 @@ public class EnemyManager : MonoBehaviour
             Debug.Log(spawnedEnemy.GetGridPosition());
             enemyAliveList.Add(spawnedEnemy);
         }
-
-
     }
     void DebugEnemyPathFind()
     {
         foreach(AI e in enemyAliveList)
         {
-            e.EnemyTurnPathFind();
+            e.AITurn();
         }
     }
 }
