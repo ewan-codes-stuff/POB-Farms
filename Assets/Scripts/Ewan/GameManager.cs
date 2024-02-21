@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject ground;
+    public LightControl light;
 
     public Dictionary<Vector2Int, GridTile> tileArray;
     // Start is called before the first frame update

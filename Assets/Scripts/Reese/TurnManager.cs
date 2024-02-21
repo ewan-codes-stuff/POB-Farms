@@ -9,7 +9,6 @@ public class TurnManager : MonoBehaviour
     [SerializeField] int dayLength = 10;
     [SerializeField][Range(0.0f, 1.0f)] float daylightIntensity = 0.8f;
     [SerializeField][Range(1, 10)] int nightBrightness = 5;
-    [SerializeField] private GameObject light;
 
     public static TurnManager instance;
 
@@ -36,6 +35,14 @@ public class TurnManager : MonoBehaviour
         ResetCurrentTurn();
         InitiateNight += StartNight;
         turnsTillNight = dayLength;
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            EndNight();
+        }
     }
 
     public int GetCurrentTurn()
@@ -79,11 +86,11 @@ public class TurnManager : MonoBehaviour
     {
         if (isNight)
         {
-            light.transform.eulerAngles = new Vector3(-180.0f, -30.0f, 0.0f);
+            GameManager.instance.light.FlipIntensity();
         }
         else
         {
-            light.transform.eulerAngles = new Vector3(50.0f, -30.0f, 0.0f);
+            GameManager.instance.light.FlipIntensity();
         }
     }
 }
