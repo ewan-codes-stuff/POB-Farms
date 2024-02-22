@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public AIManager aiManager;
 
     public GameObject ground;
+    public LightControl light;
 
     public Entity house;
 
