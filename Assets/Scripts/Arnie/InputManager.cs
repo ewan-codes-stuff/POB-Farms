@@ -20,7 +20,8 @@ public class InputManager : MonoBehaviour
     public enum InputState
     {
         PLACE,
-        MOVE
+        MOVE,
+        HARVEST
     }
 
     private void Update()
