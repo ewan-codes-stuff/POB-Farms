@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    int spawnBudget = 1;
+    int spawnBudget = 10;
     int spawnTimer = 1;
     int spawnLocationRotator = 0;
     [SerializeField]
@@ -58,7 +58,9 @@ public class EnemySpawner : MonoBehaviour
                 spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
                 GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].entity = spawnedEnemy.GetComponent<AI>();
                 spawnedEnemy.name = "Enemy " + enemyIDCounter;
+                GameManager.instance.aiManager.AddAIToList(spawnedEnemy.gameObject);
                 hasSpawnedEnemiesTonight = true;
+                spawnBudget -= 1;
             }
         }
     }
@@ -67,5 +69,6 @@ public class EnemySpawner : MonoBehaviour
     {
         isNight = true;
         hasSpawnedEnemiesTonight = false;
+        spawnBudget = 5;
     }
 }

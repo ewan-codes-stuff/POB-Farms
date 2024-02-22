@@ -19,9 +19,23 @@ public class AIManager : MonoBehaviour
 
     private void Update()
     {
-        if(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        
+    }
+
+    public void AddAIToList(GameObject ai)
+    {
+        if (ai.GetComponent<AI>() != null)
         {
-            TurnManager.instance.EndNight();
+            if (ai.GetComponent<AI>().IsAlly()) { allyList.Add(ai); }
+            else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Add(ai); }
+        }
+    }
+    public void RemoveAIFromList(GameObject ai)
+    {
+        if (ai.GetComponent<AI>() != null)
+        {
+            if (ai.GetComponent<AI>().IsAlly()) { allyList.Remove(ai); }
+            else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Remove(ai); }
         }
     }
 
@@ -29,7 +43,7 @@ public class AIManager : MonoBehaviour
     {
         foreach (GameObject placedObject in PlacementSystem.instance.placedGameObject)
         {
-            if (placedObject.GetComponent<AI>() != null)
+            if (placedObject != null && placedObject.GetComponent<AI>() != null)
             {
                 if(placedObject.GetComponent<AI>().IsAlly() && !allyList.Contains(placedObject))
                 {
@@ -69,6 +83,10 @@ public class AIManager : MonoBehaviour
         foreach (GameObject ai in enemyList)
         {
             ai.GetComponent<AI>().AITurn();
+        }
+        if (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        {
+            TurnManager.instance.EndNight();
         }
     }
 
