@@ -13,9 +13,9 @@ public class AI : Entity
     bool lateStart = false;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Init()
     {
-        
+        base.Init();
         GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
         if (!PlacementSystem.instance.placedGameObject.Contains(gameObject)) { AddAIToArnieGrid(); }
