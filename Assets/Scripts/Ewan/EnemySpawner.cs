@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     int enemyIDCounter = 0;
 
-    bool isNight = false;
+    
 
     public bool hasSpawnedEnemiesTonight = false;
 
@@ -35,11 +35,6 @@ public class EnemySpawner : MonoBehaviour
         TurnManager.instance.EndTurnEvent += SpawnEnemies;
     }
 
-    public void ChangeTimePeriod(bool isNightTrue)
-    {
-        isNight = isNightTrue;
-    }
-
     public void ChangeSpawnBudget(int budget)
     {
         spawnBudget = budget;
@@ -55,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
         enemyIDCounter += 1;
         Debug.Log("Spawned Enemies");
         spawnTimer -= 1;
-        if (isNight)
+        if (GameManager.instance.aiManager.IsNight())
         {
             if (spawnBudget > 0 && spawnTimer <= 0)
             {

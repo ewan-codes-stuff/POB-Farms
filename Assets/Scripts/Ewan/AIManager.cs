@@ -9,6 +9,8 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     List<GameObject> enemyList = new List<GameObject>();
 
+    bool isNight = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,10 @@ public class AIManager : MonoBehaviour
     {
         
     }
-
+    public bool IsNight()
+    {
+        return isNight;
+    }
     public void AddAIToList(GameObject ai)
     {
         if (ai.GetComponent<AI>() != null)
@@ -85,16 +90,16 @@ public class AIManager : MonoBehaviour
         {
             ai.GetComponent<AI>().AITurn();
         }
-        if (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
             TurnManager.instance.EndNight();
-            GameManager.instance.enemySpawner.ChangeTimePeriod(false);
+            isNight = false;
         }
     }
 
     void ChangeToNight()
     {
-        GameManager.instance.enemySpawner.ChangeTimePeriod(true);
+        isNight = true;
         GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
 
         //Change from magic number 
