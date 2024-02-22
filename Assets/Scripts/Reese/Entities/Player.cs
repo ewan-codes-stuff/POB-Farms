@@ -8,6 +8,8 @@ public class Player : Entity
 
     private int wollars = 10;
 
+    private bool playerFreezeInputs = false;
+
     private void Awake()
     {
         //Setup the Player instance
@@ -38,5 +40,10 @@ public class Player : Entity
     {
         //Add Currency to Player
         wollars += ammount;
+    }
+
+    public void FreezeInputs(bool freeze)
+    {
+        playerFreezeInputs = freeze;
     }
 }
