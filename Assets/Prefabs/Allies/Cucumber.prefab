@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
-  Cost: 3
+  cost: 3
   Ally: 1
   pathFinder: {fileID: 8670093624059044706}
   AIDetectionRadius: 2

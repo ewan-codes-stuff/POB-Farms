@@ -6,11 +6,9 @@ using UnityEngine.UI;
 public class Entity : MonoBehaviour
 {
     [SerializeField] private int HP = 3;
-    [SerializeField] private int Cost = 3;
+    [SerializeField] private int cost = 3;
 
     [SerializeField] private bool Ally = true;
-
-    [SerializeField] private int cost;
 
     //Stores my position on the grid
     private Vector2Int gridPosition;
@@ -28,7 +26,7 @@ public class Entity : MonoBehaviour
         currentHP = HP;
     }
 
-    public void TakeDamage(int damageAmount)
+    public virtual void TakeDamage(int damageAmount)
     {
         currentHP -= damageAmount;
         Debug.Log(this.gameObject.name + " Taken damage");
@@ -42,7 +40,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    void Die()
+    public virtual void Die()
     {
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
         //Remove this gameobject from the placed objects list
@@ -56,7 +54,7 @@ public class Entity : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    public void Heal(int healAmmount) 
+    public virtual void Heal(int healAmmount) 
     {
         currentHP += healAmmount;
 

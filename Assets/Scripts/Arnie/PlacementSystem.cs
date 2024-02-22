@@ -162,9 +162,9 @@ public class PlacementSystem : MonoBehaviour
     {
         // Gets the cost of the plant being attempted to be selected
         int plantCost = 0;
-        if (database.objectsData[selectedObjectIndex].Prefab.GetComponent<Plant>())
+        if (database.objectsData[selectedObjectIndex].Prefab.GetComponent<Entity>())
         {
-            plantCost = database.objectsData[selectedObjectIndex].Prefab.GetComponent<Plant>().GetCost();
+            plantCost = database.objectsData[selectedObjectIndex].Prefab.GetComponent<Entity>().GetCost();
         }
         
         // Checks if player has enough currency to place object

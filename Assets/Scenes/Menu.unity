@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b0811c611524ae54daac2fdcf26ec7c9, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1097,9 +1097,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bc54782ebdb5747a91006526f3b1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToReveal: 30
-  timeToLerp: 3
-  endPos: {x: 0.41976148, y: -3.3850062, z: 4.692296}
 --- !u!1001 &546224704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1294,9 +1291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bc54782ebdb5747a91006526f3b1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToReveal: 30
-  timeToLerp: 3
-  endPos: {x: 0.34946147, y: -3.0615063, z: 4.5183964}
 --- !u!1001 &583863205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1434,9 +1428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bc54782ebdb5747a91006526f3b1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToReveal: 30
-  timeToLerp: 3
-  endPos: {x: 0.26606146, y: -3.3112063, z: 4.337796}
 --- !u!1001 &589145341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1951,6 +1942,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3777490527334200703, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
     - {fileID: 9096520566861077533, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
+    - {fileID: -8991566125223517803, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
+    - {fileID: 81931722166377729, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2473,6 +2466,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 572886528833951988, guid: 609a46d4dabbc8241a81f4cf66519cc3, type: 3}
     - {fileID: 7968103198281045217, guid: 609a46d4dabbc8241a81f4cf66519cc3, type: 3}
+    - {fileID: 6898774046746972140, guid: 609a46d4dabbc8241a81f4cf66519cc3, type: 3}
+    - {fileID: -3778173924027118939, guid: 609a46d4dabbc8241a81f4cf66519cc3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2754,6 +2749,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6184680449104597864, guid: 6fda607e9f1818f48a2cec514434d7fe, type: 3}
+    - {fileID: -1565294412743723189, guid: 6fda607e9f1818f48a2cec514434d7fe, type: 3}
+    - {fileID: 98364536905607863, guid: 6fda607e9f1818f48a2cec514434d7fe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3042,9 +3039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bc54782ebdb5747a91006526f3b1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToReveal: 30
-  timeToLerp: 3
-  endPos: {x: 1.0515615, y: -2.7852063, z: 4.3334475}
 --- !u!4 &1370514535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 251175737528830008, guid: c5dfe51ca1f7b0e48bbb224071155782, type: 3}
@@ -3227,6 +3221,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8445272051519577567, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
     - {fileID: 2426121430881355190, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+    - {fileID: -428089220986979750, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+    - {fileID: -4822492535871210538, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3439,6 +3435,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 541752716608342076, guid: a7b2ce664f7d6374eaf448ec5c423091, type: 3}
     - {fileID: 774857080703094383, guid: a7b2ce664f7d6374eaf448ec5c423091, type: 3}
+    - {fileID: 5003279146412239325, guid: a7b2ce664f7d6374eaf448ec5c423091, type: 3}
+    - {fileID: -3591935308382851384, guid: a7b2ce664f7d6374eaf448ec5c423091, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3978,9 +3976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bc54782ebdb5747a91006526f3b1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToReveal: 30
-  timeToLerp: 3
-  endPos: {x: 1.05, y: -3.3790634, z: 4.398}
 --- !u!4 &1933032954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6510189481916828942, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
