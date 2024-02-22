@@ -6,10 +6,19 @@ public class EnemySpawner : MonoBehaviour
 {
     int spawnBudget = 1;
     int spawnTimer = 1;
+    int spawnLocationRotator = 0;
     [SerializeField]
     List<Vector2Int> locationsToSpawn;
 
-    public List<GameObject> EnemiesToSpawn;
+    public List<AI> EnemiesToSpawn;
+
+    int enemyIDCounter = 0;
+
+    bool isNight = false;
+
+    public bool hasSpawnedEnemiesTonight = false;
+
+    public bool debugSpawnEnemies = false;
     
     //Things we need for spawner
     /*
@@ -24,21 +33,40 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         TurnManager.instance.EndTurnEvent += SpawnEnemies;
+        TurnManager.instance.InitiateNight += ChangeToNight;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(spawnLocationRotator == 1) { spawnLocationRotator = 0; }
     }
 
     void SpawnEnemies()
     {
+        enemyIDCounter += 1;
+        Debug.Log("Spawned Enemies");
         spawnTimer -= 1;
         //if night
-        if(spawnBudget < 0 && spawnTimer == 0)
+        if (debugSpawnEnemies)
         {
-            GameObject.Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)],new Vector3(GameManager.instance.tileArray[locationsToSpawn[0]].position.x,0.0f, GameManager.instance.tileArray[locationsToSpawn[0]].position.y),Quaternion.identity);
+            if (spawnBudget > 0 && spawnTimer <= 0)
+            {
+                spawnTimer = 1;
+                spawnLocationRotator = 1;
+                GameObject spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].position.x, 0.0f, GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].position.y), Quaternion.identity);
+                Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
+                spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
+                GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].entity = spawnedEnemy.GetComponent<AI>();
+                spawnedEnemy.name = "Enemy " + enemyIDCounter;
+                hasSpawnedEnemiesTonight = true;
+            }
         }
+    }
+
+    void ChangeToNight()
+    {
+        isNight = true;
+        hasSpawnedEnemiesTonight = false;
     }
 }

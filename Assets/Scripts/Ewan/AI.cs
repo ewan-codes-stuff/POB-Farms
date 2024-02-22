@@ -10,46 +10,24 @@ public class AI : Entity
     [SerializeField]
     private int AIDetectionRadius = 2;
 
-    [SerializeField]
-    private Grid grid;
-
-    public bool debugPathFind = false;
-    public GameObject test;
     bool lateStart = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetGridPosition(new Vector2Int((int)(transform.position.x + (GameManager.instance.ground.transform.localScale.x * 10 / 2)), (int)(transform.position.z + (GameManager.instance.ground.transform.localScale.z * 10 / 2))));
-        Debug.Log("Update Grid Pos: " + GetGridPosition());
-        //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
-        //GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        //AddAIToArnieGrid();
+        
+        GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
+        GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        AddAIToArnieGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //DEBUG FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if(!lateStart)
-        {
-            AddAIToArnieGrid();
-            lateStart = true;
-        }
-        //DEBUG FUNCTION DELETE AFTER USE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         SetGridPosition(new Vector2Int((int)(transform.position.x), (int)(transform.position.z)));
 
         GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
-
-        //Debug Path Find for testing
-        if (debugPathFind)
-        {
-            SetAlly(false);
-            AITurn();
-            debugPathFind = false;
-        }
     }
     public void AddAIToArnieGrid()
     {
@@ -65,15 +43,20 @@ public class AI : Entity
     }
     public void AITurn()
     {
+        Debug.Log("AI is taking it's turn");
         GridTile target = FindTargetInRadius();
-        if(Vector2Int.Distance(target.gridPosition,GetGridPosition()) <= 1.0f)
+        if (target != null)
         {
-            Attack(this,target.entity);
+            if (Vector2Int.Distance(target.gridPosition, GetGridPosition()) <= 1.0f)
+            {
+                Attack(this, target.entity);
+            }
+            else if (target != null)
+            {
+                pathFinder.PathfindToTarget(this, target);
+            }
         }
-        else if (target != null) 
-        {
-            pathFinder.PathfindToTarget(this,target);
-        }
+        //Wander();
     }
     private GridTile FindTargetInRadius()
     {
@@ -139,9 +122,28 @@ public class AI : Entity
     void Attack(Entity self, Entity targetEntity)
     {
         Debug.Log(targetEntity);
+        Debug.Log(self.gameObject.name);
         Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
         targetEntity.TakeDamage(1);
     }
 
-    
+    void Wander()
+    {
+        List<GridTile> wanderNeighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[GetGridPosition()], 1);
+
+        GridTile wanderTile = wanderNeighbours[Random.Range(0, wanderNeighbours.Count)];
+
+        if (wanderTile.entity == null)
+        {
+            Vector2 pathDifference = wanderTile.gridPosition - GetGridPosition();
+            GameManager.instance.tileArray[GetGridPosition()].entity = null;
+            RemoveAIFromArnieGrid();
+            //Move Enemy position in world and in grid space
+            gameObject.transform.position = new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y);
+            AddAIToArnieGrid();
+            SetGridPosition(GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
+            //Update new tile to be blocked by enemy
+            GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        }
+    }
 }

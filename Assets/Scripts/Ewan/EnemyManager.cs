@@ -51,7 +51,7 @@ public class EnemyManager : MonoBehaviour
             GMtileArray[new Vector2Int(randPosX, randPosY)].entity = spawnedEnemy.GetComponent<AI>();
             Debug.Log(spawnedEnemy.GetGridPosition());
             enemyAliveList.Add(spawnedEnemy);
-            spawnedEnemy.Name = "Enemy " + GMtileArray[spawnedEnemy.GetGridPosition()].position.x + " " + GMtileArray[spawnedEnemy.GetGridPosition()].position.y;
+            //spawnedEnemy.Name = "Enemy " + GMtileArray[spawnedEnemy.GetGridPosition()].position.x + " " + GMtileArray[spawnedEnemy.GetGridPosition()].position.y;
         }
     }
     void DebugEnemyPathFind()

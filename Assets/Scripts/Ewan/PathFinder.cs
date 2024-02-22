@@ -7,6 +7,8 @@ public class PathFinder : MonoBehaviour
 {
     List<GridTile> path;
     List<GridTile> previousPath = new List<GridTile>();
+
+    GridTile closestTileToTarget;
     bool done = false;
 
     public List<GridTile> FindPath(GridTile start, GridTile end)
@@ -48,6 +50,8 @@ public class PathFinder : MonoBehaviour
 
             openList.Remove(currentTile);
             closedList.Add(currentTile);
+            closedList = new List<GridTile>(closedList.OrderBy(x => x.F));
+            if (closedList.Count > 1) { closestTileToTarget = closedList[1]; }
 
             if (currentTile == end)
             {
@@ -77,8 +81,8 @@ public class PathFinder : MonoBehaviour
             }
         }
         //When you cannot get to the end position, return the list with what you have
-        
-        return new List<GridTile>();
+        return GetFinishedList(start, closestTileToTarget);
+        //return new List<GridTile>();
     }
 
     private int GetManhattenDistance(GridTile start, GridTile neighbour)

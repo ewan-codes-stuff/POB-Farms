@@ -48,4 +48,4 @@ MonoBehaviour:
   - {x: -4, y: 5}
   - {x: 4, y: -5}
   EnemiesToSpawn:
-  - {fileID: 6256197649210174563, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}
+  - {fileID: 6996588106068909646, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}

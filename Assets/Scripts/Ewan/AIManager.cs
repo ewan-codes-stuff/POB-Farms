@@ -12,7 +12,17 @@ public class AIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TurnManager.instance.EndTurnEvent += GetListOfEntities;
         TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
+        
+    }
+
+    private void Update()
+    {
+        if(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        {
+            TurnManager.instance.EndNight();
+        }
     }
 
     public void GetListOfEntities()
@@ -31,6 +41,14 @@ public class AIManager : MonoBehaviour
                     enemyList.Add(placedObject.gameObject);
                 }
             }
+        }
+        if(GameManager.instance.house == null)
+        {
+            GameManager.instance.tileArray[new Vector2Int(0, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+            GameManager.instance.tileArray[new Vector2Int(-1, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+            GameManager.instance.tileArray[new Vector2Int(0, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+            GameManager.instance.tileArray[new Vector2Int(-1, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+            GameManager.instance.house = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
         }
     }
 

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public AIManager aiManager;
+    public EnemySpawner enemySpawner;
 
     public GameObject ground;
     public LightControl light;
