@@ -33,9 +33,17 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         TurnManager.instance.EndTurnEvent += SpawnEnemies;
-        TurnManager.instance.InitiateNight += ChangeToNight;
     }
 
+    public void ChangeTimePeriod(bool isNightTrue)
+    {
+        isNight = isNightTrue;
+    }
+
+    public void ChangeSpawnBudget(int budget)
+    {
+        spawnBudget = budget;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -65,10 +73,5 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void ChangeToNight()
-    {
-        isNight = true;
-        hasSpawnedEnemiesTonight = false;
-        spawnBudget = 5;
-    }
+    
 }
