@@ -9,11 +9,14 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     List<GameObject> enemyList = new List<GameObject>();
 
+    bool isNight = false;
+
     // Start is called before the first frame update
     void Start()
     {
         TurnManager.instance.EndTurnEvent += GetListOfEntities;
         TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
+        TurnManager.instance.InitiateNight += ChangeToNight;
         
     }
 
@@ -21,7 +24,10 @@ public class AIManager : MonoBehaviour
     {
         
     }
-
+    public bool IsNight()
+    {
+        return isNight;
+    }
     public void AddAIToList(GameObject ai)
     {
         if (ai.GetComponent<AI>() != null)
@@ -68,7 +74,7 @@ public class AIManager : MonoBehaviour
 
     void AIPathFindOnEndTurn()
     {
-        //if(Is Night Time)
+        
         foreach (GameObject ai in allyList)
         {
             if (ai.GetComponent<AI>().IsAlly())
@@ -84,11 +90,20 @@ public class AIManager : MonoBehaviour
         {
             ai.GetComponent<AI>().AITurn();
         }
-        if (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
             TurnManager.instance.EndNight();
+            isNight = false;
         }
     }
 
+    void ChangeToNight()
+    {
+        isNight = true;
+        GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
+
+        //Change from magic number 
+        GameManager.instance.enemySpawner.ChangeSpawnBudget(5);
+    }
 
 }     
