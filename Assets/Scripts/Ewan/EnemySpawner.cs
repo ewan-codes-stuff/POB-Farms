@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(spawnLocationRotator == 1) { spawnLocationRotator = 0; }
+        if(spawnLocationRotator < 1) { spawnLocationRotator = -1; }
     }
 
     void SpawnEnemies()
@@ -47,13 +47,12 @@ public class EnemySpawner : MonoBehaviour
         enemyIDCounter += 1;
         Debug.Log("Spawned Enemies");
         spawnTimer -= 1;
-        //if night
-        if (debugSpawnEnemies)
+        if (isNight)
         {
             if (spawnBudget > 0 && spawnTimer <= 0)
             {
                 spawnTimer = 1;
-                spawnLocationRotator = 1;
+                spawnLocationRotator += 1;
                 GameObject spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].position.x, 0.0f, GameManager.instance.tileArray[locationsToSpawn[spawnLocationRotator]].position.y), Quaternion.identity);
                 Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
                 spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
