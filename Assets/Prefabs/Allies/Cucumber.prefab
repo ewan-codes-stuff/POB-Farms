@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4100795369191469244}
-  - component: {fileID: 168812940364164082}
+  - component: {fileID: 9006431295569958665}
+  - component: {fileID: 8670093624059044706}
   m_Layer: 0
   m_Name: Cucumber
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   - {fileID: 8521981388709038607}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &168812940364164082
+--- !u!114 &9006431295569958665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +43,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115528661789350248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ac4848fbca08314e80c396cd0136fe5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
+  Cost: 3
+  Ally: 1
+  pathFinder: {fileID: 8670093624059044706}
+  AIDetectionRadius: 2
+--- !u!114 &8670093624059044706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115528661789350248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fb580678c6ede46896d549d874a175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1994916600096942032
 GameObject:
   m_ObjectHideFlags: 0

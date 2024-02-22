@@ -5,8 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public AIManager aiManager;
+    public EnemySpawner enemySpawner;
+
     public GameObject ground;
     public LightControl light;
+
+    public Entity house;
 
     public Dictionary<Vector2Int, GridTile> tileArray;
     // Start is called before the first frame update

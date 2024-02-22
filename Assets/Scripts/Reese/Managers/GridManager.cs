@@ -12,9 +12,9 @@ public class GridManager : MonoBehaviour
         int z = (int)(GameManager.instance.ground.transform.localScale.z * 10);
 
         GameManager.instance.tileArray = new Dictionary<Vector2Int, GridTile>();
-        for (int i = (-x/2); i < x; i++)
+        for (int i = (-x/2); i < x/2; i++)
         {
-            for (int j = (-z/2); j < z; j++)
+            for (int j = (-z/2); j < z/2; j++)
             {
                 var newTile = new GridTile();
                 newTile.name = $"Tile {i}{j}";
@@ -24,9 +24,10 @@ public class GridManager : MonoBehaviour
                 GameManager.instance.tileArray[new Vector2Int(i, j)] = newTile;
             }
         }
+        
     }
 
-    public static void UpdateGridForPlacedObjects()
+    public static void UpdateGridForHouse()
     {
         foreach(GameObject placedObject in PlacementSystem.instance.placedGameObject)
         {
@@ -35,11 +36,8 @@ public class GridManager : MonoBehaviour
                 Vector2Int placedObjectVector2 = new Vector2Int(Mathf.RoundToInt(placedObject.transform.position.x), Mathf.RoundToInt(placedObject.transform.position.z));
 
                 Grid localGrid = GameManager.instance.GetGrid();
-                //localGrid.WorldToCell(placedObject.transform.position);
-                GameManager.instance.tileArray[new Vector2Int(localGrid.WorldToCell(placedObject.transform.position).x, localGrid.WorldToCell(placedObject.transform.position).z)].isBlockedByEntity = true;
-                //every other cell should be traversable
-                Debug.Log("Grid Position Blocked by Entity: " + localGrid.WorldToCell(placedObject.transform.position));
             }
         }
+        Debug.Log(PlacementSystem.instance.placedGameObject[0].gameObject.name);
     }
 }
