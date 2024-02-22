@@ -30,10 +30,17 @@ public class LightControl : MonoBehaviour
         }
     }
 
-    public void FlipIntensity()
+    public void RaiseIntensity()
     {
-        targetIntensity = startIntensity;
-        startIntensity = currentIntensity;
+        targetIntensity = 1;
+        startIntensity = 0;
+        timer = 0;
+    }
+
+    public void LowerIntensity()
+    {
+        startIntensity = 1;
+        targetIntensity = 0;
         timer = 0;
     }
 }

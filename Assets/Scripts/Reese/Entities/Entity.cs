@@ -8,7 +8,9 @@ public class Entity : MonoBehaviour
     [SerializeField] private int HP = 3;
     [SerializeField] private int Cost = 3;
 
-    [SerializeField]private bool Ally = true;
+    [SerializeField] private bool Ally = true;
+
+    [SerializeField] private int cost;
 
     //Stores my position on the grid
     private Vector2Int gridPosition;
@@ -64,5 +66,10 @@ public class Entity : MonoBehaviour
     public bool IsAlly()
     {
         return Ally;
+    }
+
+    public int GetCost()
+    {
+        return cost;
     }
 }
