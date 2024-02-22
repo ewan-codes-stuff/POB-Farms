@@ -7,9 +7,8 @@ public class Entity : MonoBehaviour
 {
     [SerializeField] private int HP = 3;
 
-    [SerializeField]private bool Ally = true;
+    [SerializeField] private bool Ally = true;
 
-    //Plant cost
     [SerializeField] private int cost;
 
     //Stores my position on the grid

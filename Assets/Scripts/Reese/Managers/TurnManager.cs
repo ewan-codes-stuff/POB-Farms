@@ -86,11 +86,11 @@ public class TurnManager : MonoBehaviour
     {
         if (isNight)
         {
-            GameManager.instance.light.FlipIntensity();
+            GameManager.instance.light.LowerIntensity();
         }
         else
         {
-            GameManager.instance.light.FlipIntensity();
+            GameManager.instance.light.RaiseIntensity();
         }
     }
 }

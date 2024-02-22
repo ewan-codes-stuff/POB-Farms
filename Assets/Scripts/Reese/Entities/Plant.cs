@@ -10,9 +10,6 @@ public class Plant : Entity
     TurnManager turnManager;
 
     [SerializeField]
-    private const int cost = 5;
-
-    [SerializeField]
     private GameObject plantyBoi;
 
     [SerializeField]
@@ -113,10 +110,9 @@ public class Plant : Entity
         if (currentTurn >= plantedTurn + turnsToGrow)
         {
             //When turning into an ally pay out cash reward
-            Player.instance.AddCurrency(cost * 2);
+            Player.instance.AddCurrency(GetCost() * 2);
             if (plantyBoi != null) 
             {
-
                 RemoveFromGrid();
                 //Spawn and add the new plant to the grid system
                 AddToGrid(Instantiate(plantyBoi, transform.position, transform.rotation));
@@ -150,10 +146,5 @@ public class Plant : Entity
 
         //Add to this stupid other thing
         GameManager.instance.tileArray[GetGridPosition()].entity = temp.GetComponent<Entity>();
-    }
-
-    public int GetCost()
-    {
-        return cost;
     }
 }
