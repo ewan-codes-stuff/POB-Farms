@@ -20,8 +20,14 @@ public class Entity : MonoBehaviour
 
     private void Start()
     {
+        Init();
+    }
+
+    public virtual void Init()
+    {
         currentHP = HP;
     }
+
     public void TakeDamage(int damageAmount)
     {
         currentHP -= damageAmount;

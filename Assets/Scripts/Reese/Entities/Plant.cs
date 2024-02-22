@@ -45,8 +45,9 @@ public class Plant : Entity
         if(this.GetComponent<Animator>() != null) animator = this.GetComponent<Animator>();
     }
 
-    private void Start()
+    public override void Init()
     {
+        base.Init();
         //Setup reference to the turn manager
         turnManager = TurnManager.instance;
 
