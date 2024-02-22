@@ -38,7 +38,16 @@ public class Entity : MonoBehaviour
 
     void Die()
     {
-        GameObject.DestroyImmediate(this.gameObject);
+        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        //Remove this gameobject from the placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+
+        //Remove the existing plant from the gridData
+        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
+
+        //Remove from this stupid other thing
+        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+        GameObject.Destroy(gameObject);
     }
 
     public void Heal(int healAmmount) 
