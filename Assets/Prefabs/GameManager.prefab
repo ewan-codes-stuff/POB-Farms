@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5429223590476385194}
   - component: {fileID: 7101334597106271687}
   - component: {fileID: 267487422488763619}
+  - component: {fileID: -8376752828148711124}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46c3f65fb101b643b54770fe7d2dd0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiManager: {fileID: -8376752828148711124}
   ground: {fileID: 0}
-  playerBase: {fileID: 0}
-  test: {fileID: 9086099823709634388, guid: 4a62881398d2107408aea511d0ef7779, type: 3}
+  house: {fileID: 0}
 --- !u!114 &267487422488763619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +66,15 @@ MonoBehaviour:
   - {fileID: -9211628978865536208, guid: 5869fbff2df41804e8a4c8c0f7ac20db, type: 3}
   enemyAliveList: []
   maxSpawnCount: 1
+--- !u!114 &-8376752828148711124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737489465164540414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e19afd5316514449613734ef5737d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

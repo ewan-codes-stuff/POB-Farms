@@ -41,8 +41,13 @@ public class GridManager : MonoBehaviour
                 GameManager.instance.tileArray[new Vector2Int(-1,0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
                 GameManager.instance.tileArray[new Vector2Int(0,-1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
                 GameManager.instance.tileArray[new Vector2Int(-1,-1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+                GameManager.instance.house = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
                 //every other cell should be traversable
                 Debug.Log("Grid Position Blocked by Entity: " + localGrid.WorldToCell(placedObject.transform.position));
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(-1, -1)].entity);
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(-1, 0)].entity);
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(0, 0)].entity);
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(0, -1)].entity);
             }
         }
         Debug.Log(PlacementSystem.instance.placedGameObject[0].gameObject.name);

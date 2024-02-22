@@ -112,13 +112,14 @@ public class AI : Entity
             targetList.Add(GameManager.instance.tileArray[new Vector2Int(-1,0)]);
             targetList.Add(GameManager.instance.tileArray[new Vector2Int(0,0)]);
             targetList.Add(GameManager.instance.tileArray[new Vector2Int(0,-1)]);
-            int checkValue = 10;
+            float checkValue = 10.0f;
             foreach(GridTile tile in targetList)
             {
                 float currentDistance = Vector2Int.Distance(tile.gridPosition, GetGridPosition());
                 if(checkValue > currentDistance)
                 {
                     target = tile;
+                    checkValue = currentDistance;
                 }
             }
             return target;
@@ -137,6 +138,7 @@ public class AI : Entity
 
     void Attack(Entity self, Entity targetEntity)
     {
+        Debug.Log(targetEntity);
         Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
         targetEntity.TakeDamage(1);
     }

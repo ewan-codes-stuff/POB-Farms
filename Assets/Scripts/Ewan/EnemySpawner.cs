@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemies()
     {
+        spawnTimer -= 1;
         //if night
         if(spawnBudget < 0 && spawnTimer == 0)
         {

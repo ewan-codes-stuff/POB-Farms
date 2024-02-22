@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour
 {
-    List<GameObject> AIList = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> allyList = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> enemyList = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
         TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
     }
 
-    void GetListOfEntities()
+    public void GetListOfEntities()
     {
         foreach (GameObject placedObject in PlacementSystem.instance.placedGameObject)
         {
             if (placedObject.GetComponent<AI>() != null)
             {
-                AIList.Add(placedObject);
+                if(placedObject.GetComponent<AI>().IsAlly() && !allyList.Contains(placedObject))
+                {
+                    allyList.Add(placedObject.gameObject);
+
+                }
+                else if(!placedObject.GetComponent<AI>().IsAlly() && !enemyList.Contains(placedObject))
+                {
+                    enemyList.Add(placedObject.gameObject);
+                }
             }
         }
     }
 
     void AIPathFindOnEndTurn()
     {
-        foreach(GameObject ai in AIList)
+        //if(Is Night Time)
+        foreach (GameObject ai in allyList)
         {
-            if(ai.GetComponent<AI>().IsAlly())
+            if (ai.GetComponent<AI>().IsAlly())
             {
                 //if(night)
                 //Wander/Pathfind to enemy
@@ -34,11 +47,12 @@ public class AIManager : MonoBehaviour
                 //else
                 //Wander
             }
-            else
-            {
-                //pathfind to plant or house**
-                ai.GetComponent<AI>().AITurn();
-            }
+        }
+        foreach (GameObject ai in enemyList)
+        {
+            ai.GetComponent<AI>().AITurn();
         }
     }
-}
+
+
+}     

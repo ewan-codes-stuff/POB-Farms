@@ -32,6 +32,7 @@ public class EnemyManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             GridManager.UpdateGridForHouse();
+            GameManager.instance.aiManager.GetListOfEntities();
         }
 
     }
@@ -40,15 +41,17 @@ public class EnemyManager : MonoBehaviour
     {
         var GMtileArray = GameManager.instance.tileArray;
 
-        int randPosX = Random.Range((int)-((GameManager.instance.ground.transform.localScale.x * 10)/2)+1, (int)((GameManager.instance.ground.transform.localScale.x*10)/2)-1);
-        int randPosY = Random.Range((int)-((GameManager.instance.ground.transform.localScale.z * 10) / 2) + 1, (int)((GameManager.instance.ground.transform.localScale.z * 10) / 2)-1);
+        int randPosX = Random.Range((int)-((GameManager.instance.ground.transform.localScale.x * 10) / 2) + 1, -3);//(int)((GameManager.instance.ground.transform.localScale.x*10)/2)-1);
+        int randPosY = Random.Range((int)-((GameManager.instance.ground.transform.localScale.z * 10) / 2) + 1, -3);//(int)((GameManager.instance.ground.transform.localScale.z * 10) / 2)-1);
         for (int e = 0; e < maxSpawnCount; e++)
         {
             AI spawnedEnemy = GameObject.Instantiate(enemyList[0], new Vector3(GMtileArray[new Vector2Int(randPosX, randPosY)].position.x,GameManager.instance.ground.transform.position.y, GMtileArray[new Vector2Int(randPosX, randPosY)].position.y), Quaternion.identity, enemyParent.transform);
             spawnedEnemy.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
             spawnedEnemy.SetGridPosition(new Vector2Int(randPosX, randPosY));
+            GMtileArray[new Vector2Int(randPosX, randPosY)].entity = spawnedEnemy.GetComponent<AI>();
             Debug.Log(spawnedEnemy.GetGridPosition());
             enemyAliveList.Add(spawnedEnemy);
+            spawnedEnemy.Name = "Enemy " + GMtileArray[spawnedEnemy.GetGridPosition()].position.x + " " + GMtileArray[spawnedEnemy.GetGridPosition()].position.y;
         }
     }
     void DebugEnemyPathFind()

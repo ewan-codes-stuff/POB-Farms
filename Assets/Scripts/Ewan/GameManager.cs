@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public AIManager aiManager;
+
     public GameObject ground;
 
-    public GameObject house;
+    public Entity house;
 
     public Dictionary<Vector2Int, GridTile> tileArray;
     // Start is called before the first frame update

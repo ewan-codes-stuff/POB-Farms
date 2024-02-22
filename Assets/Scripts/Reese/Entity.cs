@@ -18,6 +18,9 @@ public class Entity : MonoBehaviour
     //Store my current HP
     private int currentHP;
 
+    //Debug
+    public string Name;
+
     public void TakeDamage(int damageAmount)
     {
         currentHP -= damageAmount;

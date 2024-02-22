@@ -58,7 +58,9 @@ public class PathFinder : MonoBehaviour
 
             foreach (var neighbour in neighbourTiles)
             {
-                if (!neighbour.traversable || closedList.Contains(neighbour))
+                //You can't go there if it's
+                //Not traversable, you've been there before, or something is there that isn't the house
+                if (!neighbour.traversable || closedList.Contains(neighbour) || (neighbour.entity != null && neighbour.entity != end.entity))
                 {
                     continue;
                 }
@@ -67,13 +69,15 @@ public class PathFinder : MonoBehaviour
                 neighbour.H = GetManhattenDistance(end, neighbour);
 
                 neighbour.previous = currentTile;
-
+                
                 if (!openList.Contains(neighbour))
                 {
                     openList.Add(neighbour);
                 }
             }
         }
+        //When you cannot get to the end position, return the list with what you have
+        
         return new List<GridTile>();
     }
 
@@ -100,10 +104,9 @@ public class PathFinder : MonoBehaviour
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
-                {
+                
                     neighbours.Add(grid[locationToCheck]);
-                }
+                
             }
 
             //Bottom Neighbour
@@ -111,10 +114,9 @@ public class PathFinder : MonoBehaviour
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
-                {
+                
                     neighbours.Add(grid[locationToCheck]);
-                }
+                
             }
 
             //Right Neighbour
@@ -122,10 +124,9 @@ public class PathFinder : MonoBehaviour
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
-                {
+                
                     neighbours.Add(grid[locationToCheck]);
-                }
+                
                 
             }
 
@@ -134,10 +135,9 @@ public class PathFinder : MonoBehaviour
 
             if (grid.ContainsKey(locationToCheck) && GameManager.instance.tileArray[locationToCheck] != currentTile)
             {
-                if (GameManager.instance.tileArray[locationToCheck].entity != null)// || GameManager.instance.tileArray[locationToCheck].entity.IsHouse)
-                {
+                
                     neighbours.Add(grid[locationToCheck]);
-                }
+                
             }
         }
 
@@ -149,12 +149,16 @@ public class PathFinder : MonoBehaviour
         List<GridTile> finishedList = new List<GridTile>();
 
         GridTile currentTile = target;
+        GridTile tempPrevTile = null;
         //Debug.Log(currentTile.position);
         while (currentTile.position != start.position)
         {
             finishedList.Add(currentTile);
 
-            currentTile = currentTile.previous;
+
+            tempPrevTile = currentTile.previous;
+            currentTile.previous = null;
+            currentTile = tempPrevTile;
               
         }
 
@@ -168,26 +172,30 @@ public class PathFinder : MonoBehaviour
         //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)]);
         path = FindPath(GameManager.instance.tileArray[self.GetGridPosition()], target);
 
-        Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
-
-        //if(path[0])
-        // If Unity Grid is occupied by an object
-        // You cannot go there
-        if (path[0].entity != null)
+        if (path.Count == 0) { Debug.LogError("Path not found"); }
+        else
         {
-            //Add current position to list of where I've been
-            previousPath.Add(path[0]);
-            //Update previous tile so it is no longer blocked by enemy
-            GameManager.instance.tileArray[self.GetGridPosition()].entity = null;
-            self.RemoveAIFromArnieGrid();
-            //Move Enemy position in world and in grid space
-            gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
-            self.AddAIToArnieGrid();
-            self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
-            //Update new tile to be blocked by enemy
-            GameManager.instance.tileArray[self.GetGridPosition()].entity = self;
+            Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
+
+            //if(path[0])
+            // If Unity Grid is occupied by an object
+            // You cannot go there
+            if (path[0].entity == null || path[0].entity == this)
+            {
+                //Add current position to list of where I've been
+                previousPath.Add(path[0]);
+                //Update previous tile so it is no longer blocked by enemy
+                GameManager.instance.tileArray[self.GetGridPosition()].entity = null;
+                self.RemoveAIFromArnieGrid();
+                //Move Enemy position in world and in grid space
+                gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
+                self.AddAIToArnieGrid();
+                self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
+                //Update new tile to be blocked by enemy
+                GameManager.instance.tileArray[self.GetGridPosition()].entity = self;
+            }
+            path.RemoveAt(0);
         }
-        path.RemoveAt(0);
     }
 
 }
