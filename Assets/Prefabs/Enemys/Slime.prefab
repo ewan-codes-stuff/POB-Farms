@@ -47,12 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
+  cost: 1
   Ally: 0
   pathFinder: {fileID: 5156298996169927206}
   AIDetectionRadius: 2
-  grid: {fileID: 0}
-  debugPathFind: 0
-  test: {fileID: 0}
 --- !u!114 &5156298996169927206
 MonoBehaviour:
   m_ObjectHideFlags: 0
