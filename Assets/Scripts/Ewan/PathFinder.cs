@@ -156,7 +156,7 @@ public class PathFinder : MonoBehaviour
         GridTile currentTile = target;
         GridTile tempPrevTile = null;
         //Debug.Log(currentTile.position);
-        if (currentTile.position == null) throw new Exception($"Current Tile position is null");
+        if (currentTile == null) return finishedList;
         
         while (currentTile.position != start.position)
         {
