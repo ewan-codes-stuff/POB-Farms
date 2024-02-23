@@ -181,17 +181,17 @@ public class HarvestSystem : MonoBehaviour
         // adds the price to the players currency
         Player.instance.AddCurrency(50);
 
-        // Remove this gameobject from the placed objects list
-        GameManager.instance.GetPlacedObjects().Remove(GetAllyGameobject(gridPosition));
+        //// Remove this gameobject from the placed objects list
+        //GameManager.instance.GetPlacedObjects().Remove(GetAllyGameobject(gridPosition));
 
-        //Remove the existing plant from the gridData
-        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(GetAllyGameobject(gridPosition).transform.position), new Vector2Int(1, 1));
+        ////Remove the existing plant from the gridData
+        //PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(GetAllyGameobject(gridPosition).transform.position), new Vector2Int(1, 1));
 
-        //Remove from this stupid other thing
-        GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity = null;
+        ////Remove from this stupid other thing
+        //GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity = null;
 
 
 
-        Destroy(temp);
+        temp.GetComponent<Entity>().Die();
     }
 }

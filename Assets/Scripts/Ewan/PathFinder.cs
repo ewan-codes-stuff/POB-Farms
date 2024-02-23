@@ -161,8 +161,8 @@ public class PathFinder : MonoBehaviour
         while (currentTile.position != start.position)
         {
             finishedList.Add(currentTile);
-
-
+            if (currentTile.previous == null)
+            { Debug.Log("Checked if previous tile was null, and found it was nill"); }
             tempPrevTile = currentTile.previous;
             currentTile.previous = null;
             currentTile = tempPrevTile;

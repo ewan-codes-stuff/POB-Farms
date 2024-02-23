@@ -42,12 +42,19 @@ public class Entity : MonoBehaviour
 
     public virtual void Die()
     {
-        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
-        //Remove this gameobject from the placed objects list
-        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+        if (gameObject.GetComponent<AI>() != null)
+        {
+            GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        }
+        else
+        {
+            //Remove this gameobject from the placed objects list
+            GameManager.instance.GetPlacedObjects().Remove(gameObject);
 
-        //Remove the existing plant from the gridData
-        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
+            //Remove the existing plant from the gridData
+            PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
+        }
+        
 
         //Remove from this stupid other thing
         GameManager.instance.tileArray[GetGridPosition()].entity = null;
