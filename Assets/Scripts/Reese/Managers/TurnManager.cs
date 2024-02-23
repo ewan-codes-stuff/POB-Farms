@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 public class TurnManager : MonoBehaviour
 {
     [SerializeField] int dayLength = 10;
-    [SerializeField][Range(0.0f, 1.0f)] float daylightIntensity = 0.8f;
-    [SerializeField][Range(1, 10)] int nightBrightness = 5;
 
     public static TurnManager instance;
 
