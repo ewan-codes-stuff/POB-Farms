@@ -17,8 +17,12 @@ public class AI : Entity
     {
         base.Init();
         GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
-        GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject)) { AddAIToArnieGrid(); }
+        
+        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null) 
+        { 
+            AddAIToArnieGrid();
+            GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        }
     }
 
     // Update is called once per frame

@@ -90,8 +90,22 @@ public class EnemySpawner : MonoBehaviour
             {
                 GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
-                if (xRandomised) { spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum-6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity); }
-                else { spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity); }
+                if (xRandomised) 
+                { 
+                    if(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null) 
+                    {
+                        randomNum = Random.Range(0, 11);
+                    }
+                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum-6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity); 
+                }
+                else 
+                {
+                    if (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
+                    {
+                        randomNum = Random.Range(0, 11);
+                    }
+                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity); 
+                }
                 Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
                 spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
                 GameManager.instance.tileArray[new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z)].entity = spawnedEnemy.GetComponent<AI>();
