@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using System.Linq;
 
 public class PathFinder : MonoBehaviour
@@ -45,7 +46,7 @@ public class PathFinder : MonoBehaviour
                     done = true;
                 }
             }
-            GridTile currentTile = openList[Random.Range(0,count)];
+            GridTile currentTile = openList[UnityEngine.Random.Range(0,count)];
 
 
             openList.Remove(currentTile);
@@ -155,6 +156,8 @@ public class PathFinder : MonoBehaviour
         GridTile currentTile = target;
         GridTile tempPrevTile = null;
         //Debug.Log(currentTile.position);
+        if (currentTile.position == null) throw new Exception($"Current Tile position is null");
+        
         while (currentTile.position != start.position)
         {
             finishedList.Add(currentTile);

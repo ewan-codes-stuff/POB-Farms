@@ -16,6 +16,7 @@ public class AIManager : MonoBehaviour
     {
         TurnManager.instance.EndTurnEvent += GetListOfEntities;
         TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
+        TurnManager.instance.EndTurnEvent += SpawnEnemies;
         TurnManager.instance.InitiateNight += ChangeToNight;
         
     }
@@ -93,7 +94,16 @@ public class AIManager : MonoBehaviour
         if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
             TurnManager.instance.EndNight();
+            GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
             isNight = false;
+        }
+    }
+
+    void SpawnEnemies()
+    {
+        if (!GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+        {
+            if (isNight) GameManager.instance.enemySpawner.SpawnEnemies();
         }
     }
 
