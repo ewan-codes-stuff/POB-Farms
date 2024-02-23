@@ -200,6 +200,10 @@ public class PlacementSystem : MonoBehaviour
 
             // Adding it to the dictionary of placed objects
             placedGameObject.Add(newObject);
+
+            //Add To Ewan Grid Data
+            GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity = newObject.GetComponent<Entity>();
+
             GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
                 floorData:
                 objectData;

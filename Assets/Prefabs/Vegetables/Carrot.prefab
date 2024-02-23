@@ -493,6 +493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
+  cost: 3
+  Ally: 1
   plantyBoi: {fileID: 4069974868463718104, guid: 6fda607e9f1818f48a2cec514434d7fe, type: 3}
   turnsToGrow: 5
   growthCurve:
