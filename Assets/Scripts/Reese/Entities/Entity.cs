@@ -53,6 +53,21 @@ public class Entity : MonoBehaviour
         //Add to GridTile entity variable
         GameManager.instance.tileArray[GetGridPosition()].entity = gameObject.GetComponent<AI>();
     }
+
+    public void RemoveEntityFromGrids(Vector3Int gridPosition)
+    {
+        if (gameObject.GetComponent<AI>())
+        {
+            GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        }
+
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+        GameManager.instance.GetObjectData().RemoveObjectAt(gridPosition, new Vector2Int(1,1));
+
+        //Add to GridTile entity variable
+        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+    }
     public virtual void Die()
     {
         if(gameObject.GetComponent<AI>())
