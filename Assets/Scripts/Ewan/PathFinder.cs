@@ -152,8 +152,8 @@ public class PathFinder : MonoBehaviour
     private List<GridTile> GetFinishedList(GridTile start, GridTile target)
     {
         List<GridTile> finishedList = new List<GridTile>();
-        Debug.Log(start.gridPosition);
-        Debug.Log(target.gridPosition);
+        //Debug.Log(start.gridPosition);
+        //Debug.Log(target.gridPosition);
         GridTile currentTile = target;
         GridTile tempPrevTile = null;
         //Debug.Log(currentTile.position);

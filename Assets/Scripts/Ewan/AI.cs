@@ -16,7 +16,7 @@ public class AI : Entity
     public override void Init()
     {
         base.Init();
-        GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
+        //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         
         if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null) 
         { 
@@ -30,26 +30,22 @@ public class AI : Entity
     {
         SetGridPosition(new Vector2Int((int)(transform.position.x), (int)(transform.position.z)));
 
-        GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
+        //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
     public void AddAIToArnieGrid()
     {
         //Add to Unity Grid
         GameManager.instance.GetPlacedObjects().Add(gameObject);
-        if (GameManager.instance.GetObjectData() != null)
-        {
-            GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
-        }
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        
     }
     public void RemoveAIFromArnieGrid()
     {
         //Remove to Unity Grid
         GameManager.instance.GetPlacedObjects().Remove(gameObject);
-        if (GameManager.instance.GetObjectData() != null)
-        {
-            GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
-        }
+        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
+        
     }
     public void AITurn()
     {
