@@ -152,7 +152,8 @@ public class PathFinder : MonoBehaviour
     private List<GridTile> GetFinishedList(GridTile start, GridTile target)
     {
         List<GridTile> finishedList = new List<GridTile>();
-
+        Debug.Log(start.gridPosition);
+        Debug.Log(target.gridPosition);
         GridTile currentTile = target;
         GridTile tempPrevTile = null;
         //Debug.Log(currentTile.position);
@@ -162,7 +163,10 @@ public class PathFinder : MonoBehaviour
         {
             finishedList.Add(currentTile);
             if (currentTile.previous == null)
-            { Debug.Log("Checked if previous tile was null, and found it was nill"); }
+            { 
+                Debug.Log("Checked if previous tile was null, and found it was nill");
+                return finishedList;
+            }
             tempPrevTile = currentTile.previous;
             currentTile.previous = null;
             currentTile = tempPrevTile;
@@ -175,8 +179,6 @@ public class PathFinder : MonoBehaviour
 
     public void PathfindToTarget(AI self,GridTile target)
     {
-        //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)].name);
-        //Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.y)]);
         path = FindPath(GameManager.instance.tileArray[self.GetGridPosition()], target);
 
         if (path.Count == 0) { Debug.LogError("Path not found"); }

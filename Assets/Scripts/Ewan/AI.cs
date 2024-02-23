@@ -37,17 +37,22 @@ public class AI : Entity
     {
         //Add to Unity Grid
         GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        if (GameManager.instance.GetObjectData() != null)
+        {
+            GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        }
     }
     public void RemoveAIFromArnieGrid()
     {
         //Remove to Unity Grid
         GameManager.instance.GetPlacedObjects().Remove(gameObject);
-        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
+        if (GameManager.instance.GetObjectData() != null)
+        {
+            GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
+        }
     }
     public void AITurn()
     {
-        Debug.Log("AI is taking it's turn");
         GridTile target = FindTargetInRadius();
         if (target != null)
         {
@@ -125,9 +130,7 @@ public class AI : Entity
 
     void Attack(Entity self, Entity targetEntity)
     {
-        Debug.Log(targetEntity);
-        Debug.Log(self.gameObject.name);
-        Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
+        //Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
         targetEntity.TakeDamage(1);
     }
 
