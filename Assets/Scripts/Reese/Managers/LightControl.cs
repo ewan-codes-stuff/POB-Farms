@@ -32,14 +32,14 @@ public class LightControl : MonoBehaviour
 
     public void RaiseIntensity()
     {
+        startIntensity = currentIntensity;
         targetIntensity = 1;
-        startIntensity = 0;
         timer = 0;
     }
 
     public void LowerIntensity()
     {
-        startIntensity = 1;
+        startIntensity = currentIntensity;
         targetIntensity = 0;
         timer = 0;
     }
