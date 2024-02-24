@@ -177,11 +177,17 @@ public class PathFinder : MonoBehaviour
         return finishedList;
     }
 
-    public void PathfindToTarget(AI self,GridTile target)
+    public void PathfindToTarget(AI self,GridTile target)   //This should be changed to return the list
     {
         path = FindPath(GameManager.instance.tileArray[self.GetGridPosition()], target);
 
-        if (path.Count == 0) { Debug.LogError("Path not found"); }
+        if (path.Count == 0) 
+        { 
+            if (!self.IsAlly())
+            { 
+                self.Wander(); 
+            } 
+        }
         else
         {
             Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();

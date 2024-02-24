@@ -54,7 +54,6 @@ public class AI : Entity
     public override void Die()
     {
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
-        Debug.Log(gameObject.name + " Died the AI way");
         base.Die();
         
     }
@@ -156,9 +155,10 @@ public class AI : Entity
         {
             targetEntity.TakeDamage(1);
         }
+        
     }
 
-    void Wander()
+    public void Wander()
     {
         List<GridTile> wanderNeighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[GetGridPosition()], 1);
 
