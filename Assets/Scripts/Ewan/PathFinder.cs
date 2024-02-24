@@ -198,9 +198,9 @@ public class PathFinder : MonoBehaviour
                 self.RemoveAIFromArnieGrid();
                 //Move Enemy position in world and in grid space
                 gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
+                //Add to grids
                 self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y)); //Questionable
-                self.AddEntityToGrids();
-                //self.AddAIToArnieGrid();
+                self.AddAIToArnieGrid();
                 
                 //Update new tile to be blocked by enemy
                 GameManager.instance.tileArray[self.GetGridPosition()].entity = self;
