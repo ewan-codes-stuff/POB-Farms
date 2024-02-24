@@ -14,7 +14,13 @@ public class GridData : MonoBehaviour
         foreach (var pos in positionToOccupy)
         {
             if (placedObjects.ContainsKey(pos))
+            {
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject);
+                Debug.Log(placedObjects[pos]);
+
                 throw new Exception($"Dictionary already contains this cell position {pos}");
+            }
+                
             placedObjects[pos] = data;
         }
 
@@ -75,7 +81,7 @@ public class GridTile
     public Vector2Int gridPosition;
     public Entity entity;
     public bool traversable;
-    public bool isBlockedByEntity = false;
+    //public bool isBlockedByEntity = false;
     
 }
 

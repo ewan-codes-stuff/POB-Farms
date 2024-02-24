@@ -75,7 +75,10 @@ public class AIManager : MonoBehaviour
 
     void AIPathFindOnEndTurn()
     {
-        
+        foreach (GameObject ai in enemyList)
+        {
+            ai.GetComponent<AI>().AITurn();
+        }
         foreach (GameObject ai in allyList)
         {
             if (ai.GetComponent<AI>().IsAlly())
@@ -87,10 +90,7 @@ public class AIManager : MonoBehaviour
                 //Wander
             }
         }
-        foreach (GameObject ai in enemyList)
-        {
-            ai.GetComponent<AI>().AITurn();
-        }
+        
         if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
             TurnManager.instance.EndNight();
