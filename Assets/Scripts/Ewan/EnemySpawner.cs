@@ -81,13 +81,14 @@ public class EnemySpawner : MonoBehaviour
 
         }
             
-        enemyIDCounter += 1;
+        
         Debug.Log("Spawned Enemies");
         spawnTimer -= 1;
         if (GameManager.instance.aiManager.IsNight())
         {
             for(int m = spawnBudget; m>0; m -= enemyTax)
             {
+                enemyIDCounter += 1;
                 GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
                 if (xRandomised) 
@@ -108,9 +109,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
                 spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
-                GameManager.instance.tileArray[new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z)].entity = spawnedEnemy.GetComponent<AI>();
                 spawnedEnemy.name = "Enemy " + enemyIDCounter;
-                GameManager.instance.aiManager.AddAIToList(spawnedEnemy.gameObject);
                 hasSpawnedEnemiesTonight = true;
                 enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
             }

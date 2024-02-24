@@ -29,51 +29,42 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(int damageAmount)
     {
         currentHP -= damageAmount;
-        Debug.Log(this.gameObject.name + " Taken damage");
 
         if(currentHP <= 0) 
         {
             currentHP = 0;
-            Debug.Log(this.gameObject.name + " Died");
             Die();
             
         }
     }
-    public void AddEntityToGrids()
+    public virtual void AddEntityToGrids()
     {
-        if (gameObject.GetComponent<AI>())
+        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null)
         {
-            GameManager.instance.aiManager.AddAIToList(gameObject);
+            //Add to Unity Grid and placed objects list
+            GameManager.instance.GetPlacedObjects().Add(gameObject);
+            GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+
+            //Add to GridTile entity variable
+            GameManager.instance.tileArray[GetGridPosition()].entity = this;
         }
-
-        //Add to Unity Grid and placed objects list
-        GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
-
-        //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = gameObject.GetComponent<AI>();
     }
 
-    public void RemoveEntityFromGrids(Vector3Int gridPosition)
+    public virtual void RemoveEntityFromGrids(Vector3Int gridPosition)
     {
-        if (gameObject.GetComponent<AI>())
+        if (PlacementSystem.instance.placedGameObject.Contains(gameObject))
         {
-            GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+            //Add to Unity Grid and placed objects list
+            GameManager.instance.GetPlacedObjects().Remove(gameObject);
+            GameManager.instance.GetObjectData().RemoveObjectAt(gridPosition, new Vector2Int(1, 1));
+
+            //Add to GridTile entity variable
+            GameManager.instance.tileArray[GetGridPosition()].entity = null;
         }
-
-        //Add to Unity Grid and placed objects list
-        GameManager.instance.GetPlacedObjects().Remove(gameObject);
-        GameManager.instance.GetObjectData().RemoveObjectAt(gridPosition, new Vector2Int(1,1));
-
-        //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = null;
     }
     public virtual void Die()
     {
-        if(gameObject.GetComponent<AI>())
-        {
-            GameManager.instance.aiManager.RemoveAIFromList(gameObject);
-        }
+        
         //Remove this gameobject from the placed objects list
         GameManager.instance.GetPlacedObjects().Remove(gameObject);
 

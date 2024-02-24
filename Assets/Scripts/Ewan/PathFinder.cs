@@ -195,13 +195,23 @@ public class PathFinder : MonoBehaviour
                 previousPath.Add(path[0]);
                 //Update previous tile so it is no longer blocked by enemy
                 GameManager.instance.tileArray[self.GetGridPosition()].entity = null;
+                //self.RemoveEntityFromGrids(new Vector3Int(self.GetGridPosition().x,0,self.GetGridPosition().y));
                 self.RemoveAIFromArnieGrid();
                 //Move Enemy position in world and in grid space
                 gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
                 //Add to grids
                 self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y)); //Questionable
                 self.AddAIToArnieGrid();
-                
+                //self.AddEntityToGrids();
+
+
+                //Change to coroutine that will work by
+                /*
+                 * Take in self and path[0] tile
+                 * Move from self grid position to path[0] tile position through lerp each frame until it's finished
+                 * End
+                 */
+
                 //Update new tile to be blocked by enemy
                 GameManager.instance.tileArray[self.GetGridPosition()].entity = self;
             }
