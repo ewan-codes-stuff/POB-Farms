@@ -19,10 +19,11 @@ public class AI : Entity
         //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         
         if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null) 
-        { 
-            AddAIToArnieGrid();
-            GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        {
+            AddEntityToGrids();
         }
+
+        
     }
 
     // Update is called once per frame
@@ -32,6 +33,29 @@ public class AI : Entity
 
         //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
+    }
+
+    public override void AddEntityToGrids()
+    {
+        base.AddEntityToGrids();
+        if (!GameManager.instance.aiManager.isInAIList(this))
+        {
+            GameManager.instance.aiManager.AddAIToList(gameObject);
+        }
+    }
+    public override void RemoveEntityFromGrids(Vector3Int gridPosition)
+    {
+        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        base.RemoveEntityFromGrids(gridPosition);
+        
+        
+    }
+
+    public override void Die()
+    {
+        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        base.Die();
+        
     }
     public void AddAIToArnieGrid()
     {
@@ -127,10 +151,14 @@ public class AI : Entity
     void Attack(Entity self, Entity targetEntity)
     {
         //Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
-        targetEntity.TakeDamage(1);
+        if (targetEntity != null)
+        {
+            targetEntity.TakeDamage(1);
+        }
+        
     }
 
-    void Wander()
+    public void Wander()
     {
         List<GridTile> wanderNeighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[GetGridPosition()], 1);
 

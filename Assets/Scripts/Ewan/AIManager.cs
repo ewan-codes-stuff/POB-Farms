@@ -25,25 +25,31 @@ public class AIManager : MonoBehaviour
     {
         
     }
+    public bool isInAIList(AI ai)
+    {
+        if(ai.IsAlly())
+        {
+            return allyList.Contains(ai.gameObject);
+        }
+        if (!ai.IsAlly())
+        {
+            return enemyList.Contains(ai.gameObject);
+        }
+        else return false;
+    }
     public bool IsNight()
     {
         return isNight;
     }
     public void AddAIToList(GameObject ai)
     {
-        if (ai.GetComponent<AI>() != null)
-        {
-            if (ai.GetComponent<AI>().IsAlly()) { allyList.Add(ai); }
-            else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Add(ai); }
-        }
+        if (ai.GetComponent<AI>().IsAlly()) { allyList.Add(ai); }
+        else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Add(ai); }
     }
     public void RemoveAIFromList(GameObject ai)
     {
-        if (ai.GetComponent<AI>() != null)
-        {
-            if (ai.GetComponent<AI>().IsAlly()) { allyList.Remove(ai); }
-            else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Remove(ai); }
-        }
+        if (ai.GetComponent<AI>().IsAlly()) { allyList.Remove(ai); }
+        if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Remove(ai); }
     }
 
     public void GetListOfEntities()
@@ -77,18 +83,18 @@ public class AIManager : MonoBehaviour
     {
         foreach (GameObject ai in enemyList)
         {
+            if(ai == null) { enemyList.Remove(ai); }
             ai.GetComponent<AI>().AITurn();
         }
         foreach (GameObject ai in allyList)
         {
-            if (ai.GetComponent<AI>().IsAlly())
-            {
-                //if(night)
-                //Wander/Pathfind to enemy
-                ai.GetComponent<AI>().AITurn();
+            if (ai == null) { allyList.Remove(ai); }
+            //if(night)
+            //Wander/Pathfind to enemy
+            ai.GetComponent<AI>().AITurn();
                 //else
                 //Wander
-            }
+            
         }
         
         if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
