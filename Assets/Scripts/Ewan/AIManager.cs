@@ -11,6 +11,8 @@ public class AIManager : MonoBehaviour
 
     bool isNight = false;
 
+    bool enemyOrAllyTurn = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,21 +83,10 @@ public class AIManager : MonoBehaviour
 
     void AIPathFindOnEndTurn()
     {
-        foreach (GameObject ai in enemyList)
-        {
-            if(ai == null) { enemyList.Remove(ai); }
-            ai.GetComponent<AI>().AITurn();
-        }
-        foreach (GameObject ai in allyList)
-        {
-            if (ai == null) { allyList.Remove(ai); }
-            //if(night)
-            //Wander/Pathfind to enemy
-            ai.GetComponent<AI>().AITurn();
-                //else
-                //Wander
-            
-        }
+        
+        StartCoroutine(AITurnCoroutine());
+        
+        //StartCoroutine(AllyTurnCoroutine());
         
         if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
@@ -104,6 +95,46 @@ public class AIManager : MonoBehaviour
             isNight = false;
         }
     }
+
+    IEnumerator AITurnCoroutine()
+    {
+        
+        foreach (GameObject ai in enemyList.ToArray())
+        {
+            if (ai == null) { enemyList.Remove(ai); }
+            else
+                {
+                    ai.GetComponent<AI>().AITurn();
+                    yield return new WaitForSeconds(0.5f);
+                }
+
+        }
+            
+        
+        
+        foreach (GameObject ai in allyList.ToArray())
+        {
+            if (ai == null) { allyList.Remove(ai); }
+            //if(night)
+            //Wander/Pathfind to enemy
+            else
+            {
+                ai.GetComponent<AI>().AITurn();
+                yield return new WaitForSeconds(0.5f);
+            }
+                //else
+                //Wander
+
+        }
+        Debug.Log("Finished end turn");
+            
+        
+    }
+
+    //IEnumerator AllyTurnCoroutine()
+    //{
+        
+    //}
 
     void SpawnEnemies()
     {
