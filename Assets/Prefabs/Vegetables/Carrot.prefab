@@ -521,7 +521,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeToAnimate: 1
+  timeToAnimate: 0.2
 --- !u!1 &6531991342173119092
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,7 @@ public class TurnManager : MonoBehaviour
         turnsTillNight = dayLength;
     }
 
+    //Debug Checks only
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4250691006509400864}
   - component: {fileID: -1565294412743723189}
   - component: {fileID: 98364536905607863}
-  - component: {fileID: 1198205180352035123}
   m_Layer: 0
   m_Name: Carrot
   m_TagString: Untagged
@@ -52,6 +51,7 @@ MonoBehaviour:
   Ally: 1
   pathFinder: {fileID: 98364536905607863}
   AIDetectionRadius: 2
+  speed: 8
 --- !u!114 &98364536905607863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,21 +64,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fb580678c6ede46896d549d874a175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1198205180352035123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4069974868463718104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8e57b8d83b28c47a27170209b3b7a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 3
-  healthbarOffset: {x: 0, y: 0.35, z: 0}
-  healthbarParent: {fileID: 0}
 --- !u!1 &7479574077625196561
 GameObject:
   m_ObjectHideFlags: 0

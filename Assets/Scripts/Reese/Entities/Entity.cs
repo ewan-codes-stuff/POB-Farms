@@ -57,6 +57,7 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Grid Management
+    //Adding to the grid
     public virtual void AddEntityToGrids()
     {
         //Add to Unity Grid and placed objects list
@@ -65,6 +66,15 @@ public class Entity : MonoBehaviour
 
         //Add to GridTile entity variable
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
+    }
+    public virtual void AddEntityToGrids(GameObject obj)
+    {
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Add(obj);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(obj.transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+
+        //Add to GridTile entity variable
+        if (obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[obj.GetComponent<Entity>().GetGridPosition()].entity = obj.GetComponent<Entity>();
     }
     public virtual void AddEntityToGrids(Vector3Int worldPos)
     {
@@ -76,6 +86,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
 
+    //Removing from the grid
     public virtual void RemoveEntityFromGrids()
     {
         //Add to Unity Grid and placed objects list
@@ -84,6 +95,15 @@ public class Entity : MonoBehaviour
 
         //Add to GridTile entity variable
         GameManager.instance.tileArray[GetGridPosition()].entity = null;
+    }
+    public virtual void RemoveEntityFromGrids(GameObject obj)
+    {
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(obj);
+        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(obj.transform.position), new Vector2Int(1, 1));
+
+        //Add to GridTile entity variable
+        if(obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[obj.GetComponent<Entity>().GetGridPosition()].entity = null;
     }
     public virtual void RemoveEntityFromGrids(Vector3Int worldPos)
     {

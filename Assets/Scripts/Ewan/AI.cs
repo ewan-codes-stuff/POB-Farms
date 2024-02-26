@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class AI : Entity
 {
+    #region Serialized Fields
     [SerializeField]
     PathFinder pathFinder;
-
+                                                                                
     [SerializeField]
     private int AIDetectionRadius = 2;
 
-    float speed = 8f;
+    [SerializeField]
+    private float speed = 8f;
+    #endregion
 
-    // Start is called before the first frame update
+    #region Private Variables
+    private GridTile targetTile;
+    #endregion
+
+    #region Initalisation
+    //Initalise the AI here
     public override void Init()
     {
+        //Run the base initalise code
         base.Init();
-        //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
-        
-        //Should have a single line for adding to AiManager list here....
 
-        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null) 
-        {
-            AddEntityToGrids();
-        }
+        //Add AI to the grid systems
+        AddEntityToGrids();
+
+        //Should probably have a single line for adding to AiManager list here unless that is done by the AI manager when instantiated
     }
+    #endregion
 
-    // Update is called once per frame
+    //Fix this shit
     void Update()
     {
         //Why in the shit is this called every god damn frame!?!
@@ -38,47 +45,50 @@ public class AI : Entity
 
     public override void Die()
     {
-        //This is the only reasonable place to run this line!
+        //Remove the AI from the list of AI
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        //Run the base Death code
         base.Die();
     }
 
     public void AITurn()
     {
-        GridTile target = FindTargetInRadius();
-        if (target != null)
+        targetTile = FindTargetInRadius();
+        if (targetTile != null)
         {
-            if (Vector2Int.Distance(target.gridPosition, GetGridPosition()) <= 1.0f)
+            if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
             {
-                Attack(target.entity);
+                Attack(targetTile.entity);
             }
-            else if (target != null)
+            else if (targetTile != null)
             {
-                pathFinder.PathfindToTarget(this, target);
+                pathFinder.PathfindToTarget(this, targetTile);
             }
         }
         //Wander();
     }
     private GridTile FindTargetInRadius()
     {
-        GridTile target = null;
+        //Make sure the current target tile is cleared
+        targetTile = null;
         List<GridTile> targetList = new List<GridTile>();
-        //Search around the enemy in it's detection radius to find either plants or the player
+        //Check tiles within the AI's detection radius for other entities
         for (int x = GetGridPosition().x - AIDetectionRadius; x <= GetGridPosition().x + AIDetectionRadius; x++)
         {
             for (int y = GetGridPosition().y - AIDetectionRadius; y <= GetGridPosition().y + AIDetectionRadius; y++)
-            {   //If the location is actually in the Tile Dictionary
+            {   
+                //If the Tile Dictionary contains this location
                 if(GameManager.instance.tileArray.ContainsKey(new Vector2Int(x, y)))
-                {   //Check the tile is occupied by an entity and the entity is not self
-                    if (GameManager.instance.tileArray[new Vector2Int(x, y)].entity != null && GameManager.instance.tileArray[new Vector2Int(x, y)] !=GameManager.instance.tileArray[GetGridPosition()])
+                {   
+                    //Check that the tile is occupied by an entity and the entity is not self
+                    //The second part of this is a stupid check
+                    if (GameManager.instance.tileArray[new Vector2Int(x, y)].entity != null && GameManager.instance.tileArray[new Vector2Int(x, y)] != GameManager.instance.tileArray[GetGridPosition()])
                     {
-                        //Differing If statements based on whether the AI is enemy or ally
 
                         //If Self is an enemy and the target is an ally, add it to list of targets
                         if (!IsAlly() && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly())
                         {
                             targetList.Add(GameManager.instance.tileArray[new Vector2Int(x, y)]);
-                            
                         }
                         //If Self is an ally and the target is an enemy, add it to list of targets
                         if (IsAlly() && GameManager.instance.tileArray[new Vector2Int(x, y)].entity.IsAlly() == false)
@@ -102,22 +112,22 @@ public class AI : Entity
                 float currentDistance = Vector2Int.Distance(tile.gridPosition, GetGridPosition());
                 if(checkValue > currentDistance)
                 {
-                    target = tile;
+                    targetTile = tile;
                     checkValue = currentDistance;
                 }
             }
-            return target;
+            return targetTile;
         }
         if (targetList.Count != 0)
         {
-            target = targetList[Random.Range(0, targetList.Count)];
-            return target;
+            targetTile = targetList[Random.Range(0, targetList.Count)];
+            return targetTile;
         }
         //If it can't find any plants or the player then it'll default to the player's base.
         //currently a debug location 
         
 
-        return target;
+        return targetTile;
     }
 
     void Attack(Entity targetEntity)
