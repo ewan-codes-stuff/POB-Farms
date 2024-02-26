@@ -192,6 +192,13 @@ public class HarvestSystem : MonoBehaviour
 
 
 
-        temp.GetComponent<Plant>().Die();
+        if (temp.TryGetComponent<Plant>(out Plant plant))
+        {
+            plant.Die();
+        }
+        else
+        {
+            temp.GetComponent<Entity>().Die();
+        }
     }
 }

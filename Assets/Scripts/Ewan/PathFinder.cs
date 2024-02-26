@@ -190,7 +190,7 @@ public class PathFinder : MonoBehaviour
         }
         else
         {
-            Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
+            //Vector2 pathDifference = path[0].gridPosition - self.GetGridPosition();
 
             //if(path[0])
             // If Unity Grid is occupied by an object
@@ -204,8 +204,10 @@ public class PathFinder : MonoBehaviour
                 self.RemoveEntityFromGrids();
 
                 //Update the Entity's Grid position to the new grid position
-                self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y)); //Questionable coding
-                
+                self.SetGridPosition(path[0].gridPosition);
+
+                self.AddEntityToGrids(new Vector3Int(self.GetGridPosition().x, 0, self.GetGridPosition().y));
+
                 //Smoothly update the AI's position
                 self.StartCoroutine(self.Move(new Vector3(path[0].position.x, 0, path[0].position.y)));
             }
