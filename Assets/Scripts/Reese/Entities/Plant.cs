@@ -57,6 +57,9 @@ public class Plant : Entity
         //Setup reference to the turn manager
         turnManager = TurnManager.instance;
 
+        //Add the TurnUpdate to the End Turn event
+        turnManager.EndTurnEvent += TurnUpdate;
+
         //Get the turn the plant was placed
         currentTurn = turnManager.GetCurrentTurn();
         plantedTurn = currentTurn;
@@ -70,29 +73,28 @@ public class Plant : Entity
 
     private void FixedUpdate()
     {
-        TurnUpdate();
-        
         AnimatePlantGrowth();
-
-        SpawnLivingPlant();
     }
 
     private void TurnUpdate()
     {
-        if (currentTurn != turnManager.GetCurrentTurn() && turnManager != null)
+        //Update the currentTurn
+        currentTurn = turnManager.GetCurrentTurn();
+        //Update how many turns since planted
+        growthTurn = currentTurn - plantedTurn;
+
+        //Update the start growth to continue from current growth value for lerping plant growth
+        startGrowth = currentGrowth;
+
+        //Calculate the new growth target on the animation curve
+        targetGrowth = growthCurve.Evaluate((float)growthTurn / ((float)turnsToGrow - 1));
+
+        //Reset the timer
+        timer = 0;
+
+        if (growthTurn == turnsToGrow)
         {
-            //Update the currentTurn
-            currentTurn = turnManager.GetCurrentTurn();
-            //Update how many turns since planted
-            growthTurn = currentTurn - plantedTurn;
-
-            //Update the start growth to continue from current growth value
-            startGrowth = currentGrowth;
-            //Calculate the new growth target on the animation curve
-            targetGrowth = growthCurve.Evaluate((float)growthTurn / ((float)turnsToGrow - 1));
-
-            //Reset the timer
-            timer = 0;
+            SpawnLivingPlant();
         }
     }
 
