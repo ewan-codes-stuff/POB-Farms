@@ -10,7 +10,7 @@ public class AI : Entity
     [SerializeField]
     private int AIDetectionRadius = 2;
 
-    bool lateStart = false;
+    float speed = 8f;
 
     // Start is called before the first frame update
     public override void Init()
@@ -47,8 +47,6 @@ public class AI : Entity
     {
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
         base.RemoveEntityFromGrids(gridPosition);
-        
-        
     }
 
     public override void Die()
@@ -57,11 +55,13 @@ public class AI : Entity
         base.Die();
         
     }
-    public void AddAIToArnieGrid()
+
+    //worldPos = new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))
+    public void AddAIToArnieGrid(Vector3Int worldPos)
     {
         //Add to Unity Grid
         GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
         
     }
     public void RemoveAIFromArnieGrid()
@@ -160,21 +160,52 @@ public class AI : Entity
 
     public void Wander()
     {
+        //Get list of neighbouring tiles
         List<GridTile> wanderNeighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[GetGridPosition()], 1);
 
+        //Pick a random neighbour tile to wander to
         GridTile wanderTile = wanderNeighbours[Random.Range(0, wanderNeighbours.Count)];
 
+        //If there is nothing on the chosen tile
         if (wanderTile.entity == null)
         {
             Vector2 pathDifference = wanderTile.gridPosition - GetGridPosition();
             GameManager.instance.tileArray[GetGridPosition()].entity = null;
             RemoveAIFromArnieGrid();
-            //Move Enemy position in world and in grid space
-            gameObject.transform.position = new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y);
-            AddAIToArnieGrid();
+
+            
             SetGridPosition(GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
             //Update new tile to be blocked by enemy
             GameManager.instance.tileArray[GetGridPosition()].entity = this;
+            //Move Enemy position in world and in grid space
+            StartCoroutine(Move(new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y)));
+
+            AddAIToArnieGrid(new Vector3Int(wanderTile.position.x, 0, wanderTile.position.y));
         }
+    }
+
+    public IEnumerator Move(Vector3 target)
+    {
+        // While the player has not met the target position continue moving across a tile
+        while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Sets the players position to the end position as they are close enough by a negligable amount
+        transform.position = target;
+    }
+
+    public void MoveIt(Vector3 target)
+    {
+        // While the player has not met the target position continue moving across a tile
+        while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        }
+
+        // Sets the players position to the end position as they are close enough by a negligable amount
+        transform.position = target;
     }
 }

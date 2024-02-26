@@ -203,11 +203,14 @@ public class PathFinder : MonoBehaviour
                 GameManager.instance.tileArray[self.GetGridPosition()].entity = null;
                 //self.RemoveEntityFromGrids(new Vector3Int(self.GetGridPosition().x,0,self.GetGridPosition().y));
                 self.RemoveAIFromArnieGrid();
-                //Move Enemy position in world and in grid space
-                gameObject.transform.position = new Vector3(path[0].position.x, 0.5f, path[0].position.y);
-                //Add to grids
+
                 self.SetGridPosition(self.GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y)); //Questionable
-                self.AddAIToArnieGrid();
+                
+                //Move Enemy position in world and in grid space
+                //self.MoveIt(new Vector3(path[0].position.x, 0, path[0].position.y));
+                self.StartCoroutine(self.Move(new Vector3(path[0].position.x, 0, path[0].position.y)));
+                //Add to grids
+                self.AddAIToArnieGrid(new Vector3Int(path[0].position.x, 0, path[0].position.y));
                 //self.AddEntityToGrids();
 
 

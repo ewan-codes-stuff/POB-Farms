@@ -154,10 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2787d00fe94639f4ebb6d80de10f9c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 3
-  Cost: 3
-  Ally: 1
+  HP: 10
   cost: 0
+  Ally: 1
 --- !u!1 &6417547750815159814
 GameObject:
   m_ObjectHideFlags: 0
