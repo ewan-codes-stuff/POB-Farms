@@ -59,7 +59,13 @@ public class AI : Entity
         base.Die();
     }
 
-    //worldPos = new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))
+    public void AddAIToArnieGrid()
+    {
+        //Add to Unity Grid
+        GameManager.instance.GetPlacedObjects().Add(gameObject);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+
+    }
     public void AddAIToArnieGrid(Vector3Int worldPos)
     {
         //Add to Unity Grid
@@ -67,7 +73,7 @@ public class AI : Entity
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
         
     }
-    public void RemoveAIFromArnieGrid()
+    public virtual void RemoveAIFromArnieGrid()
     {
         //Remove to Unity Grid
         GameManager.instance.GetPlacedObjects().Remove(gameObject);
