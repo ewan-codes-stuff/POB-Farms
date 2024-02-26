@@ -51,15 +51,7 @@ public class Entity : MonoBehaviour
     }
     public virtual void Die()
     {
-
-        //Remove this gameobject from the placed objects list
-        GameManager.instance.GetPlacedObjects().Remove(gameObject);
-
-        //Remove the existing plant from the gridData
-        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
-
-        //Remove from this stupid other thing
-        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+        RemoveEntityFromGrids();
         GameObject.Destroy(gameObject);
     }
     #endregion
@@ -67,52 +59,40 @@ public class Entity : MonoBehaviour
     #region Grid Management
     public virtual void AddEntityToGrids()
     {
-        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null)
-        {
-            //Add to Unity Grid and placed objects list
-            GameManager.instance.GetPlacedObjects().Add(gameObject);
-            GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Add(gameObject);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
-            //Add to GridTile entity variable
-            GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        }
+        //Add to GridTile entity variable
+        GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
     public virtual void AddEntityToGrids(Vector3Int worldPos)
     {
-        if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null)
-        {
-            //Add to Unity Grid and placed objects list
-            GameManager.instance.GetPlacedObjects().Add(gameObject);
-            GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Add(gameObject);
+        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
-            //Add to GridTile entity variable
-            GameManager.instance.tileArray[GetGridPosition()].entity = this;
-        }
+        //Add to GridTile entity variable
+        GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
 
     public virtual void RemoveEntityFromGrids()
     {
-        if (PlacementSystem.instance.placedGameObject.Contains(gameObject))
-        {
-            //Add to Unity Grid and placed objects list
-            GameManager.instance.GetPlacedObjects().Remove(gameObject);
-            GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1));
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
 
-            //Add to GridTile entity variable
-            GameManager.instance.tileArray[GetGridPosition()].entity = null;
-        }
+        //Add to GridTile entity variable
+        GameManager.instance.tileArray[GetGridPosition()].entity = null;
     }
     public virtual void RemoveEntityFromGrids(Vector3Int worldPos)
     {
-        if (PlacementSystem.instance.placedGameObject.Contains(gameObject))
-        {
-            //Add to Unity Grid and placed objects list
-            GameManager.instance.GetPlacedObjects().Remove(gameObject);
-            GameManager.instance.GetObjectData().RemoveObjectAt(worldPos, new Vector2Int(1, 1));
+        //Add to Unity Grid and placed objects list
+        GameManager.instance.GetPlacedObjects().Remove(gameObject);
+        GameManager.instance.GetObjectData().RemoveObjectAt(worldPos, new Vector2Int(1, 1));
 
-            //Add to GridTile entity variable
-            GameManager.instance.tileArray[GetGridPosition()].entity = null;
-        }
+        //Add to GridTile entity variable
+        GameManager.instance.tileArray[GetGridPosition()].entity = null;
     }
 
     public Vector2Int GetGridPosition()

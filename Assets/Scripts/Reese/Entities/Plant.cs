@@ -7,22 +7,26 @@ using static UnityEditor.PlayerSettings;
 
 public class Plant : Entity
 {
-    TurnManager turnManager;
+    #region Serialized Fields
 
     [SerializeField]
     private GameObject plantyBoi;
-
     [SerializeField]
     private int turnsToGrow = 3;
-
     [SerializeField]
     private AnimationCurve growthCurve = AnimationCurve.Linear(0, 0, 1, 1);
-
     [SerializeField]
     private float timeToAnimate = 1.0f;
 
+    #endregion
+
+    #region Private Variables
+
+    //Store a reference to the turn manager
+    private TurnManager turnManager;
+
     //Store the plant's animator
-    Animator animator;
+    private Animator animator;
     //Store the turn the plant was planted on
     private int plantedTurn;
     //Store int to indicate how far through growth cycle we are
@@ -38,6 +42,8 @@ public class Plant : Entity
     private float targetGrowth;
 
     private float timer;
+
+    #endregion
 
     private void Awake()
     {
@@ -114,24 +120,12 @@ public class Plant : Entity
             Player.instance.AddCurrency(GetCost() * 2);
             if (plantyBoi != null) 
             {
-                RemoveFromGrid();
+                RemoveEntityFromGrids();
                 //Spawn and add the new plant to the grid system
                 AddToGrid(Instantiate(plantyBoi, transform.position, transform.rotation));
             }
             Destroy(this.gameObject);
         }
-    }
-
-    private void RemoveFromGrid()
-    {
-        //Remove this gameobject from the placed objects list
-        GameManager.instance.GetPlacedObjects().Remove(gameObject);
-
-        //Remove the existing plant from the gridData
-        PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(transform.position), new Vector2Int(1, 1));
-
-        //Remove from this stupid other thing
-        GameManager.instance.tileArray[GetGridPosition()].entity = null;
     }
 
     public void AddToGrid(GameObject temp)

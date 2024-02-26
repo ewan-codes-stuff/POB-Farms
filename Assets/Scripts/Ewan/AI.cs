@@ -36,22 +36,6 @@ public class AI : Entity
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
 
-    public override void AddEntityToGrids()
-    {
-        base.AddEntityToGrids();
-        //In what world good god no wtf
-        if (!GameManager.instance.aiManager.isInAIList(this))
-        {
-            GameManager.instance.aiManager.AddAIToList(gameObject);
-        }
-    }
-    public override void RemoveEntityFromGrids(Vector3Int gridPosition)
-    {
-        //No this is dumb stop
-        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
-        base.RemoveEntityFromGrids(gridPosition);
-    }
-
     public override void Die()
     {
         //This is the only reasonable place to run this line!
@@ -59,27 +43,6 @@ public class AI : Entity
         base.Die();
     }
 
-    public void AddAIToArnieGrid()
-    {
-        //Add to Unity Grid
-        GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
-
-    }
-    public void AddAIToArnieGrid(Vector3Int worldPos)
-    {
-        //Add to Unity Grid
-        GameManager.instance.GetPlacedObjects().Add(gameObject);
-        GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
-        
-    }
-    public virtual void RemoveAIFromArnieGrid()
-    {
-        //Remove to Unity Grid
-        GameManager.instance.GetPlacedObjects().Remove(gameObject);
-        GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
-        
-    }
     public void AITurn()
     {
         GridTile target = FindTargetInRadius();
@@ -87,7 +50,7 @@ public class AI : Entity
         {
             if (Vector2Int.Distance(target.gridPosition, GetGridPosition()) <= 1.0f)
             {
-                Attack(this, target.entity);
+                Attack(target.entity);
             }
             else if (target != null)
             {
@@ -157,9 +120,8 @@ public class AI : Entity
         return target;
     }
 
-    void Attack(Entity self, Entity targetEntity)
+    void Attack(Entity targetEntity)
     {
-        //Debug.Log(self.gameObject.name+ " Attacking " + targetEntity.gameObject.name);
         if (targetEntity != null)
         {
             targetEntity.TakeDamage(1);
@@ -179,9 +141,9 @@ public class AI : Entity
         if (wanderTile.entity == null)
         {
             Vector2 pathDifference = wanderTile.gridPosition - GetGridPosition();
-            GameManager.instance.tileArray[GetGridPosition()].entity = null;
-            RemoveAIFromArnieGrid();
-
+            
+            //Remove Entity from previous Grid position
+            RemoveEntityFromGrids();
             
             SetGridPosition(GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
             //Update new tile to be blocked by enemy
@@ -189,7 +151,7 @@ public class AI : Entity
             //Move Enemy position in world and in grid space
             StartCoroutine(Move(new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y)));
 
-            AddAIToArnieGrid(new Vector3Int(wanderTile.position.x, 0, wanderTile.position.y));
+            //AddAIToArnieGrid(new Vector3Int(wanderTile.position.x, 0, wanderTile.position.y));
         }
     }
 
@@ -201,8 +163,10 @@ public class AI : Entity
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             yield return null;
         }
-
         // Sets the players position to the end position as they are close enough by a negligable amount
         transform.position = target;
+
+        //Update the Enity's Grid Position
+        AddEntityToGrids();
     }
 }

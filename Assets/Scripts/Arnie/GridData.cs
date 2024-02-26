@@ -15,8 +15,7 @@ public class GridData : MonoBehaviour
         {
             if (placedObjects.ContainsKey(pos))
             {
-                Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject);
-                Debug.Log(placedObjects[pos]);
+                Debug.Log(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.name);
 
                 throw new Exception($"Dictionary already contains this cell position {pos}");
             }

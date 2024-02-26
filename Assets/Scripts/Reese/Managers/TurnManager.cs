@@ -52,7 +52,6 @@ public class TurnManager : MonoBehaviour
     {
         if((currentTurn >= turnsTillNight) && !isNight) { InitiateNight?.Invoke(); }
         currentTurn++;
-        Debug.Log(currentTurn);
     }
 
     private void StartNight()
