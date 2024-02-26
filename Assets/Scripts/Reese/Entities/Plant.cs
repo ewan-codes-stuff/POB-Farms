@@ -93,7 +93,7 @@ public class Plant : Entity
         timer = 0;
 
         //Once you hit the turn for the plant to finish growing spawn the living plant
-        if (currentTurn >= (plantedTurn + turnsToGrow))
+        if (currentTurn >= plantedTurn + turnsToGrow)
         {
             SpawnLivingPlant();
         }
@@ -116,11 +116,13 @@ public class Plant : Entity
 
     private void SpawnLivingPlant()
     {
+        RemoveEntityFromGrids();
         if (plantyBoi != null)
         {
             //Spawn fully grown plant
             Instantiate(plantyBoi, transform.position, transform.rotation);
         }
-        Die();
+        turnManager.EndTurnEvent -= TurnUpdate;
+        Destroy(this.gameObject);
     }
 }
