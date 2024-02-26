@@ -196,16 +196,4 @@ public class AI : Entity
         // Sets the players position to the end position as they are close enough by a negligable amount
         transform.position = target;
     }
-
-    public void MoveIt(Vector3 target)
-    {
-        // While the player has not met the target position continue moving across a tile
-        while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        }
-
-        // Sets the players position to the end position as they are close enough by a negligable amount
-        transform.position = target;
-    }
 }
