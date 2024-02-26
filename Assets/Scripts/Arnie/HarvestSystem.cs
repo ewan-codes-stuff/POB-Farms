@@ -192,6 +192,6 @@ public class HarvestSystem : MonoBehaviour
 
 
 
-        temp.GetComponent<Entity>().Die();
+        temp.GetComponent<Plant>().Die();
     }
 }

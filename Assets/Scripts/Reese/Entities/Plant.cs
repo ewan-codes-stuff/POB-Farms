@@ -116,13 +116,17 @@ public class Plant : Entity
 
     private void SpawnLivingPlant()
     {
-        RemoveEntityFromGrids();
         if (plantyBoi != null)
         {
             //Spawn fully grown plant
             Instantiate(plantyBoi, transform.position, transform.rotation);
         }
+        Die();
+    }
+
+    public override void Die()
+    {
         turnManager.EndTurnEvent -= TurnUpdate;
-        Destroy(this.gameObject);
+        base.Die();
     }
 }
