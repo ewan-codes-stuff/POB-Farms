@@ -65,7 +65,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
         //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        GameManager.instance.tileArray[new Vector2Int((int)transform.position.x, (int)transform.position.z)].entity = this;
     }
     public virtual void AddEntityToGrids(GameObject obj)
     {
@@ -74,7 +74,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(obj.transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
         //Add to GridTile entity variable
-        if (obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[obj.GetComponent<Entity>().GetGridPosition()].entity = obj.GetComponent<Entity>();
+        if (obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[new Vector2Int((int)obj.transform.position.x, (int)obj.transform.position.z)].entity = obj.GetComponent<Entity>();
     }
     public virtual void AddEntityToGrids(Vector3Int worldPos)
     {
@@ -83,7 +83,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(worldPos), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
         //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = this;
+        GameManager.instance.tileArray[new Vector2Int(worldPos.x, worldPos.z)].entity = this;
     }
 
     //Removing from the grid
@@ -94,7 +94,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(transform.position), new Vector2Int(1, 1));
 
         //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+        GameManager.instance.tileArray[new Vector2Int((int)transform.position.x, (int)transform.position.z)].entity = null;
     }
     public virtual void RemoveEntityFromGrids(GameObject obj)
     {
@@ -103,7 +103,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().RemoveObjectAt(GameManager.instance.GetGrid().WorldToCell(obj.transform.position), new Vector2Int(1, 1));
 
         //Add to GridTile entity variable
-        if(obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[obj.GetComponent<Entity>().GetGridPosition()].entity = null;
+        if(obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[new Vector2Int((int)obj.transform.position.x, (int)obj.transform.position.z)].entity = null;
     }
     public virtual void RemoveEntityFromGrids(Vector3Int worldPos)
     {
@@ -112,7 +112,7 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetObjectData().RemoveObjectAt(worldPos, new Vector2Int(1, 1));
 
         //Add to GridTile entity variable
-        GameManager.instance.tileArray[GetGridPosition()].entity = null;
+        GameManager.instance.tileArray[new Vector2Int(worldPos.x, worldPos.z)].entity = null;
     }
 
     public Vector2Int GetGridPosition()
