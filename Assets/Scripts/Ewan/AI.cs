@@ -18,26 +18,28 @@ public class AI : Entity
         base.Init();
         //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
         
+        //Should have a single line for adding to AiManager list here....
+
         if (!PlacementSystem.instance.placedGameObject.Contains(gameObject) && GameManager.instance.tileArray[GetGridPosition()].entity == null) 
         {
             AddEntityToGrids();
         }
-
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Why in the shit is this called every god damn frame!?!
         SetGridPosition(new Vector2Int((int)(transform.position.x), (int)(transform.position.z)));
 
-        //GameManager.instance.tileArray[GetGridPosition()].isBlockedByEntity = true;
+        //I hate you this should not be here
         GameManager.instance.tileArray[GetGridPosition()].entity = this;
     }
 
     public override void AddEntityToGrids()
     {
         base.AddEntityToGrids();
+        //In what world good god no wtf
         if (!GameManager.instance.aiManager.isInAIList(this))
         {
             GameManager.instance.aiManager.AddAIToList(gameObject);
@@ -45,15 +47,16 @@ public class AI : Entity
     }
     public override void RemoveEntityFromGrids(Vector3Int gridPosition)
     {
+        //No this is dumb stop
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
         base.RemoveEntityFromGrids(gridPosition);
     }
 
     public override void Die()
     {
+        //This is the only reasonable place to run this line!
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
         base.Die();
-        
     }
 
     //worldPos = new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z))
