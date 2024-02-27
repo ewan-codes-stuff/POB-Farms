@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
@@ -41,6 +42,16 @@ public class TurnManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             EndNight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            EndTurn();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Menu");
         }
     }
 
