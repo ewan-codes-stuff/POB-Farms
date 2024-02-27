@@ -69,6 +69,7 @@ public class MovementSystem : MonoBehaviour
     {
         StopMovement();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
+        gameObject.GetComponent<Entity>().AddEntityToGrids(gameObject);
     }
 
     private void Update()
@@ -196,6 +197,10 @@ public class MovementSystem : MonoBehaviour
 
         initialPlayerPos = gameObject.transform.position;
         playerToMovePos = grid.CellToWorld(gridPosition);
+
+        // Adds player to the grid and removes its old position from the grids
+        gameObject.GetComponent<Entity>().RemoveEntityFromGrids(gameObject);
+        gameObject.GetComponent<Entity>().AddEntityToGrids(gridPosition);
 
         // Checks the Directly above and below positions isometrically and makes it so the player doesnt flip in those positions
         if ((playerToMovePos.x > initialPlayerPos.x && playerToMovePos.z > initialPlayerPos.z) || (playerToMovePos.x < initialPlayerPos.x && playerToMovePos.z < initialPlayerPos.z))
