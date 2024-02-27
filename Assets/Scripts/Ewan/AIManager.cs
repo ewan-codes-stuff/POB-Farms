@@ -23,10 +23,6 @@ public class AIManager : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        
-    }
     public bool isInAIList(AI ai)
     {
         if(ai.IsAlly())
