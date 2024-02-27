@@ -83,29 +83,31 @@ public class AIManager : MonoBehaviour
 
     void AIPathFindOnEndTurn()
     {
-        
-        StartCoroutine(AITurnCoroutine());
-        
-        //StartCoroutine(AllyTurnCoroutine());
-        
-        if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
+        if (isNight) 
         {
-            TurnManager.instance.EndNight();
-            GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
-            isNight = false;
+            StartCoroutine(AITurnCoroutine());
+
+            //StartCoroutine(AllyTurnCoroutine());
+
+            if (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
+            {
+                TurnManager.instance.EndNight();
+                GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
+                isNight = false;
+            } 
         }
     }
 
     IEnumerator AITurnCoroutine()
     {
-        
+        Player.instance.FreezeInputs(true);
         foreach (GameObject ai in enemyList.ToArray())
         {
             if (ai == null) { enemyList.Remove(ai); }
             else
                 {
                     ai.GetComponent<AI>().AITurn();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.1f);
                 }
 
         }
@@ -120,21 +122,16 @@ public class AIManager : MonoBehaviour
             else
             {
                 ai.GetComponent<AI>().AITurn();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.1f);
             }
                 //else
                 //Wander
 
         }
-        Debug.Log("Finished end turn");
+        Player.instance.FreezeInputs(false);
             
         
     }
-
-    //IEnumerator AllyTurnCoroutine()
-    //{
-        
-    //}
 
     void SpawnEnemies()
     {

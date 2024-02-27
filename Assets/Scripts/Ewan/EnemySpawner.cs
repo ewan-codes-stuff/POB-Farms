@@ -25,8 +25,6 @@ public class EnemySpawner : MonoBehaviour
     
 
     public bool hasSpawnedEnemiesTonight = false;
-
-    public bool debugSpawnEnemies = false;
     
     //Things we need for spawner
     /*
@@ -91,48 +89,76 @@ public class EnemySpawner : MonoBehaviour
             {
                 int randomiseSpawnCounter = 0;
                 enemyIDCounter += 1;
-                GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
                 if (xRandomised) 
                 { 
-                    while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null && randomiseSpawnCounter <100) 
+                    while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null) 
                     {
                         randomNum = Random.Range(0, 11);
                         randomiseSpawnCounter += 1;
+                        if(randomiseSpawnCounter > 100)
+                        {
+                            if(xSpawn > 0) { xSpawn--; randomiseSpawnCounter = 0; }
+                            if(xSpawn < 0) { xSpawn++; randomiseSpawnCounter = 0; }
+                            if(xSpawn == 0) { break; }
+                        }
                     }
                     if (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity == null)
                     {
-                        spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity);
-                        Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
-                        spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
-                        spawnedEnemy.name = "Enemy " + enemyIDCounter;
-                        GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity = spawnedEnemy.GetComponent<AI>();
+                        SpawnEnemy(xSpawn, randomNum - 6);
                         hasSpawnedEnemiesTonight = true;
-                        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
                     }
                 }
                 else 
                 {
-                    while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null && randomiseSpawnCounter < 100)
+                    while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
                     {
                         randomNum = Random.Range(0, 11);
                         randomiseSpawnCounter += 1;
+                        if (randomiseSpawnCounter > 100)
+                        {
+                            if (zSpawn > 0) { zSpawn--; randomiseSpawnCounter = 0; }
+                            if (zSpawn < 0) { zSpawn++; randomiseSpawnCounter = 0; }
+                            if (zSpawn == 0) { break; }
+                        }
                     }
                     if (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity == null)
                     {
-                        spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity);
-                        Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
-                        spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
-                        spawnedEnemy.name = "Enemy " + enemyIDCounter;
-                        GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity = spawnedEnemy.GetComponent<AI>();
+                        SpawnEnemy(randomNum - 6, zSpawn);
                         hasSpawnedEnemiesTonight = true;
-                        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+                        
                     }
                 }
                 
             }
         }
     }
+
+    void SpawnEnemy(int SpawnX, int SpawnZ)
+    {
+        GameObject spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(SpawnX, SpawnZ)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(SpawnX, SpawnZ)].position.y), Quaternion.identity);
+        Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
+        spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
+        spawnedEnemy.name = "Enemy " + enemyIDCounter;
+        GameManager.instance.tileArray[new Vector2Int(SpawnX, SpawnZ)].entity = spawnedEnemy.GetComponent<AI>();
+        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+    }
+
+//    while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null && randomiseSpawnCounter<100) 
+//                    {
+//                        randomNum = Random.Range(0, 11);
+//                        randomiseSpawnCounter += 1;
+//                    }
+    //if (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity == null)
+    //{
+    //    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity);
+    //    Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
+    //    spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
+    //    spawnedEnemy.name = "Enemy " + enemyIDCounter;
+    //    GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity = spawnedEnemy.GetComponent<AI>();
+    //    hasSpawnedEnemiesTonight = true;
+    //    enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+    //}
 
     
 }
