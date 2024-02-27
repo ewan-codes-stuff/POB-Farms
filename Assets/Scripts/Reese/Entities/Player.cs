@@ -6,8 +6,6 @@ public class Player : Entity
 {
     public static Player instance;
 
-    public bool freezePlayer = false;
-
     private int wollars = 10;
 
     private bool playerFreezeInputs = false;

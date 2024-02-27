@@ -80,16 +80,7 @@ public class HarvestSystem : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
-                {
-                    rend.material.color = Color.red;
-                }
-                else
-                {
-                    rend.material.color = Color.green;
-                }
-
-                
+                rend.material.color = Color.green;
             }
         }
 
@@ -120,15 +111,7 @@ public class HarvestSystem : MonoBehaviour
     {
         if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity != null)
         {
-            if(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
-            {
-                return !GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
-            }
-            else
-            {
-                return GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
-            }
-            
+            return GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
         }
         else
         {
@@ -141,24 +124,16 @@ public class HarvestSystem : MonoBehaviour
 
     public void StartHarvest()
     {
-        if (!Player.instance.freezePlayer)
-        {
-            // Initially stops harvest to make sure all variables are reset just incase
-            StopHarvest();
+        // Initially stops harvest to make sure all variables are reset just incase
+        StopHarvest();
 
-            // Activates the grid for the player to see
-            gridVisualization.SetActive(true);
-            cellIndicator.SetActive(true);
+        // Activates the grid for the player to see
+        gridVisualization.SetActive(true);
+        cellIndicator.SetActive(true);
 
-            // Adds these functions to the OnClicked/OnExit Action
-            inputManager.OnClicked += HarvestVegetable;
-            inputManager.OnExit += StopHarvest;
-        }
-        else
-        {
-            StopHarvest();
-        }
-
+        // Adds these functions to the OnClicked/OnExit Action
+        inputManager.OnClicked += HarvestVegetable;
+        inputManager.OnExit += StopHarvest;
 
     }
 

@@ -154,22 +154,15 @@ public class MovementSystem : MonoBehaviour
 
     public void StartMovement()
     {
-        if (!Player.instance.freezePlayer)
-        {
-            StopMovement();
-            CameraScript.instance.zoomOnPlayer = true;
-            gridVisualization.SetActive(true);
-            cellIndicator.SetActive(true);
+
+        StopMovement();
+        CameraScript.instance.zoomOnPlayer = true;
+        gridVisualization.SetActive(true);
+        cellIndicator.SetActive(true);
 
 
-            inputManager.OnClicked += MovePlayer;
-            inputManager.OnExit += StopMovement;
-        }
-        else
-        {
-            StopMovement();
-        }
-       
+        inputManager.OnClicked += MovePlayer;
+        inputManager.OnExit += StopMovement;
         
     }
 
