@@ -94,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
                 int randomNum = Random.Range(0, 11);
                 if (xRandomised) 
                 { 
-                    if(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
+                    while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
                     {
                         randomNum = Random.Range(0, 11);
                     }
@@ -102,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 else 
                 {
-                    if (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
+                    while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
                     {
                         randomNum = Random.Range(0, 11);
                     }

@@ -26,6 +26,8 @@ public class AI : Entity
         //Run the base initalise code
         base.Init();
 
+        SetGridPosition(new Vector2Int((int)transform.position.x, (int)transform.position.z));
+
         //Add AI to the grid systems
         AddEntityToGrids();
 

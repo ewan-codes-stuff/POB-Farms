@@ -42,6 +42,11 @@ public class TurnManager : MonoBehaviour
         {
             EndNight();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            EndTurn();
+        }
     }
 
     public int GetCurrentTurn()
