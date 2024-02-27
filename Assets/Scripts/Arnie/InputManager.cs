@@ -26,16 +26,19 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        if (!Player.instance.freezePlayer)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
 
-            OnClicked?.Invoke();
+                OnClicked?.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
+            {
+                OnExit?.Invoke();
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
-        {
-            OnExit?.Invoke();
-        }
+        
             
     }
 
