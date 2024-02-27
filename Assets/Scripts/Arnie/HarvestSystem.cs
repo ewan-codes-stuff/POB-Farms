@@ -80,7 +80,16 @@ public class HarvestSystem : MonoBehaviour
             }
             else
             {
-                rend.material.color = Color.green;
+                if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
+                {
+                    rend.material.color = Color.red;
+                }
+                else
+                {
+                    rend.material.color = Color.green;
+                }
+
+                
             }
         }
 
@@ -111,7 +120,15 @@ public class HarvestSystem : MonoBehaviour
     {
         if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity != null)
         {
-            return GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
+            if(GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
+            {
+                return !GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
+            }
+            else
+            {
+                return GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.IsAlly();
+            }
+            
         }
         else
         {
