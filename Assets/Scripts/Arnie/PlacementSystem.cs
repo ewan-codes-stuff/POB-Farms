@@ -120,28 +120,36 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
-        // Initially stops placement to make sure all variables are reset just incase
-        StopPlacement();
-
-        // Zooms in on player for a cool effect
-        CameraScript.instance.zoomOnPlayer = true;
-
-        // Makes sure ID for the placed object is valid
-        selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
-        if (selectedObjectIndex < 0)
+        if (!Player.instance.freezePlayer)
         {
-            Debug.LogError($"No ID dound {ID}");
-            // Return out as place is not valid
-            return;
+            // Initially stops placement to make sure all variables are reset just incase
+            StopPlacement();
+
+            // Zooms in on player for a cool effect
+            CameraScript.instance.zoomOnPlayer = true;
+
+            // Makes sure ID for the placed object is valid
+            selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
+            if (selectedObjectIndex < 0)
+            {
+                Debug.LogError($"No ID dound {ID}");
+                // Return out as place is not valid
+                return;
+            }
+
+            // Activates the grid for the player to see
+            gridVisualization.SetActive(true);
+            cellIndicator.SetActive(true);
+
+            // Adds these functions to the OnClicked/OnExit Action
+            inputManager.OnClicked += PlaceStructure;
+            inputManager.OnExit += StopPlacement;
+        }
+        else
+        {
+            StopPlacement();
         }
 
-        // Activates the grid for the player to see
-        gridVisualization.SetActive(true);
-        cellIndicator.SetActive(true);
-
-        // Adds these functions to the OnClicked/OnExit Action
-        inputManager.OnClicked += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
 
     }
 

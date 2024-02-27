@@ -141,16 +141,24 @@ public class HarvestSystem : MonoBehaviour
 
     public void StartHarvest()
     {
-        // Initially stops harvest to make sure all variables are reset just incase
-        StopHarvest();
+        if (!Player.instance.freezePlayer)
+        {
+            // Initially stops harvest to make sure all variables are reset just incase
+            StopHarvest();
 
-        // Activates the grid for the player to see
-        gridVisualization.SetActive(true);
-        cellIndicator.SetActive(true);
+            // Activates the grid for the player to see
+            gridVisualization.SetActive(true);
+            cellIndicator.SetActive(true);
 
-        // Adds these functions to the OnClicked/OnExit Action
-        inputManager.OnClicked += HarvestVegetable;
-        inputManager.OnExit += StopHarvest;
+            // Adds these functions to the OnClicked/OnExit Action
+            inputManager.OnClicked += HarvestVegetable;
+            inputManager.OnExit += StopHarvest;
+        }
+        else
+        {
+            StopHarvest();
+        }
+
 
     }
 
