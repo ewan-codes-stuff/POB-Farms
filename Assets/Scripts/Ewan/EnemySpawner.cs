@@ -92,7 +92,7 @@ public class EnemySpawner : MonoBehaviour
                 enemyIDCounter += 1;
                 GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
-                if (xRandomised) 
+                if (xRandomised)
                 { 
                     while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
                     {
@@ -108,8 +108,6 @@ public class EnemySpawner : MonoBehaviour
                     }
                     spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity); 
                 }
-                Debug.Log(spawnedEnemy.GetComponent<AI>().GetGridPosition());
-                spawnedEnemy.GetComponent<AI>().SetGridPosition(new Vector2Int((int)spawnedEnemy.transform.position.x, (int)spawnedEnemy.transform.position.z));
                 spawnedEnemy.name = "Enemy " + enemyIDCounter;
                 hasSpawnedEnemiesTonight = true;
                 enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
