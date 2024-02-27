@@ -22,11 +22,9 @@ public class EnemySpawner : MonoBehaviour
 
     int enemyTax = 1;
 
-    
+    GameObject spawnedEnemy;
 
     public bool hasSpawnedEnemiesTonight = false;
-
-    public bool debugSpawnEnemies = false;
     
     //Things we need for spawner
     /*
@@ -36,11 +34,6 @@ public class EnemySpawner : MonoBehaviour
     Enemy Types
      
     */
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     public void ChangeSpawnBudget(int budget)
     {
@@ -90,7 +83,6 @@ public class EnemySpawner : MonoBehaviour
             for(int m = spawnBudget; m > 0; m -= enemyTax)
             {
                 enemyIDCounter += 1;
-                GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
                 if (xRandomised)
                 { 
@@ -98,8 +90,7 @@ public class EnemySpawner : MonoBehaviour
                     {
                         randomNum = Random.Range(0, 11);
                     }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(xSpawn, 0, randomNum - 6), Quaternion.identity);
-                    GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum - 6)].entity = spawnedEnemy.GetComponent<Entity>();
+                    SpawnEnemy(xSpawn, randomNum - 6);
                 }
                 else 
                 {
@@ -107,15 +98,19 @@ public class EnemySpawner : MonoBehaviour
                     {
                         randomNum = Random.Range(0, 11);
                     }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(randomNum - 6, 0, zSpawn), Quaternion.identity);
-                    GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity = spawnedEnemy.GetComponent<Entity>();
+                    SpawnEnemy(randomNum - 6, zSpawn);
                 }
-                spawnedEnemy.name = "Enemy " + enemyIDCounter;
+
                 hasSpawnedEnemiesTonight = true;
-                enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
             }
         }
     }
 
-    
+    private void SpawnEnemy(int x, int z)
+    {
+        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(x, 0, z), Quaternion.identity);
+        GameManager.instance.tileArray[new Vector2Int(x, z)].entity = spawnedEnemy.GetComponent<Entity>();
+        spawnedEnemy.name = "Enemy " + enemyIDCounter;
+        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+    }
 }
