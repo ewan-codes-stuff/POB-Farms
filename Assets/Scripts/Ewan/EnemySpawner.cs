@@ -98,7 +98,8 @@ public class EnemySpawner : MonoBehaviour
                     {
                         randomNum = Random.Range(0, 11);
                     }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum-6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity); 
+                    spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(xSpawn, 0, randomNum - 6), Quaternion.identity);
+                    GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum - 6)].entity = spawnedEnemy.GetComponent<Entity>();
                 }
                 else 
                 {
@@ -106,7 +107,8 @@ public class EnemySpawner : MonoBehaviour
                     {
                         randomNum = Random.Range(0, 11);
                     }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity); 
+                    spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(randomNum - 6, 0, zSpawn), Quaternion.identity);
+                    GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity = spawnedEnemy.GetComponent<Entity>();
                 }
                 spawnedEnemy.name = "Enemy " + enemyIDCounter;
                 hasSpawnedEnemiesTonight = true;
