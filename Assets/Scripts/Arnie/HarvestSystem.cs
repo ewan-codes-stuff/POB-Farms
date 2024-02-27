@@ -198,11 +198,10 @@ public class HarvestSystem : MonoBehaviour
         }
         else
         {
-            if(temp.TryGetComponent<Player>(out Player player))
+            if (temp.GetComponent<Player>() == null)
             {
                 temp.GetComponent<Entity>().Die();
             }
-            
         }
     }
 }

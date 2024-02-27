@@ -80,20 +80,21 @@ public class EnemySpawner : MonoBehaviour
                 break;
 
         }
-            
         
         Debug.Log("Spawned Enemies");
         spawnTimer -= 1;
+
+        //This is called before running this function this is unnecessary
         if (GameManager.instance.aiManager.IsNight())
         {
-            for(int m = spawnBudget; m>0; m -= enemyTax)
+            for(int m = spawnBudget; m > 0; m -= enemyTax)
             {
                 enemyIDCounter += 1;
                 GameObject spawnedEnemy = null;
                 int randomNum = Random.Range(0, 11);
                 if (xRandomised) 
                 { 
-                    if(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null) 
+                    if(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
                     {
                         randomNum = Random.Range(0, 11);
                     }
