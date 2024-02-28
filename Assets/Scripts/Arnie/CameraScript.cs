@@ -17,7 +17,7 @@ public class CameraScript : MonoBehaviour
     float reverseTimeElapsed = 5;
     public float lerpDuration = 3;
 
-
+    public bool zoomOnPlayerMore = false;
 
     // Singleton instance
     public static CameraScript instance;
@@ -62,7 +62,7 @@ public class CameraScript : MonoBehaviour
             }
 
         }
-        else
+        else if (!zoomOnPlayer && !zoomOnPlayerMore)
         {
             timeElapsed = 0;
 
@@ -78,5 +78,24 @@ public class CameraScript : MonoBehaviour
                 transform.position = InitialPos;
             }
         }
+
+        if (zoomOnPlayerMore)
+        {
+            reverseTimeElapsed = 0;
+
+            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
+            if (timeElapsed < lerpDuration)
+            {
+                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, 3.5f, timeElapsed / lerpDuration);
+                transform.position = Vector3.Lerp(InitialPos, TargetPos, timeElapsed / lerpDuration);
+                timeElapsed += Time.deltaTime;
+            }
+            else
+            {
+                transform.position = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
+            }
+
+        }
+
     }
 }
