@@ -22,6 +22,13 @@ public class CameraScript : MonoBehaviour
     // Singleton instance
     public static CameraScript instance;
 
+    public float orthosize = 5;
+
+    Vector3 lerpPos = new Vector3();
+
+    public Vector3 LerpFrom;
+    public Vector3 LerpTo;
+
     public void Awake()
     {
         // Initialise Singleton
@@ -40,62 +47,45 @@ public class CameraScript : MonoBehaviour
     {
         InitialPos = gameObject.transform.position;
         initialSize = gameObject.GetComponent<Camera>().orthographicSize;
+
+        lerpPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (zoomOnPlayer)
+        Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
+        if (timeElapsed < lerpDuration)
         {
-            reverseTimeElapsed = 0;
-
-            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            if (timeElapsed < lerpDuration)
-            {
-                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, 5, timeElapsed / lerpDuration);
-                transform.position = Vector3.Lerp(InitialPos, TargetPos, timeElapsed / lerpDuration);
-                timeElapsed += Time.deltaTime;
-            }
-            else
-            {
-                transform.position = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            }
-
+            gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, orthosize, timeElapsed / lerpDuration);
+            transform.position = Vector3.Lerp(LerpFrom, LerpTo, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
         }
-        else if (!zoomOnPlayer && !zoomOnPlayerMore)
+        else
+        {
+            transform.position = LerpTo;
+        }
+
+
+    }
+
+    public void StartLerp(float newOrthosize, bool lerpIn)
+    {
+        if (lerpIn)
         {
             timeElapsed = 0;
-
-            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            if (reverseTimeElapsed < lerpDuration)
-            {
-                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(5, initialSize, reverseTimeElapsed / lerpDuration);
-                transform.position = Vector3.Lerp(TargetPos, InitialPos, reverseTimeElapsed / lerpDuration);
-                reverseTimeElapsed += Time.deltaTime;
-            }
-            else
-            {
-                transform.position = InitialPos;
-            }
+            LerpFrom = gameObject.transform.position;
+            LerpTo = lerpPos;
+            orthosize = newOrthosize;
+            initialSize = gameObject.GetComponent<Camera>().orthographicSize;
         }
-
-        if (zoomOnPlayerMore)
+        else
         {
-            reverseTimeElapsed = 0;
-
-            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            if (timeElapsed < lerpDuration)
-            {
-                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, 3.5f, timeElapsed / lerpDuration);
-                transform.position = Vector3.Lerp(InitialPos, TargetPos, timeElapsed / lerpDuration);
-                timeElapsed += Time.deltaTime;
-            }
-            else
-            {
-                transform.position = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            }
-
+            timeElapsed = 0;
+            LerpFrom = gameObject.transform.position;
+            LerpTo = InitialPos;
+            orthosize = newOrthosize;
+            initialSize = gameObject.GetComponent<Camera>().orthographicSize;
         }
-
     }
 }
