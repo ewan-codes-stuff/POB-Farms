@@ -72,7 +72,7 @@ MonoBehaviour:
   HP: 3
   cost: 3
   Ally: 1
-  plantyBoi: {fileID: 1173055739605530014, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
+  plantyBoi: {fileID: 6560910321417507696, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
   turnsToGrow: 5
   growthCurve:
     serializedVersion: 2
