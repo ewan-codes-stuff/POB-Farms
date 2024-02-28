@@ -34,28 +34,8 @@ public class EnemySpawner : MonoBehaviour
         {
             //Increment the enemy ID
             enemyIDCounter += 1;
-            //Get a new random number
-            randomNum = Random.Range(0, 11);
-            //If set to spawn on the "Left" or "Right" edges of the grid
-            if (xWalls)
-            {
-                //if the randomly chosen tile is already occupided
-                while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
-                {
-                    //Regenerate a new random
-                    randomNum = Random.Range(0, 11);
-                }
-                //Once a free space is found Create a new enemy
-                CreateEnemy(xSpawn, randomNum - 6);
-            }
-            else
-            {
-                while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
-                {
-                    randomNum = Random.Range(0, 11);
-                }
-                CreateEnemy(randomNum - 6, zSpawn);
-            }
+
+            CreateEnemy(WorkoutSpawnPos());
 
             hasSpawnedEnemiesTonight = true;
         }
@@ -85,20 +65,46 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void CreateEnemy(int x, int z)
+    private Vector2Int WorkoutSpawnPos()
+    {
+        //Get a new random number
+        randomNum = Random.Range(0, 11);
+        //If set to spawn on the "Left" or "Right" edges of the grid
+        if (xWalls)
+        {
+            //if the randomly chosen tile is already occupided
+            while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
+            {
+                //Regenerate a new random
+                randomNum = Random.Range(0, 11);
+            }
+            //Once a free space is found Create a new enemy
+            return new Vector2Int(xSpawn, randomNum - 6);
+        }
+        else
+        {
+            while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
+            {
+                randomNum = Random.Range(0, 11);
+            }
+            return new Vector2Int(randomNum - 6, zSpawn);
+        }
+    }
+
+    private void CreateEnemy(Vector2Int pos)
     {
         //Spawn an enemy under the floor at the grid tile position
-        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(x, -2, z), Quaternion.identity);
+        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, -2, pos.y), Quaternion.identity);
 
         //Make sure the entity is stored on the tile
-        GameManager.instance.tileArray[new Vector2Int(x, z)].entity = spawnedEnemy.GetComponent<Entity>();
+        GameManager.instance.tileArray[new Vector2Int(pos.x, pos.y)].entity = spawnedEnemy.GetComponent<Entity>();
         //Set the enemy's name to equal it's enemy number
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
         //Set the enemy's tax to equal it's value
         enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
 
         //Use the Move coroutine to smoothly move the enemies up out of the floor
-        spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(x, 0, z), 3f));
+        spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(pos.x, 0, pos.y), 3f));
     }
 
     public void ChangeSpawnBudget(int budget)
