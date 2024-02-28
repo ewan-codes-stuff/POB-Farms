@@ -103,7 +103,7 @@ MonoBehaviour:
   HP: 3
   cost: 3
   Ally: 1
-  pathFinder: {fileID: 0}
+  pathFinder: {fileID: -3807486985988436429}
   AIDetectionRadius: 2
   speed: 8
 --- !u!114 &-3807486985988436429

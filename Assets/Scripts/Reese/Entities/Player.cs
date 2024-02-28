@@ -27,7 +27,6 @@ public class Player : Entity
     public override void Init()
     {
         base.Init();
-        AddEntityToGrids();
     }
 
     public int GetCurrency()
