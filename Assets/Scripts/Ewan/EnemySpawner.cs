@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     int xSpawn = -6;
     int zSpawn = -6;
 
-    bool xRandomised = false;
+    bool xWalls = false;
 
     public List<AI> EnemiesToSpawn;
 
@@ -26,46 +26,27 @@ public class EnemySpawner : MonoBehaviour
 
     public bool hasSpawnedEnemiesTonight = false;
 
-    public void ChangeSpawnBudget(int budget)
-    {
-        spawnBudget = budget;
-    }
-
     public void SpawnEnemies()
     {
-        //Random side to spawn from: 1 - x=5, 2- x=-6 3- z=5, 4- z=-6
-        randomNum = Random.Range(1, 4);
-        switch (randomNum) 
-        {
-            case 1:
-                xSpawn = 5;
-                xRandomised = true;
-                break;
-            case 2:
-                xSpawn = -6;
-                xRandomised = true;
-                break;
-            case 3:
-                zSpawn = 5;
-                xRandomised = false;
-                break;
-            case 4:
-                zSpawn = -6;
-                xRandomised = false;
-                break;
-        }
+        ChooseSpawnSide();
 
         for (int i = spawnBudget; i > 0; i -= enemyTax)
         {
+            //Increment the enemy ID
             enemyIDCounter += 1;
+            //Get a new random number
             randomNum = Random.Range(0, 11);
-            if (xRandomised)
+            //If set to spawn on the "Left" or "Right" edges of the grid
+            if (xWalls)
             {
+                //if the randomly chosen tile is already occupided
                 while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
                 {
+                    //Regenerate a new random
                     randomNum = Random.Range(0, 11);
                 }
-                SpawnEnemy(xSpawn, randomNum - 6);
+                //Once a free space is found Create a new enemy
+                CreateEnemy(xSpawn, randomNum - 6);
             }
             else
             {
@@ -73,21 +54,55 @@ public class EnemySpawner : MonoBehaviour
                 {
                     randomNum = Random.Range(0, 11);
                 }
-                SpawnEnemy(randomNum - 6, zSpawn);
+                CreateEnemy(randomNum - 6, zSpawn);
             }
 
             hasSpawnedEnemiesTonight = true;
         }
     }
 
-    private void SpawnEnemy(int x, int z)
+    private void ChooseSpawnSide()
     {
+        randomNum = Random.Range(1, 4);
+        switch (randomNum)
+        {
+            case 1:
+                xSpawn = 5;
+                xWalls = true;
+                break;
+            case 2:
+                xSpawn = -6;
+                xWalls = true;
+                break;
+            case 3:
+                zSpawn = 5;
+                xWalls = false;
+                break;
+            case 4:
+                zSpawn = -6;
+                xWalls = false;
+                break;
+        }
+    }
+
+    private void CreateEnemy(int x, int z)
+    {
+        //Spawn an enemy under the floor at the grid tile position
         spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(x, -2, z), Quaternion.identity);
 
+        //Make sure the entity is stored on the tile
         GameManager.instance.tileArray[new Vector2Int(x, z)].entity = spawnedEnemy.GetComponent<Entity>();
+        //Set the enemy's name to equal it's enemy number
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
+        //Set the enemy's tax to equal it's value
         enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
 
+        //Use the Move coroutine to smoothly move the enemies up out of the floor
         spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(x, 0, z), 3f));
+    }
+
+    public void ChangeSpawnBudget(int budget)
+    {
+        spawnBudget = budget;
     }
 }
