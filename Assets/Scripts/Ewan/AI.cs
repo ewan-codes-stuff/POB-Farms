@@ -33,19 +33,6 @@ public class AI : Entity
     }
     #endregion
 
-    public void AnimateSpawn()
-    {
-
-    }
-
-    public override void Die()
-    {
-        //Remove the AI from the list of AI
-        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
-        //Run the base Death code
-        base.Die();
-    }
-
     public void AITurn()
     {
         targetTile = FindTargetInRadius();
@@ -165,6 +152,7 @@ public class AI : Entity
         }
     }
 
+    #region Coroutines
     public IEnumerator Move(Vector3 target)
     {
         // While the player has not met the target position continue moving across a tile
@@ -176,4 +164,15 @@ public class AI : Entity
         // Sets the players position to the end position as they are close enough by a negligable amount
         transform.position = target;
     }
+    #endregion
+
+    #region Override Functions
+    public override void Die()
+    {
+        //Remove the AI from the list of AI
+        GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+        //Run the base Death code
+        base.Die();
+    }
+    #endregion
 }

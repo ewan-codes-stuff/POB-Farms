@@ -224,7 +224,7 @@ public class HarvestSystem : MonoBehaviour
         }
         else
         {
-            if (temp.GetComponent<Player>() == null)
+            if (temp.GetComponent<Player>() == null && temp.GetComponent<House>() == null)
             {
                 temp.GetComponent<Entity>().Die();
             }

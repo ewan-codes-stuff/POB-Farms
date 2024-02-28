@@ -102,10 +102,6 @@ public class EnemySpawner : MonoBehaviour
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
         //Set the enemy's tax to equal it's value
         enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
-
-        //Use the Move coroutine to smoothly move the enemies up out of the floor
-        spawnedEnemy.GetComponent<AI>().AnimateSpawn();
-        //spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(pos.x, 0, pos.y), 3f));
     }
 
     public void ChangeSpawnBudget(int budget)
