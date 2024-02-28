@@ -8,6 +8,7 @@ public class Player : Entity
 
     public bool freezePlayer = false;
 
+    [SerializeField]
     private int wollars = 10;
 
     private bool playerFreezeInputs = false;
@@ -21,6 +22,12 @@ public class Player : Entity
             return;
         }
         instance = this;
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        AddEntityToGrids();
     }
 
     public int GetCurrency()

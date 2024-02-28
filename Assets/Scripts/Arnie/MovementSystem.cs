@@ -69,7 +69,6 @@ public class MovementSystem : MonoBehaviour
     {
         StopMovement();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
-        gameObject.GetComponent<Entity>().AddEntityToGrids(gameObject);
     }
 
     private void Update()
