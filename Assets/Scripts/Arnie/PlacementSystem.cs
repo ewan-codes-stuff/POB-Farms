@@ -126,7 +126,7 @@ public class PlacementSystem : MonoBehaviour
             StopPlacement();
 
             // Zooms in on player for a cool effect
-            CameraScript.instance.zoomOnPlayer = true;
+            CameraScript.instance.StartLerp(3.5f, true);
 
             // Makes sure ID for the placed object is valid
             selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
@@ -156,7 +156,7 @@ public class PlacementSystem : MonoBehaviour
     public void StopPlacement()
     {
         // Resets all initial values 
-        CameraScript.instance.zoomOnPlayer = false;
+        CameraScript.instance.StartLerp(9.5f, false);
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);

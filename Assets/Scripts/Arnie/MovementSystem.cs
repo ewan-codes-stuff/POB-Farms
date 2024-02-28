@@ -156,7 +156,7 @@ public class MovementSystem : MonoBehaviour
         if (!Player.instance.freezePlayer)
         {
             StopMovement();
-            CameraScript.instance.zoomOnPlayer = true;
+            CameraScript.instance.StartLerp(5f, true);
             gridVisualization.SetActive(true);
             cellIndicator.SetActive(true);
 
@@ -174,7 +174,7 @@ public class MovementSystem : MonoBehaviour
 
     public void StopMovement()
     {
-        CameraScript.instance.zoomOnPlayer = false;
+        CameraScript.instance.StartLerp(9.5f, false);
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
 
