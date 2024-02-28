@@ -94,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
     private void CreateEnemy(Vector2Int pos)
     {
         //Spawn an enemy under the floor at the grid tile position
-        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, -2, pos.y), Quaternion.identity);
+        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
 
         //Make sure the entity is stored on the tile
         GameManager.instance.tileArray[new Vector2Int(pos.x, pos.y)].entity = spawnedEnemy.GetComponent<Entity>();
@@ -104,7 +104,8 @@ public class EnemySpawner : MonoBehaviour
         enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
 
         //Use the Move coroutine to smoothly move the enemies up out of the floor
-        spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(pos.x, 0, pos.y), 3f));
+        spawnedEnemy.GetComponent<AI>().AnimateSpawn();
+        //spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(pos.x, 0, pos.y), 3f));
     }
 
     public void ChangeSpawnBudget(int budget)

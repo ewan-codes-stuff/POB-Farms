@@ -30,10 +30,13 @@ public class AI : Entity
 
         //Add AI to the grid systems
         AddEntityToGrids();
-
-        //Should probably have a single line for adding to AiManager list here unless that is done by the AI manager when instantiated
     }
     #endregion
+
+    public void AnimateSpawn()
+    {
+
+    }
 
     public override void Die()
     {
@@ -163,18 +166,6 @@ public class AI : Entity
     }
 
     public IEnumerator Move(Vector3 target)
-    {
-        // While the player has not met the target position continue moving across a tile
-        while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            yield return null;
-        }
-        // Sets the players position to the end position as they are close enough by a negligable amount
-        transform.position = target;
-    }
-
-    public IEnumerator Move(Vector3 target, float speed)
     {
         // While the player has not met the target position continue moving across a tile
         while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)

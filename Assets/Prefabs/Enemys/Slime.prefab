@@ -51,6 +51,7 @@ MonoBehaviour:
   Ally: 0
   pathFinder: {fileID: 5156298996169927206}
   AIDetectionRadius: 2
+  speed: 8
 --- !u!114 &5156298996169927206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +77,7 @@ GameObject:
   - component: {fileID: 2142603266098109433}
   - component: {fileID: 2578910018799552952}
   m_Layer: 0
-  m_Name: SlimeSprite
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

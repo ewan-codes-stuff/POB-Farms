@@ -80,16 +80,17 @@ public class HarvestSystem : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
+                if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity != null)
                 {
-                    rend.material.color = Color.red;
-                }
-                else
-                {
-                    rend.material.color = Color.green;
-                }
-
-                
+                    if (GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity.gameObject.GetComponent<Player>() != null)
+                    {
+                        rend.material.color = Color.red;
+                    }
+                    else
+                    {
+                        rend.material.color = Color.green;
+                    }
+                }            
             }
         }
 
