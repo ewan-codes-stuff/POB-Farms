@@ -156,7 +156,7 @@ public class PlacementSystem : MonoBehaviour
     public void StopPlacement()
     {
         // Resets all initial values 
-        CameraScript.instance.StartLerp(9.5f, true);
+        CameraScript.instance.StartLerp(9.5f, false);
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
