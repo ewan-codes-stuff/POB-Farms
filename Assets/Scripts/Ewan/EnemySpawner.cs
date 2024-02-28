@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     int spawnBudget = 1;
-    int spawnTimer = 1;
     int spawnLocationRotator = 0;
     [SerializeField]
     List<Vector2Int> locationsToSpawn;
@@ -13,8 +12,7 @@ public class EnemySpawner : MonoBehaviour
     int xSpawn = -6;
     int zSpawn = -6;
 
-    bool xRandomised = false;
-    bool zRandomised = false;
+    bool xWalls = false;
 
     public List<AI> EnemiesToSpawn;
 
@@ -22,98 +20,95 @@ public class EnemySpawner : MonoBehaviour
 
     int enemyTax = 1;
 
-    
+    GameObject spawnedEnemy;
+
+    int randomNum;
 
     public bool hasSpawnedEnemiesTonight = false;
 
-    public bool debugSpawnEnemies = false;
-    
-    //Things we need for spawner
-    /*
-    Locations to spawn in
-    To pass the enemy into the AI Manager
-    When to spawn enemies
-    Enemy Types
-     
-    */
-
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnEnemies()
     {
+        ChooseSpawnSide();
+
+        for (int i = spawnBudget; i > 0; i -= enemyTax)
+        {
+            //Increment the enemy ID
+            enemyIDCounter += 1;
+
+            CreateEnemy(WorkoutSpawnPos());
+
+            hasSpawnedEnemiesTonight = true;
+        }
+    }
+
+    private void ChooseSpawnSide()
+    {
+        randomNum = Random.Range(1, 4);
+        switch (randomNum)
+        {
+            case 1:
+                xSpawn = 5;
+                xWalls = true;
+                break;
+            case 2:
+                xSpawn = -6;
+                xWalls = true;
+                break;
+            case 3:
+                zSpawn = 5;
+                xWalls = false;
+                break;
+            case 4:
+                zSpawn = -6;
+                xWalls = false;
+                break;
+        }
+    }
+
+    private Vector2Int WorkoutSpawnPos()
+    {
+        //Get a new random number
+        randomNum = Random.Range(0, 11);
+        //If set to spawn on the "Left" or "Right" edges of the grid
+        if (xWalls)
+        {
+            //if the randomly chosen tile is already occupided
+            while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
+            {
+                //Regenerate a new random
+                randomNum = Random.Range(0, 11);
+            }
+            //Once a free space is found Create a new enemy
+            return new Vector2Int(xSpawn, randomNum - 6);
+        }
+        else
+        {
+            while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
+            {
+                randomNum = Random.Range(0, 11);
+            }
+            return new Vector2Int(randomNum - 6, zSpawn);
+        }
+    }
+
+    private void CreateEnemy(Vector2Int pos)
+    {
+        //Spawn an enemy under the floor at the grid tile position
+        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, -2, pos.y), Quaternion.identity);
+
+        //Make sure the entity is stored on the tile
+        GameManager.instance.tileArray[new Vector2Int(pos.x, pos.y)].entity = spawnedEnemy.GetComponent<Entity>();
+        //Set the enemy's name to equal it's enemy number
+        spawnedEnemy.name = "Enemy " + enemyIDCounter;
+        //Set the enemy's tax to equal it's value
+        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+
+        //Use the Move coroutine to smoothly move the enemies up out of the floor
+        spawnedEnemy.GetComponent<AI>().StartCoroutine(spawnedEnemy.GetComponent<AI>().Move(new Vector3(pos.x, 0, pos.y), 3f));
     }
 
     public void ChangeSpawnBudget(int budget)
     {
         spawnBudget = budget;
     }
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
-
-    public void SpawnEnemies()
-    {
-        //Random side to spawn from: 1 - x=5, 2- x=-6 3- z=5, 4- z=-6
-        int spawnSide = Random.Range(1, 4);
-        switch (spawnSide) 
-        {
-            case 1:
-                xSpawn = 5;
-                xRandomised = true;
-                zRandomised = false;
-                break;
-            case 2:
-                xSpawn = -6;
-                xRandomised = true;
-                zRandomised = false;
-                break;
-            case 3:
-                zSpawn = 5;
-                zRandomised = true;
-                xRandomised = false;
-                break;
-            case 4:
-                zSpawn = -6;
-                zRandomised = true;
-                xRandomised = false;
-                break;
-
-        }
-        
-        Debug.Log("Spawned Enemies");
-        spawnTimer -= 1;
-
-        //This is called before running this function this is unnecessary
-        if (GameManager.instance.aiManager.IsNight())
-        {
-            for(int m = spawnBudget; m > 0; m -= enemyTax)
-            {
-                enemyIDCounter += 1;
-                GameObject spawnedEnemy = null;
-                int randomNum = Random.Range(0, 11);
-                if (xRandomised)
-                { 
-                    while(GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
-                    {
-                        randomNum = Random.Range(0, 11);
-                    }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(xSpawn,randomNum-6)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].position.y), Quaternion.identity); 
-                }
-                else 
-                {
-                    while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
-                    {
-                        randomNum = Random.Range(0, 11);
-                    }
-                    spawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)].gameObject, new Vector3(GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.x, 0.0f, GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].position.y), Quaternion.identity); 
-                }
-                spawnedEnemy.name = "Enemy " + enemyIDCounter;
-                hasSpawnedEnemiesTonight = true;
-                enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
-            }
-        }
-    }
-
-    
 }
