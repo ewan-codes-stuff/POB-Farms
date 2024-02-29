@@ -53,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         //Random side to spawn from: 1 - x=5, 2- x=-6 3- z=5, 4- z=-6
-        int spawnSide = Random.Range(1, 4);
+        int spawnSide = Random.Range(1, 5);
         switch (spawnSide) 
         {
             case 1:
