@@ -120,7 +120,7 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacement(int ID)
     {
-        if (!Player.instance.freezePlayer)
+        if (!Player.instance.IsPlayerFrozen())
         {
             // Initially stops placement to make sure all variables are reset just incase
             StopPlacement();

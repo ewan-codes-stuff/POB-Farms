@@ -84,35 +84,7 @@ public class AIManager : MonoBehaviour
         StartCoroutine(WaitForCoroutine(AITurn()));
     }
 
-    private IEnumerator WaitForCoroutine(IEnumerator coroutine)
-    {
-        yield return StartCoroutine(coroutine);
-
-        Player.instance.FreezeInputs(false);
-    }
-
-    private IEnumerator AITurn()
-    {
-        //For every AI in the AI list
-        for (int i = 0; i < aiList.Count; i++)
-        {
-            //Check if the AI is null
-            if (aiList[i] == null)
-            {
-                //If null remove the AI from the AI list
-                aiList.Remove(aiList[i]);
-                //If the AI is in the Enemy list remove it from there too
-                if (enemyList.Contains(aiList[i])) enemyList.Remove(aiList[i]);
-            }
-            //If the AI isn't null
-            else
-            {
-                //Run the AI's Turn
-                aiList[i].GetComponent<AI>().AITurn();
-                yield return new WaitForSeconds(0.2f);
-            }
-        }
-    }
+    
 
     void EndNight()
     {
@@ -144,4 +116,35 @@ public class AIManager : MonoBehaviour
         GameManager.instance.enemySpawner.ChangeSpawnBudget(enemyBudget);
     }
 
-}     
+    #region Coroutines
+    private IEnumerator WaitForCoroutine(IEnumerator coroutine)
+    {
+        yield return StartCoroutine(coroutine);
+
+        Player.instance.FreezeInputs(false);
+    }
+
+    private IEnumerator AITurn()
+    {
+        //For every AI in the AI list
+        for (int i = 0; i < aiList.Count; i++)
+        {
+            //Check if the AI is null
+            if (aiList[i] == null)
+            {
+                //If null remove the AI from the AI list
+                aiList.Remove(aiList[i]);
+                //If the AI is in the Enemy list remove it from there too
+                if (enemyList.Contains(aiList[i])) enemyList.Remove(aiList[i]);
+            }
+            //If the AI isn't null
+            else
+            {
+                //Run the AI's Turn
+                aiList[i].GetComponent<AI>().AITurn();
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+    }
+    #endregion
+}

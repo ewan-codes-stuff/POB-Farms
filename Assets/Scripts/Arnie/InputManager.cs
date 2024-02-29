@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Player.instance.freezePlayer)
+        if (!Player.instance.IsPlayerFrozen())
         {
             if (Input.GetMouseButtonDown(0))
             {
