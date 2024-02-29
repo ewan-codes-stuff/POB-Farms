@@ -33,7 +33,7 @@ public class AI : Entity
     }
     #endregion
 
-    public void AITurn()
+    public bool AITurn()
     {
         targetTile = FindTargetInRadius();
         if (targetTile != null)
@@ -41,13 +41,15 @@ public class AI : Entity
             if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
             {
                 Attack(targetTile.entity);
+                return true;
             }
             else if (targetTile != null)
             {
                 pathFinder.PathfindToTarget(this, targetTile);
+                return true;
             }
         }
-        //Wander();
+        return false;
     }
     private GridTile FindTargetInRadius()
     {
