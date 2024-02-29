@@ -79,12 +79,18 @@ public class AIManager : MonoBehaviour
     void AIPathFindOnEndTurn()
     {
         //For every AI in the AI list
-        foreach (GameObject ai in aiList)
+        for(int i = 0; i < aiList.Count; i++)
         {
             //Check that the AI isn't null and if it is remove it from the list
-            if (ai == null) { aiList.Remove(ai); }
-            //Run the AI's turn
-            ai.GetComponent<AI>().AITurn();
+            if (aiList[i] == null) 
+            { 
+                aiList.Remove(aiList[i]);
+                enemyList.Remove(aiList[i]);
+            }
+            else
+            {
+                aiList[i].GetComponent<AI>().AITurn();
+            }
         }
         
         //If the enemy count is 0 and enemys have been spawned tonight

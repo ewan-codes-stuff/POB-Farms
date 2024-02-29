@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
             //Increment the enemy ID
             enemyIDCounter += 1;
 
-            CreateEnemy(WorkoutSpawnPos());
+            InstantiateEnemy(WorkoutSpawnPos());
 
             hasSpawnedEnemiesTonight = true;
         }
@@ -78,20 +78,24 @@ public class EnemySpawner : MonoBehaviour
                 //Regenerate a new random
                 randomNum = Random.Range(0, 11);
             }
-            //Once a free space is found Create a new enemy
+            //Once a free space is found return the location
             return new Vector2Int(xSpawn, randomNum - 6);
         }
+        //If not the "Left" or "Right" edges
         else
         {
+            //Check random "Top" / "Bottom" edge positions for if they are occupided
             while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
             {
+                //Regenerate a new random
                 randomNum = Random.Range(0, 11);
             }
+            //Once a free space is found return the location
             return new Vector2Int(randomNum - 6, zSpawn);
         }
     }
 
-    private void CreateEnemy(Vector2Int pos)
+    private void InstantiateEnemy(Vector2Int pos)
     {
         //Spawn an enemy under the floor at the grid tile position
         spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);

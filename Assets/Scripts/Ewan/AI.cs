@@ -137,18 +137,13 @@ public class AI : Entity
             //Remove Entity from previous Grid position
             RemoveEntityFromGrids();
             
-            SetGridPosition(GetGridPosition() + new Vector2Int((int)pathDifference.x, (int)pathDifference.y));
-            
-            //Update new tile to be blocked by enemy
-            //GameManager.instance.tileArray[GetGridPosition()].entity = this;
+            SetGridPosition(wanderTile.gridPosition);
 
             //Update the Enity's Grid Position
             AddEntityToGrids(new Vector3Int(GetGridPosition().x, 0, GetGridPosition().y));
 
             //Move Enemy position in world and in grid space
             StartCoroutine(Move(new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y)));
-
-            //AddAIToArnieGrid(new Vector3Int(wanderTile.position.x, 0, wanderTile.position.y));
         }
     }
 
