@@ -6,8 +6,6 @@ public class Player : Entity
 {
     public static Player instance;
 
-    public bool freezePlayer = false;
-
     [SerializeField]
     private int wollars = 10;
 
@@ -48,6 +46,11 @@ public class Player : Entity
     {
         //Add Currency to Player
         wollars += ammount;
+    }
+
+    public bool IsPlayerFrozen()
+    {
+        return playerFreezeInputs;
     }
 
     public void FreezeInputs(bool freeze)

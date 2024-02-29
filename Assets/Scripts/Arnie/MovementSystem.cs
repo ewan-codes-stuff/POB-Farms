@@ -153,7 +153,7 @@ public class MovementSystem : MonoBehaviour
 
     public void StartMovement()
     {
-        if (!Player.instance.freezePlayer)
+        if (!Player.instance.IsPlayerFrozen())
         {
             StopMovement();
             CameraScript.instance.StartLerp(5f, true);

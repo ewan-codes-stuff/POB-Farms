@@ -142,7 +142,7 @@ public class HarvestSystem : MonoBehaviour
 
     public void StartHarvest()
     {
-        if (!Player.instance.freezePlayer)
+        if (!Player.instance.IsPlayerFrozen())
         {
             // Initially stops harvest to make sure all variables are reset just incase
             StopHarvest();
