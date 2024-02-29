@@ -18,8 +18,9 @@ public class AIManager : MonoBehaviour
     {
         //Subscribe functions to all relevant Events
         TurnManager.instance.EndTurnEvent += GetListOfEntities;
-        TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
+        TurnManager.instance.EndTurnEvent += RunAITurn;
         TurnManager.instance.EndTurnEvent += SpawnEnemies;
+        TurnManager.instance.EndTurnEvent += EndNight;
         TurnManager.instance.InitiateNight += ChangeToNight;
     }
     
@@ -76,25 +77,47 @@ public class AIManager : MonoBehaviour
         GameManager.instance.tileArray[new Vector2Int(-1, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
     }
 
-    void AIPathFindOnEndTurn()
+    void RunAITurn()
+    {
+        Player.instance.FreezeInputs(true);
+
+        StartCoroutine(WaitForCoroutine(AITurn()));
+    }
+
+    private IEnumerator WaitForCoroutine(IEnumerator coroutine)
+    {
+        yield return StartCoroutine(coroutine);
+
+        Player.instance.FreezeInputs(false);
+    }
+
+    private IEnumerator AITurn()
     {
         //For every AI in the AI list
-        for(int i = 0; i < aiList.Count; i++)
+        for (int i = 0; i < aiList.Count; i++)
         {
-            //Check that the AI isn't null and if it is remove it from the list
-            if (aiList[i] == null) 
-            { 
+            //Check if the AI is null
+            if (aiList[i] == null)
+            {
+                //If null remove the AI from the AI list
                 aiList.Remove(aiList[i]);
-                enemyList.Remove(aiList[i]);
+                //If the AI is in the Enemy list remove it from there too
+                if (enemyList.Contains(aiList[i])) enemyList.Remove(aiList[i]);
             }
+            //If the AI isn't null
             else
             {
+                //Run the AI's Turn
                 aiList[i].GetComponent<AI>().AITurn();
+                yield return new WaitForSeconds(0.2f);
             }
         }
-        
+    }
+
+    void EndNight()
+    {
         //If the enemy count is 0 and enemys have been spawned tonight
-        if (isNight&&(enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
+        if (isNight && (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
         {
             //Call the end night event
             TurnManager.instance.EndNight();
