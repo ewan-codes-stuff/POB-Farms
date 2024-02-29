@@ -47,19 +47,19 @@ public class EnemySpawner : MonoBehaviour
         switch (randomNum)
         {
             case 1:
-                xSpawn = 5;
+                xSpawn = 6;
                 xWalls = true;
                 break;
             case 2:
-                xSpawn = -6;
+                xSpawn = -7;
                 xWalls = true;
                 break;
             case 3:
-                zSpawn = 5;
+                zSpawn = 6;
                 xWalls = false;
                 break;
             case 4:
-                zSpawn = -6;
+                zSpawn = -7;
                 xWalls = false;
                 break;
         }
@@ -99,7 +99,8 @@ public class EnemySpawner : MonoBehaviour
     {
         //Spawn an enemy under the floor at the grid tile position
         spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-
+        //Add Enemy to AI Manager List
+        GameManager.instance.aiManager.AddAIToList(spawnedEnemy);
         //Make sure the entity is stored on the tile
         GameManager.instance.tileArray[new Vector2Int(pos.x, pos.y)].entity = spawnedEnemy.GetComponent<Entity>();
         //Set the enemy's name to equal it's enemy number

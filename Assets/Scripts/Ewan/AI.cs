@@ -29,7 +29,10 @@ public class AI : Entity
         SetGridPosition(new Vector2Int((int)transform.position.x, (int)transform.position.z));
 
         //Add AI to the grid systems
-        AddEntityToGrids();
+        if (IsAlly())
+        {
+            AddEntityToGrids();
+        }
     }
     #endregion
 
