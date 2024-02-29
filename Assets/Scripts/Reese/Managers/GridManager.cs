@@ -24,7 +24,6 @@ public class GridManager : MonoBehaviour
                 GameManager.instance.tileArray[new Vector2Int(i, j)] = newTile;
             }
         }
-        
     }
 
     public static void UpdateGridForHouse()
