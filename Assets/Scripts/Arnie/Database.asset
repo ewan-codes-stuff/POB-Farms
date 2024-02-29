@@ -20,7 +20,7 @@ MonoBehaviour:
   - <Name>k__BackingField: Carrot
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 6457083606302852855, guid: 1152edf7560821742ba964e334399a4e, type: 3}
+    <Prefab>k__BackingField: {fileID: 3606730114192485923, guid: 913a7b9ef9865e64097fa47c79a89f0d, type: 3}
   - <Name>k__BackingField: Parsnip
     <ID>k__BackingField: 2
     <Size>k__BackingField: {x: 1, y: 1}
