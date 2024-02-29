@@ -5,128 +5,127 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> allyList = new List<GameObject>();
+    private int enemyBudget = 3;
     [SerializeField]
-    List<GameObject> enemyList = new List<GameObject>();
+    private List<GameObject> aiList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> enemyList = new List<GameObject>();
 
     bool isNight = false;
-
-    bool enemyOrAllyTurn = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Subscribe functions to all relevant Events
         TurnManager.instance.EndTurnEvent += GetListOfEntities;
-        TurnManager.instance.EndTurnEvent += AIPathFindOnEndTurn;
+        TurnManager.instance.EndTurnEvent += RunAITurn;
         TurnManager.instance.EndTurnEvent += SpawnEnemies;
+        TurnManager.instance.EndTurnEvent += EndNight;
         TurnManager.instance.InitiateNight += ChangeToNight;
-        
     }
-
-    public bool isInAIList(AI ai)
+    
+    public bool IsInAIList(AI ai)
     {
-        if(ai.IsAlly())
-        {
-            return allyList.Contains(ai.gameObject);
-        }
-        if (!ai.IsAlly())
-        {
-            return enemyList.Contains(ai.gameObject);
-        }
-        else return false;
-    }
-    public bool IsNight()
-    {
-        return isNight;
+        //If the AI in the AI list return true otherwise return false
+        return aiList.Contains(ai.gameObject);
     }
     public void AddAIToList(GameObject ai)
     {
-        if (ai.GetComponent<AI>().IsAlly()) { allyList.Add(ai); }
-        else if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Add(ai); }
+        //Add the AI to the AI list
+        aiList.Add(ai);
+        //If the AI is an Enemy
+        if (!ai.GetComponent<AI>().IsAlly())
+        {
+            //Add the AI to the Enemy list
+            enemyList.Add(ai);
+        }
     }
     public void RemoveAIFromList(GameObject ai)
     {
-        if (ai.GetComponent<AI>().IsAlly()) { allyList.Remove(ai); }
-        if (!ai.GetComponent<AI>().IsAlly()) { enemyList.Remove(ai); }
+        //Remove the AI from the AI list
+        aiList.Remove(ai);
+        //If the AI is and Enemy
+        if (!ai.GetComponent<AI>().IsAlly())
+        {
+            //Remove the AI from the Enemy list
+            enemyList.Remove(ai);
+        }
     }
 
+    //You fucking twat why is this called every single turn?!
     public void GetListOfEntities()
     {
+        //Check every object in the placed objects list
         foreach (GameObject placedObject in PlacementSystem.instance.placedGameObject)
         {
+            //If the object is not null and is has an AI component
             if (placedObject != null && placedObject.GetComponent<AI>() != null)
             {
-                if(placedObject.GetComponent<AI>().IsAlly() && !allyList.Contains(placedObject))
+                //Check if the object is already in an AI list
+                if (!IsInAIList(placedObject.GetComponent<AI>()))
                 {
-                    allyList.Add(placedObject.gameObject);
-
-                }
-                else if(!placedObject.GetComponent<AI>().IsAlly() && !enemyList.Contains(placedObject))
-                {
-                    enemyList.Add(placedObject.gameObject);
+                    //If not add AI to the AI list
+                    AddAIToList(placedObject);
                 }
             }
         }
-        if(GameManager.instance.house == null)
-        {
-            GameManager.instance.tileArray[new Vector2Int(0, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
-            GameManager.instance.tileArray[new Vector2Int(-1, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
-            GameManager.instance.tileArray[new Vector2Int(0, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
-            GameManager.instance.tileArray[new Vector2Int(-1, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
-            GameManager.instance.house = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
-        }
+
+        //Hardcoded ungabunga house why? fuck you
+        GameManager.instance.tileArray[new Vector2Int(0, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+        GameManager.instance.tileArray[new Vector2Int(-1, 0)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+        GameManager.instance.tileArray[new Vector2Int(0, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
+        GameManager.instance.tileArray[new Vector2Int(-1, -1)].entity = PlacementSystem.instance.placedGameObject[0].gameObject.GetComponent<Entity>();
     }
 
-    void AIPathFindOnEndTurn()
-    {
-        if (isNight) 
-        {
-            StartCoroutine(AITurnCoroutine());
-
-            //StartCoroutine(AllyTurnCoroutine());
-
-            if (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight)
-            {
-                TurnManager.instance.EndNight();
-                GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
-                isNight = false;
-            } 
-        }
-    }
-
-    IEnumerator AITurnCoroutine()
+    void RunAITurn()
     {
         Player.instance.FreezeInputs(true);
-        foreach (GameObject ai in enemyList.ToArray())
-        {
-            if (ai == null) { enemyList.Remove(ai); }
-            else
-                {
-                    ai.GetComponent<AI>().AITurn();
-                    yield return new WaitForSeconds(0.1f);
-                }
 
-        }
-            
-        
-        
-        foreach (GameObject ai in allyList.ToArray())
+        StartCoroutine(WaitForCoroutine(AITurn()));
+    }
+
+    private IEnumerator WaitForCoroutine(IEnumerator coroutine)
+    {
+        yield return StartCoroutine(coroutine);
+
+        Player.instance.FreezeInputs(false);
+    }
+
+    private IEnumerator AITurn()
+    {
+        //For every AI in the AI list
+        for (int i = 0; i < aiList.Count; i++)
         {
-            if (ai == null) { allyList.Remove(ai); }
-            //if(night)
-            //Wander/Pathfind to enemy
+            //Check if the AI is null
+            if (aiList[i] == null)
+            {
+                //If null remove the AI from the AI list
+                aiList.Remove(aiList[i]);
+                //If the AI is in the Enemy list remove it from there too
+                if (enemyList.Contains(aiList[i])) enemyList.Remove(aiList[i]);
+            }
+            //If the AI isn't null
             else
             {
-                ai.GetComponent<AI>().AITurn();
-                yield return new WaitForSeconds(0.1f);
+                //Run the AI's Turn
+                aiList[i].GetComponent<AI>().AITurn();
+                yield return new WaitForSeconds(0.2f);
             }
-                //else
-                //Wander
-
         }
-        Player.instance.FreezeInputs(false);
-            
-        
+    }
+
+    void EndNight()
+    {
+        //If the enemy count is 0 and enemys have been spawned tonight
+        if (isNight && (enemyList.Count == 0 && GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight))
+        {
+            //Call the end night event
+            TurnManager.instance.EndNight();
+            //Return the has spawned enemies check to false
+            GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
+            //Set isNight bool to false
+            isNight = false;
+        }
     }
 
     void SpawnEnemies()
@@ -142,8 +141,7 @@ public class AIManager : MonoBehaviour
         isNight = true;
         GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
 
-        //Change from magic number 
-        GameManager.instance.enemySpawner.ChangeSpawnBudget(5);
+        GameManager.instance.enemySpawner.ChangeSpawnBudget(enemyBudget);
     }
 
 }     

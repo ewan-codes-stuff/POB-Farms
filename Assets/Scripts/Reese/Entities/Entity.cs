@@ -73,6 +73,8 @@ public class Entity : MonoBehaviour
         GameManager.instance.GetPlacedObjects().Add(obj);
         GameManager.instance.GetObjectData().AddObjectAt(GameManager.instance.GetGrid().WorldToCell(obj.transform.position), new Vector2Int(1, 1), 100, GameManager.instance.GetPlacedObjects().Count - 1);
 
+        if (GameManager.instance.tileArray == null) return;
+
         //Add to GridTile entity variable
         if (obj.GetComponent<Entity>() != null) GameManager.instance.tileArray[new Vector2Int((int)obj.transform.position.x, (int)obj.transform.position.z)].entity = obj.GetComponent<Entity>();
     }

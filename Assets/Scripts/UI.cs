@@ -35,9 +35,10 @@ public class UI : MonoBehaviour
         moneyText.text = money.ToString();
     }
 
-    public void SetTurn(int remainingTurns, int maxTurns)
+    public void SetTurn(int remainingTurns, int maxTurns, bool night = false)
     {
         turnSlider.value = (float)(remainingTurns / maxTurns);
+        if (night) turnSlider.value = 1f - turnSlider.value;
         turnText.text = remainingTurns.ToString();
     }
 }

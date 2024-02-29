@@ -69,7 +69,6 @@ public class MovementSystem : MonoBehaviour
     {
         StopMovement();
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
-        gameObject.GetComponent<Entity>().AddEntityToGrids(gameObject);
     }
 
     private void Update()
@@ -154,21 +153,28 @@ public class MovementSystem : MonoBehaviour
 
     public void StartMovement()
     {
+        if (!Player.instance.freezePlayer)
+        {
+            StopMovement();
+            CameraScript.instance.StartLerp(5f, true);
+            gridVisualization.SetActive(true);
+            cellIndicator.SetActive(true);
 
-        StopMovement();
-        CameraScript.instance.zoomOnPlayer = true;
-        gridVisualization.SetActive(true);
-        cellIndicator.SetActive(true);
 
-
-        inputManager.OnClicked += MovePlayer;
-        inputManager.OnExit += StopMovement;
+            inputManager.OnClicked += MovePlayer;
+            inputManager.OnExit += StopMovement;
+        }
+        else
+        {
+            StopMovement();
+        }
+       
         
     }
 
     public void StopMovement()
     {
-        CameraScript.instance.zoomOnPlayer = false;
+        CameraScript.instance.StartLerp(9.5f, false);
         gridVisualization.SetActive(false);
         cellIndicator.SetActive(false);
 

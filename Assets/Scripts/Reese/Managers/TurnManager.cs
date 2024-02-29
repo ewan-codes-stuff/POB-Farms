@@ -19,6 +19,11 @@ public class TurnManager : MonoBehaviour
 
     public event Action EndTurnEvent, InitiateNight;
 
+    private AudioSource source;
+
+    public AudioClip dayClip;
+    public AudioClip nightClip;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -34,6 +39,8 @@ public class TurnManager : MonoBehaviour
         ResetCurrentTurn();
         InitiateNight += StartNight;
         turnsTillNight = dayLength;
+
+        source = gameObject.GetComponent<AudioSource>();
     }
 
     //Debug Checks only
@@ -69,6 +76,8 @@ public class TurnManager : MonoBehaviour
     private void StartNight()
     {
         isNight = true;
+        source.Stop();
+        source.PlayOneShot(nightClip, source.volume);
         UpdateLight();
     }
 
@@ -76,6 +85,8 @@ public class TurnManager : MonoBehaviour
     {
         isNight = false;
         turnsTillNight = currentTurn + dayLength;
+        source.Stop();
+        source.PlayOneShot(dayClip, source.volume);
         UpdateLight();
     }
 
