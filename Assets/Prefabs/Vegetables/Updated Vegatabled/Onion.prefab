@@ -47,7 +47,7 @@ Animator:
   m_GameObject: {fileID: 977511658309650620}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 612115ced0de73b49ba345a1da19180b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
   HP: 3
   cost: 3
   Ally: 1
-  plantyBoi: {fileID: 3446283061368545517, guid: 6fda607e9f1818f48a2cec514434d7fe, type: 3}
+  plantyBoi: {fileID: 6560910321417507696, guid: 5da2991ec98aeca499ad2c4d4adf78f8, type: 3}
   turnsToGrow: 5
   growthCurve:
     serializedVersion: 2
