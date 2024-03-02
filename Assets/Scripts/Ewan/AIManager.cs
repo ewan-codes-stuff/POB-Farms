@@ -81,7 +81,7 @@ public class AIManager : MonoBehaviour
     {
         Player.instance.FreezeInputs(true);
 
-        StartCoroutine(WaitForCoroutine(AITurn()));
+        StartCoroutine(WaitForCoroutine(RunAI()));
     }
 
     
@@ -124,7 +124,7 @@ public class AIManager : MonoBehaviour
         Player.instance.FreezeInputs(false);
     }
 
-    private IEnumerator AITurn()
+    private IEnumerator RunAI()
     {
         //For every AI in the AI list
         for (int i = 0; i < aiList.Count; i++)
@@ -141,11 +141,7 @@ public class AIManager : MonoBehaviour
             else
             {
                 //If the AI has an action to take
-                if (aiList[i].GetComponent<AI>().AITurn())
-                {
-                    //Wait for AI action completetion
-                    yield return new WaitForSeconds(0.2f);
-                }
+                yield return aiList[i].GetComponent<AI>().AITurn();
             }
         }
     }

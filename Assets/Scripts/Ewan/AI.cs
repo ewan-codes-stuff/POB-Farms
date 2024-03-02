@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class AI : Entity
 {
@@ -18,6 +19,7 @@ public class AI : Entity
 
     #region Private Variables
     private GridTile targetTile;
+    private bool atEnemy = false;
     #endregion
 
     #region Initalisation
@@ -33,25 +35,6 @@ public class AI : Entity
         AddEntityToGrids();
     }
     #endregion
-
-    public bool AITurn()
-    {
-        targetTile = FindTargetInRadius();
-        if (targetTile != null)
-        {
-            if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
-            {
-                Attack(targetTile.entity);
-                return true;
-            }
-            else if (targetTile != null)
-            {
-                pathFinder.PathfindToTarget(this, targetTile);
-                return true;
-            }
-        } 
-        return false;
-    }
     private GridTile FindTargetInRadius()
     {
         //Make sure the current target tile is cleared
@@ -115,15 +98,26 @@ public class AI : Entity
         return targetTile;
     }
 
-    void Attack(Entity targetEntity)
+    #region Coroutines
+    public IEnumerator AITurn()
     {
-        if (targetEntity != null)
+        targetTile = FindTargetInRadius();
+        if (targetTile != null)
         {
-            targetEntity.TakeDamage(GetDamage());
+            if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
+            {
+                yield return Attack(targetTile.entity);
+                Debug.Log(this.gameObject.name + ": Attack finished");
+            }
+            else if (targetTile != null)
+            {
+
+                yield return pathFinder.PathfindToTarget(this, targetTile);
+            }
         }
     }
 
-    public void Wander()
+    public IEnumerator Wander()
     {
         //Get list of neighbouring tiles
         List<GridTile> wanderNeighbours = pathFinder.GetNeighbourTiles(GameManager.instance.tileArray[GetGridPosition()], 1);
@@ -135,21 +129,20 @@ public class AI : Entity
         if (wanderTile.entity == null)
         {
             Vector2 pathDifference = wanderTile.gridPosition - GetGridPosition();
-            
+
             //Remove Entity from previous Grid position
             RemoveEntityFromGrids();
-            
+
             SetGridPosition(wanderTile.gridPosition);
 
             //Update the Enity's Grid Position
             AddEntityToGrids(new Vector3Int(GetGridPosition().x, 0, GetGridPosition().y));
 
             //Move Enemy position in world and in grid space
-            StartCoroutine(Move(new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y)));
+            yield return StartCoroutine(Move(new Vector3(wanderTile.position.x, 0.0f, wanderTile.position.y)));
         }
     }
 
-    #region Coroutines
     public IEnumerator Move(Vector3 target)
     {
         // While the player has not met the target position continue moving across a tile
@@ -160,6 +153,35 @@ public class AI : Entity
         }
         // Sets the players position to the end position as they are close enough by a negligable amount
         transform.position = target;
+    }
+
+    private IEnumerator Attack(Entity targetEntity)
+    {
+        Debug.Log(this.gameObject.name + ": Attacking - " + targetEntity.gameObject.name);
+        //While the AI has not approached the target yet and is not at the target position
+        while (((targetEntity.transform.position - transform.position).sqrMagnitude > Mathf.Epsilon) && !atEnemy)
+        {
+            //Move the AI towards the target position
+            transform.position = Vector3.MoveTowards(transform.position, targetEntity.transform.position, speed * Time.deltaTime);
+            yield return null;
+        }
+        //Once at the target set atEnemy to true
+        atEnemy = true;
+        //Check that the target entity isn't null
+        if (targetEntity != null)
+        {
+            //Then Damage the target entity
+            targetEntity.TakeDamage(GetDamage());
+        }
+        //While now not at the original poition and after approaching the target
+        while (((new Vector3(GetGridPosition().x, 0, GetGridPosition().y) - transform.position).sqrMagnitude > Mathf.Epsilon) && atEnemy)
+        {
+            //Move the AI back towards it's original position
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y), speed * Time.deltaTime);
+            yield return null;
+        }
+        //Reset atEnemy bool for use again
+        atEnemy = false;
     }
     #endregion
 
