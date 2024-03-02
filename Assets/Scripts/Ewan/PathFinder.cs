@@ -177,15 +177,15 @@ public class PathFinder : MonoBehaviour
         return finishedList;
     }
 
-    public void PathfindToTarget(AI self,GridTile target)   //This should be changed to return the list
+    public IEnumerator PathfindToTarget(AI self,GridTile target)   //This should be changed to return the list
     {
         path = FindPath(GameManager.instance.tileArray[self.GetGridPosition()], target);
 
         if (path.Count == 0) 
         { 
             if (!self.IsAlly())
-            { 
-                self.Wander(); 
+            {
+                yield return self.StartCoroutine(self.Wander()); 
             } 
         }
         else
@@ -209,7 +209,7 @@ public class PathFinder : MonoBehaviour
                 self.AddEntityToGrids(new Vector3Int(self.GetGridPosition().x, 0, self.GetGridPosition().y));
 
                 //Smoothly update the AI's position
-                self.StartCoroutine(self.Move(new Vector3(path[0].position.x, 0, path[0].position.y)));
+                yield return self.StartCoroutine(self.Move(new Vector3(path[0].position.x, 0, path[0].position.y)));
             }
             path.RemoveAt(0);
         }
