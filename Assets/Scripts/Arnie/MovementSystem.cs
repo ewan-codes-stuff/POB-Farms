@@ -160,6 +160,7 @@ public class MovementSystem : MonoBehaviour
             gridVisualization.SetActive(true);
             cellIndicator.SetActive(true);
 
+            inputManager.ResetSelectedMapPosition();
 
             inputManager.OnClicked += MovePlayer;
             inputManager.OnExit += StopMovement;
