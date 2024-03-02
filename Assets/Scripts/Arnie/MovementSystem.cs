@@ -155,11 +155,13 @@ public class MovementSystem : MonoBehaviour
     {
         if (!Player.instance.IsPlayerFrozen())
         {
+
             StopMovement();
             CameraScript.instance.StartLerp(5f, true);
             gridVisualization.SetActive(true);
             cellIndicator.SetActive(true);
 
+            inputManager.ResetSelectedMapPosition();
 
             inputManager.OnClicked += MovePlayer;
             inputManager.OnExit += StopMovement;
@@ -225,9 +227,7 @@ public class MovementSystem : MonoBehaviour
                 playerSprite.flipX = true;
             }
         }
-        
 
-        
 
         movePlayer = true;
 

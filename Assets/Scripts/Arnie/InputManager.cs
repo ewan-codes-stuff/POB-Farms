@@ -59,7 +59,17 @@ public class InputManager : MonoBehaviour
         {
             lastPosition = hit.point;
         }
+        else
+        {
+            // Removes the cursour if not in the grid
+            lastPosition = new Vector3(0, -15, 0);
+        }
 
         return lastPosition;
+    }
+
+    public void ResetSelectedMapPosition()
+    {
+        lastPosition = Player.instance.transform.position;
     }
 }
