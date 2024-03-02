@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
 {
     #region Serialized Variables
     [SerializeField] private int HP = 3;
+    [SerializeField] private int damage = 1;
     [SerializeField] private int cost = 3;
     [SerializeField] private bool Ally = true;
     #endregion
@@ -139,6 +140,11 @@ public class Entity : MonoBehaviour
     public int GetCost()
     {
         return cost;
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
     #endregion
 }

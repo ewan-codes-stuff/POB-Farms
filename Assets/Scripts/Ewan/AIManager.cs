@@ -140,9 +140,12 @@ public class AIManager : MonoBehaviour
             //If the AI isn't null
             else
             {
-                //Run the AI's Turn
-                aiList[i].GetComponent<AI>().AITurn();
-                yield return new WaitForSeconds(0.2f);
+                //If the AI has an action to take
+                if (aiList[i].GetComponent<AI>().AITurn())
+                {
+                    //Wait for AI action completetion
+                    yield return new WaitForSeconds(0.2f);
+                }
             }
         }
     }
