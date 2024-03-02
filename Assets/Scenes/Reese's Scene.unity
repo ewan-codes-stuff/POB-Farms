@@ -2189,7 +2189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9922b6808e42d6444bf92174a1f3a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseIndicator: {fileID: 1775387839}
+  mouseIndicator: {fileID: 401741010}
   cellIndicator: {fileID: 1223944142}
   inputManager: {fileID: 1647516593}
   grid: {fileID: 899295387}
@@ -2839,7 +2839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1349280239
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3630,7 +3630,7 @@ MonoBehaviour:
   placementLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  mouseIndicator: {fileID: 1349280238}
+  mouseIndicator: {fileID: 401741010}
   cellIndicator: {fileID: 1117779590}
   grid: {fileID: 899295387}
   gridVisualization: {fileID: 1617448174}
@@ -4105,7 +4105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1775387840
 Transform:
   m_ObjectHideFlags: 0
