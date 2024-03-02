@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject newIndicator = Instantiate(dangerIndicator);
             dangerIndicatorList.Add(newIndicator);
-            newIndicator.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+            newIndicator.transform.position = new Vector3(0.0f, -10.0f, 0.0f);
         }
         TurnManager.instance.EndTurnEvent += ManipulateDangerIndicators;
     }
@@ -70,16 +70,18 @@ public class GameManager : MonoBehaviour
             {
                 foreach (GameObject indicator in dangerIndicatorList)
                 {
-                    indicator.transform.position = new Vector3(enemySpawner.GetSpawnColumn(),0.5f,count-6);
+                    indicator.transform.position = new Vector3(enemySpawner.GetSpawnColumn(),1f,count-6);
                     count++;
+                    indicator.GetComponentInChildren<SpriteRenderer>().flipX = false;
                 }
             }
             else
             {
                 foreach (GameObject indicator in dangerIndicatorList)
                 {
-                    indicator.transform.position = new Vector3(count-6, 0.5f, enemySpawner.GetSpawnColumn());
+                    indicator.transform.position = new Vector3(count-6, 1f, enemySpawner.GetSpawnColumn());
                     count++;
+                    indicator.GetComponentInChildren<SpriteRenderer>().flipX = true;
                 }
             }
             
@@ -88,7 +90,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (GameObject indicator in dangerIndicatorList)
             {
-                indicator.transform.position = new Vector3(0.0f,0.0f,0.0f);
+                indicator.transform.position = new Vector3(0.0f,-10.0f,0.0f);
             }
         }
     }
