@@ -31,22 +31,18 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         TurnManager.instance.EndTurnEvent += ChooseSpawnSide;
-        //Randomise which side you spawn on
     }
 
     public void SpawnEnemies()
     {
-        //ChooseSpawnSide(); //Remove this from here and do it earlier
-                           //Then use the Danger Indicator
         for (int i = spawnBudget; i > 0; i -= enemyTax)
         {
             //Increment the enemy ID
             enemyIDCounter += 1;
 
             InstantiateEnemy(WorkoutSpawnPos());
-
-            hasSpawnedEnemiesTonight = true;
         }
+        hasSpawnedEnemiesTonight = true;
         hasRandomisedSpawnsForNight = false;
     }
 
