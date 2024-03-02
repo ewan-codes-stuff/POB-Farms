@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class AI : Entity
@@ -48,7 +49,7 @@ public class AI : Entity
                 pathFinder.PathfindToTarget(this, targetTile);
                 return true;
             }
-        }
+        } 
         return false;
     }
     private GridTile FindTargetInRadius()
@@ -118,9 +119,8 @@ public class AI : Entity
     {
         if (targetEntity != null)
         {
-            targetEntity.TakeDamage(1);
+            targetEntity.TakeDamage(GetDamage());
         }
-        
     }
 
     public void Wander()
