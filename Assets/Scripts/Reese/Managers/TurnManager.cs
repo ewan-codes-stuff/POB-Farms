@@ -62,6 +62,11 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    public bool GetIsNight()
+    {
+        return isNight;
+    }
+
     public int GetCurrentTurn()
     {
         return currentTurn;

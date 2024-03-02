@@ -26,10 +26,18 @@ public class EnemySpawner : MonoBehaviour
 
     public bool hasSpawnedEnemiesTonight = false;
 
+    private bool hasRandomisedSpawnsForNight = false;
+
+    private void Start()
+    {
+        TurnManager.instance.EndTurnEvent += ChooseSpawnSide;
+        //Randomise which side you spawn on
+    }
+
     public void SpawnEnemies()
     {
-        ChooseSpawnSide();
-
+        //ChooseSpawnSide(); //Remove this from here and do it earlier
+                           //Then use the Danger Indicator
         for (int i = spawnBudget; i > 0; i -= enemyTax)
         {
             //Increment the enemy ID
@@ -39,36 +47,58 @@ public class EnemySpawner : MonoBehaviour
 
             hasSpawnedEnemiesTonight = true;
         }
+        hasRandomisedSpawnsForNight = false;
+    }
+
+    public bool GetSpawnWall()
+    {
+        return xWalls;
+    }
+
+    public int GetSpawnColumn()
+    {
+        if(xWalls)
+        {
+            return xSpawn;
+        }
+        else
+        {
+            return zSpawn;
+        }
     }
 
     private void ChooseSpawnSide()
     {
-        randomNum = Random.Range(1, 4);
-        switch (randomNum)
+        if (!hasRandomisedSpawnsForNight)
         {
-            case 1:
-                xSpawn = 6;
-                xWalls = true;
-                break;
-            case 2:
-                xSpawn = -7;
-                xWalls = true;
-                break;
-            case 3:
-                zSpawn = 6;
-                xWalls = false;
-                break;
-            case 4:
-                zSpawn = -7;
-                xWalls = false;
-                break;
+            randomNum = Random.Range(1, 5);
+            switch (randomNum)
+            {
+                case 1:
+                    xSpawn = 6;
+                    xWalls = true;
+                    break;
+                case 2:
+                    xSpawn = -7;
+                    xWalls = true;
+                    break;
+                case 3:
+                    zSpawn = 6;
+                    xWalls = false;
+                    break;
+                case 4:
+                    zSpawn = -7;
+                    xWalls = false;
+                    break;
+            }
+            hasRandomisedSpawnsForNight = true;
         }
     }
 
     private Vector2Int WorkoutSpawnPos()
     {
         //Get a new random number
-        randomNum = Random.Range(0, 11);
+        randomNum = Random.Range(0, 13);
         //If set to spawn on the "Left" or "Right" edges of the grid
         if (xWalls)
         {
@@ -76,7 +106,7 @@ public class EnemySpawner : MonoBehaviour
             while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
             {
                 //Regenerate a new random
-                randomNum = Random.Range(0, 11);
+                randomNum = Random.Range(0, 13);
             }
             //Once a free space is found return the location
             return new Vector2Int(xSpawn, randomNum - 6);
@@ -88,7 +118,7 @@ public class EnemySpawner : MonoBehaviour
             while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
             {
                 //Regenerate a new random
-                randomNum = Random.Range(0, 11);
+                randomNum = Random.Range(0, 13);
             }
             //Once a free space is found return the location
             return new Vector2Int(randomNum - 6, zSpawn);
@@ -112,5 +142,10 @@ public class EnemySpawner : MonoBehaviour
     public void ChangeSpawnBudget(int budget)
     {
         spawnBudget = budget;
+    }
+
+    public bool GetHasRandomisedSpawns()
+    {
+        return hasRandomisedSpawnsForNight;
     }
 }

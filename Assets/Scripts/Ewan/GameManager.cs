@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
 
     public Entity house;
 
+    [SerializeField]
+    private GameObject dangerIndicator;
+    private List<GameObject> dangerIndicatorList = new List<GameObject>();
+
     public Dictionary<Vector2Int, GridTile> tileArray;
     // Start is called before the first frame update
     private void Awake()
@@ -31,6 +35,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GridManager.CreateGridArray();
+        //Spawn all enemy danger indicators.
+        for(int i = 0; i <= 11; i++)
+        {
+            GameObject newIndicator = Instantiate(dangerIndicator);
+            dangerIndicatorList.Add(newIndicator);
+            newIndicator.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+        TurnManager.instance.EndTurnEvent += ManipulateDangerIndicators;
     }
 
     public GridData GetObjectData()
@@ -46,5 +58,38 @@ public class GameManager : MonoBehaviour
     public List<GameObject> GetPlacedObjects()
     {
         return PlacementSystem.instance.placedGameObject;
+    }
+
+    private void ManipulateDangerIndicators()
+    {
+        int count = 0;
+        if(!TurnManager.instance.GetIsNight() && enemySpawner.GetHasRandomisedSpawns())
+        {
+            //If GetSpawnWall is true, we are using the X dimension walls to spawn from, else is Z Dimension
+            if(enemySpawner.GetSpawnWall())
+            {
+                foreach (GameObject indicator in dangerIndicatorList)
+                {
+                    indicator.transform.position = new Vector3(enemySpawner.GetSpawnColumn(),0.5f,count-6);
+                    count++;
+                }
+            }
+            else
+            {
+                foreach (GameObject indicator in dangerIndicatorList)
+                {
+                    indicator.transform.position = new Vector3(count-6, 0.5f, enemySpawner.GetSpawnColumn());
+                    count++;
+                }
+            }
+            
+        }
+        else
+        {
+            foreach (GameObject indicator in dangerIndicatorList)
+            {
+                indicator.transform.position = new Vector3(0.0f,0.0f,0.0f);
+            }
+        }
     }
 }

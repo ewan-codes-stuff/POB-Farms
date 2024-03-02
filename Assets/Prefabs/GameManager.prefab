@@ -50,6 +50,7 @@ MonoBehaviour:
   ground: {fileID: 0}
   light: {fileID: 0}
   house: {fileID: 0}
+  dangerIndicator: {fileID: 7943859598619389602, guid: a280c7f5a146a1a428675b4adc5b2ca2, type: 3}
 --- !u!114 &-8376752828148711124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,5 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e19afd5316514449613734ef5737d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allyList: []
+  enemyBudget: 3
+  aiList: []
   enemyList: []
