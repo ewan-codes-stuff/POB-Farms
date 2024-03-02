@@ -141,6 +141,8 @@ public class PlacementSystem : MonoBehaviour
             gridVisualization.SetActive(true);
             cellIndicator.SetActive(true);
 
+            inputManager.ResetSelectedMapPosition();
+
             // Adds these functions to the OnClicked/OnExit Action
             inputManager.OnClicked += PlaceStructure;
             inputManager.OnExit += StopPlacement;

@@ -59,7 +59,16 @@ public class InputManager : MonoBehaviour
         {
             lastPosition = hit.point;
         }
+        else
+        {
+            ResetSelectedMapPosition();
+        }
 
         return lastPosition;
+    }
+
+    public void ResetSelectedMapPosition()
+    {
+        lastPosition = Player.instance.transform.position;
     }
 }
