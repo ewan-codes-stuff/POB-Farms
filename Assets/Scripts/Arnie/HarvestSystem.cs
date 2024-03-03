@@ -27,12 +27,14 @@ public class HarvestSystem : MonoBehaviour
     [SerializeField]
     private AudioClip error;
 
-
     public GridData objectData;
 
     private Renderer[] previewRenderer;
 
     public List<GameObject> placedGameObject = new List<GameObject>();
+
+    public GameObject fadeTextPrefab;
+    public Transform textPos;
 
     // Singleton instance
     public static HarvestSystem instance;
@@ -205,17 +207,9 @@ public class HarvestSystem : MonoBehaviour
         GameObject temp = GetAllyGameobject(gridPosition);
 
         // adds the price to the players currency
-        Player.instance.AddCurrency(50);
-
-        //// Remove this gameobject from the placed objects list
-        //GameManager.instance.GetPlacedObjects().Remove(GetAllyGameobject(gridPosition));
-
-        ////Remove the existing plant from the gridData
-        //PlacementSystem.instance.objectData.RemoveObjectAt(PlacementSystem.instance.grid.WorldToCell(GetAllyGameobject(gridPosition).transform.position), new Vector2Int(1, 1));
-
-        ////Remove from this stupid other thing
-        //GameManager.instance.tileArray[new Vector2Int(gridPosition.x, gridPosition.z)].entity = null;
-
+        Player.instance.AddCurrency(Mathf.RoundToInt(temp.GetComponent<Entity>().GetCost() / 2));
+        GameObject fadeText = GameObject.Instantiate(fadeTextPrefab, textPos.transform);
+        fadeText.GetComponent<FadingText>().SetText("HARVESTED $" + Mathf.RoundToInt(temp.GetComponent<Entity>().GetCost() / 2) );
 
 
         if (temp.TryGetComponent<Plant>(out Plant plant))
