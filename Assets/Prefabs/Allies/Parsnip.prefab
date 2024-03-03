@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 3
+  HP: 2
   damage: 1
-  cost: 3
+  cost: 10
   Ally: 1
   pathFinder: {fileID: 6140163123650344927}
   AIDetectionRadius: 2
@@ -4985,6 +4985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   nightColour: {r: 0.49803922, g: 0.5058824, b: 0.9137255, a: 1}
+  timeToLerp: 1
 --- !u!1 &7701485641908567977
 GameObject:
   m_ObjectHideFlags: 0
