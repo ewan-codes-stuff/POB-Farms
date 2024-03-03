@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Entity : MonoBehaviour
 {
@@ -17,6 +19,12 @@ public class Entity : MonoBehaviour
     private Vector2Int gridPosition;
     //Store my current HP
     private int currentHP;
+    //Timer for taking damage
+    private float damageTimer = 0.2f;
+    #endregion
+
+    #region Public Actions
+    public event Action TakingDamage;
     #endregion
 
 
@@ -39,17 +47,26 @@ public class Entity : MonoBehaviour
 
         if (currentHP > HP) { currentHP = HP; }
     }
-    public virtual void TakeDamage(int damageAmount)
+    public virtual IEnumerator TakeDamage(int damageAmount)
     {
+        TakingDamage?.Invoke();
+
+        if (damageTimer > 0)
+        {
+            damageTimer -= Time.deltaTime;
+            yield return null;
+        }
         currentHP -= damageAmount;
 
         if(currentHP <= 0) 
         {
             currentHP = 0;
             Die();
-            
         }
+
+        damageTimer = 0.2f;
     }
+
     public virtual void Die()
     {
         RemoveEntityFromGrids();

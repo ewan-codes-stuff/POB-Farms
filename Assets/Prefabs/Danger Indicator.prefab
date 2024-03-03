@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 7943719462189195805}
   - component: {fileID: 1746316271007211353}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Exclamation Mark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,3 +152,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  nightColour: {r: 0, g: 0, b: 0, a: 0}

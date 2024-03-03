@@ -110,7 +110,6 @@ public class AI : Entity
             if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
             {
                 yield return Attack(targetTile.entity);
-                Debug.Log(this.gameObject.name + ": Attack finished");
             }
             else if (targetTile != null)
             {
@@ -160,7 +159,6 @@ public class AI : Entity
 
     private IEnumerator Attack(Entity targetEntity)
     {
-        Debug.Log(this.gameObject.name + ": Attacking - " + targetEntity.gameObject.name);
         //While the AI has not approached the target yet and is not at the target position
         while (((targetEntity.transform.position - transform.position).sqrMagnitude > Mathf.Epsilon) && !atEnemy)
         {
@@ -174,7 +172,7 @@ public class AI : Entity
         if (targetEntity != null)
         {
             //Then Damage the target entity
-            targetEntity.TakeDamage(GetDamage());
+            yield return StartCoroutine(targetEntity.TakeDamage(GetDamage()));
         }
         //While now not at the original poition and after approaching the target
         while (((new Vector3(GetGridPosition().x, 0, GetGridPosition().y) - transform.position).sqrMagnitude > Mathf.Epsilon) && atEnemy)
