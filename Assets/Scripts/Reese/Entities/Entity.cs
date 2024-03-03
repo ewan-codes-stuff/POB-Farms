@@ -12,7 +12,11 @@ public class Entity : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private int cost = 3;
     [SerializeField] private bool Ally = true;
+
     #endregion
+
+    public HealthBar healthbar;
+
 
     #region Private variables
     //Stores my position on the grid
@@ -57,6 +61,11 @@ public class Entity : MonoBehaviour
             yield return null;
         }
         currentHP -= damageAmount;
+
+        if(healthbar != null)
+        {
+            healthbar.ApplyDamage();
+        }
 
         if(currentHP <= 0) 
         {
@@ -167,6 +176,11 @@ public class Entity : MonoBehaviour
     public int GetHealth()
     {
         return currentHP;
+    }
+
+    public int GetMaxHealth()
+    {
+        return HP;
     }
     #endregion
 }
