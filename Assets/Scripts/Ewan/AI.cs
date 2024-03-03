@@ -106,7 +106,10 @@ public class AI : Entity
     public IEnumerator AITurn()
     {
         newTile = FindTargetInRadius();
-        if(targetTile != null && Vector2Int.Distance())
+        if ((targetTile == null || Vector2Int.Distance(newTile.gridPosition, GetGridPosition()) < Vector2Int.Distance(targetTile.gridPosition, GetGridPosition())) && newTile != null)
+        {
+            targetTile = newTile;
+        }
 
         if (targetTile != null)
         {
