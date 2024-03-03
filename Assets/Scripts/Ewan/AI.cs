@@ -186,32 +186,35 @@ public class AI : Entity
 
     private IEnumerator Attack(Entity targetEntity)
     {
-        //While the AI has not approached the target yet and is not at the target position
-        while (((targetEntity.transform.position - transform.position).sqrMagnitude > Mathf.Epsilon) && !atEnemy)
-        {
-            //Move the AI towards the target position
-            transform.position = Vector3.MoveTowards(transform.position, targetEntity.transform.position, speed * Time.deltaTime);
-            //Look at the target it's attacking
-            LookWhereGoing(targetEntity.transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y));
-            yield return null;
-        }
-        //Once at the target set atEnemy to true
-        atEnemy = true;
-        //Check that the target entity isn't null
         if (targetEntity != null)
         {
-            //Then Damage the target entity
-            yield return StartCoroutine(targetEntity.TakeDamage(GetDamage()));
+            //While the AI has not approached the target yet and is not at the target position
+            while (((targetEntity.transform.position - transform.position).sqrMagnitude > Mathf.Epsilon) && !atEnemy)
+            {
+                //Move the AI towards the target position
+                transform.position = Vector3.MoveTowards(transform.position, targetEntity.transform.position, speed * Time.deltaTime);
+                //Look at the target it's attacking
+                LookWhereGoing(targetEntity.transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y));
+                yield return null;
+            }
+            //Once at the target set atEnemy to true
+            atEnemy = true;
+            //Check that the target entity isn't null
+            if (targetEntity != null)
+            {
+                //Then Damage the target entity
+                yield return StartCoroutine(targetEntity.TakeDamage(GetDamage()));
+            }
+            //While now not at the original poition and after approaching the target
+            while (((new Vector3(GetGridPosition().x, 0, GetGridPosition().y) - transform.position).sqrMagnitude > Mathf.Epsilon) && atEnemy)
+            {
+                //Move the AI back towards it's original position
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y), speed * Time.deltaTime);
+                yield return null;
+            }
+            //Reset atEnemy bool for use again
+            atEnemy = false;
         }
-        //While now not at the original poition and after approaching the target
-        while (((new Vector3(GetGridPosition().x, 0, GetGridPosition().y) - transform.position).sqrMagnitude > Mathf.Epsilon) && atEnemy)
-        {
-            //Move the AI back towards it's original position
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y), speed * Time.deltaTime);
-            yield return null;
-        }
-        //Reset atEnemy bool for use again
-        atEnemy = false;
     }
     #endregion
 
