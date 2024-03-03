@@ -19,6 +19,7 @@ public class AI : Entity
 
     #region Private Variables
     private GridTile targetTile;
+    private GridTile newTile;
     private bool atEnemy = false;
     #endregion
 
@@ -104,7 +105,9 @@ public class AI : Entity
     #region Coroutines
     public IEnumerator AITurn()
     {
-        targetTile = FindTargetInRadius();
+        newTile = FindTargetInRadius();
+        if(targetTile != null && Vector2Int.Distance())
+
         if (targetTile != null)
         {
             if (Vector2Int.Distance(targetTile.gridPosition, GetGridPosition()) <= 1.0f)
@@ -113,7 +116,6 @@ public class AI : Entity
             }
             else if (targetTile != null)
             {
-
                 yield return pathFinder.PathfindToTarget(this, targetTile);
             }
         }
