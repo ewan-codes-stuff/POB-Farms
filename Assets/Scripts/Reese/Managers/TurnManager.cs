@@ -9,8 +9,6 @@ public class TurnManager : MonoBehaviour
 {
     #region Serialized Fields
     [SerializeField] private int dayLength = 10;
-    [SerializeField] private AudioClip dayClip;
-    [SerializeField] private AudioClip nightClip;
     #endregion
 
     #region Private Variables
@@ -18,7 +16,6 @@ public class TurnManager : MonoBehaviour
     private int currentTurn;
     private int turnsTillNight;
     private bool isNight;
-    private AudioSource source;
     #endregion
 
     #region Public Variables
@@ -42,8 +39,6 @@ public class TurnManager : MonoBehaviour
         ResetCurrentRound();
         InitiateNight += StartNight;
         turnsTillNight = dayLength;
-
-        source = gameObject.GetComponent<AudioSource>();
     }
     #endregion
 
@@ -106,8 +101,8 @@ public class TurnManager : MonoBehaviour
     private void StartNight()
     {
         isNight = true;
-        source.Stop();
-        source.PlayOneShot(nightClip, GameManager.instance.GetVolume());
+        GameManager.instance.GetAudio().Stop();
+        GameManager.instance.PlayNightAudio();
         UpdateLight();
     }
     public void EndNight()
@@ -115,8 +110,8 @@ public class TurnManager : MonoBehaviour
         isNight = false;
         IncrementCurrentRound();
         turnsTillNight = currentTurn + dayLength;
-        source.Stop();
-        source.PlayOneShot(dayClip, GameManager.instance.GetVolume());
+        GameManager.instance.GetAudio().Stop();
+        GameManager.instance.PlayDayAudio();
         UpdateLight();
         FinishNight?.Invoke();
     }

@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         VolumeSlider.onValueChanged.AddListener(delegate { OnChangeVolume(); });
+        VolumeSlider.value = GameManager.instance.GetVolume();
     }
     public void Resume()
     {

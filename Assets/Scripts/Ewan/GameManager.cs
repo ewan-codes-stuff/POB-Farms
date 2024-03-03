@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     #region Serialised Fields
     [SerializeField] private float volume = 1f;
 
+    [SerializeField] private AudioClip dayAudioClip;
+
+    [SerializeField] private AudioClip nightAudioClip;
+
     [SerializeField] private AnimationCurve difficultyCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     [SerializeField] private GameObject dangerIndicator;
@@ -16,6 +20,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public AIManager aiManager;
     public EnemySpawner enemySpawner;
+
+    private AudioSource source;
 
     public GameObject ground;
     public LightControl light;
@@ -50,7 +56,9 @@ public class GameManager : MonoBehaviour
             newIndicator.transform.position = new Vector3(0.0f, -10.0f, 0.0f);
         }
         TurnManager.instance.EndTurnEvent += ManipulateDangerIndicators;
+        source = GetComponent<AudioSource>();
         GameManager.instance.SetVolume(PlayerPrefs.GetFloat("masterVolume"));
+        PlayDayAudio();
     }
 
     private void Update()
@@ -116,7 +124,20 @@ public class GameManager : MonoBehaviour
         return difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50);
     }
 
-    #region Volume Control
+    #region Audio Control
+
+    public AudioSource GetAudio()
+    {
+        return source;
+    }
+    public void PlayDayAudio()
+    {
+        source.PlayOneShot(dayAudioClip);
+    }
+    public void PlayNightAudio()
+    {
+        source.PlayOneShot(nightAudioClip);
+    }
     public float GetVolume()
     {
         return volume;
@@ -125,6 +146,7 @@ public class GameManager : MonoBehaviour
     public void SetVolume(float value)
     {
         volume = value;
+        source.volume = volume;
     }
     #endregion
 }
