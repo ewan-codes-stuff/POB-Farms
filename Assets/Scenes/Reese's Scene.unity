@@ -2957,6 +2957,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8146453930203779187, guid: da6dc4d1c9cfc054b93bdb13870c4530, type: 3}
+      propertyPath: wollars
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 9057850740576590861, guid: da6dc4d1c9cfc054b93bdb13870c4530, type: 3}
       propertyPath: grid
       value: 

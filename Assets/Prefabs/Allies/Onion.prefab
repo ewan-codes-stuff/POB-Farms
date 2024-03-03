@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 3
   damage: 1
-  cost: 3
+  cost: 11
   Ally: 1
   pathFinder: {fileID: -3807486985988436429}
   AIDetectionRadius: 2
@@ -5039,3 +5039,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   nightColour: {r: 0.49803922, g: 0.5058824, b: 0.9137255, a: 1}
+  timeToLerp: 1

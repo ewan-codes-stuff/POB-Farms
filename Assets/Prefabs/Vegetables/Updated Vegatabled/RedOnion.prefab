@@ -154,10 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
-  cost: 3
+  damage: 1
+  cost: 10
   Ally: 1
   plantyBoi: {fileID: 585862219362413848, guid: 39746f2f2efd0884ea5b38b83c5d75fa, type: 3}
-  turnsToGrow: 5
+  turnsToGrow: 6
   growthCurve:
     serializedVersion: 2
     m_Curve:
