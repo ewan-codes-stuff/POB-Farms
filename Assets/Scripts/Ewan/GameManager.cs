@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private float GetDifficulty() 
+    public float GetDifficulty() 
     { 
         return difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50);
     }

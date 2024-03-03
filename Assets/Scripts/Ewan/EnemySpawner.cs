@@ -14,7 +14,8 @@ public class EnemySpawner : MonoBehaviour
 
     bool xWalls = false;
 
-    public List<AI> EnemiesToSpawn;
+    public List<AI> enemies;
+    private List<AI> spawnPool;
 
     int enemyIDCounter = 0;
 
@@ -28,19 +29,31 @@ public class EnemySpawner : MonoBehaviour
 
     private bool hasRandomisedSpawnsForNight = false;
 
+    private Vector2Int posToSpawnEnemy;
+
     private void Start()
     {
         TurnManager.instance.EndTurnEvent += ChooseSpawnSide;
+        spawnPool = new List<AI>();
     }
 
     public void SpawnEnemies()
     {
         for (int i = spawnBudget; i > 0; i -= enemyTax)
         {
-            //Increment the enemy ID
-            enemyIDCounter += 1;
+            //Get the position to spawn the enemy
+            posToSpawnEnemy = WorkoutSpawnPos();
 
-            InstantiateEnemy(WorkoutSpawnPos());
+            for(int j = 0; j < enemies.Count; j++)
+            {
+                if (enemies[j].gameObject.GetComponent<AI>().GetCost() <= i)
+                {
+                    spawnPool.Add(enemies[j]);
+                }
+            }
+            Debug.Log(spawnPool.Count);
+            InstantiateEnemy(spawnPool[Random.Range(0, spawnPool.Count)], posToSpawnEnemy);
+            spawnPool.Clear();
         }
         hasSpawnedEnemiesTonight = true;
         hasRandomisedSpawnsForNight = false;
@@ -121,21 +134,23 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void InstantiateEnemy(Vector2Int pos)
+    private void InstantiateEnemy(AI EnemyToSpawn, Vector2Int pos)
     {
         //Spawn an enemy under the floor at the grid tile position
-        spawnedEnemy = Instantiate(EnemiesToSpawn[0].gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+        spawnedEnemy = Instantiate(EnemyToSpawn.gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
         //Add Enemy to AI Manager List
         GameManager.instance.aiManager.AddAIToList(spawnedEnemy);
         //Make sure the entity is stored on the tile
         GameManager.instance.tileArray[new Vector2Int(pos.x, pos.y)].entity = spawnedEnemy.GetComponent<Entity>();
+        //Increment the enemy ID
+        enemyIDCounter += 1;
         //Set the enemy's name to equal it's enemy number
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
         //Set the enemy's tax to equal it's value
         enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
     }
 
-    public void ChangeSpawnBudget(int budget)
+    public void SetSpawnBudget(int budget)
     {
         spawnBudget = budget;
     }
