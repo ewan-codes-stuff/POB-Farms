@@ -79,6 +79,10 @@ public class Entity : MonoBehaviour
     public virtual void Die()
     {
         RemoveEntityFromGrids();
+        if(GameManager.instance != null && !Ally)
+        {
+            Player.instance.AddCurrency((int)(cost * (1 + GameManager.instance.GetDifficulty())));
+        }
         GameObject.Destroy(gameObject);
     }
     #endregion
