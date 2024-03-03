@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    int spawnBudget = 1;
-    int spawnLocationRotator = 0;
+    #region Serialized Fields
     [SerializeField]
-    List<Vector2Int> locationsToSpawn;
+    private List<AI> enemies;
+    #endregion
 
-    int xSpawn = -6;
-    int zSpawn = -6;
-
-    bool xWalls = false;
-
-    public List<AI> enemies;
-    private List<AI> spawnPool;
-
-    int enemyIDCounter = 0;
-
-    int enemyTax = 1;
-
-    GameObject spawnedEnemy;
-
-    int randomNum;
-
+    #region Public Variables
     public bool hasSpawnedEnemiesTonight = false;
+    #endregion
 
-    private bool hasRandomisedSpawnsForNight = false;
-
+    #region Private Variables
+    //Budget used for spawning enemies in
+    private int spawnBudget;
+    //Stores a list of enemies that can be spawned based on the budget
+    private List<AI> spawnPool;
+    //Used to hold edges of board for spawning
+    private int xSpawn;
+    private int zSpawn;
+    //Bool for if spawning on one of the edges on the x-axis
+    private bool xWalls = false;
+    //Stores the location to spawn the enemy in
     private Vector2Int posToSpawnEnemy;
+
+    //Stores the spawned enemy
+    private GameObject spawnedEnemy;
+    //Stores the spawned enemy's cost
+    private int enemyCost;
+    //Used for setting the stored enemy name
+    private int enemyIDCounter = 0;
+
+    //Random number store for use in many places
+    private int randomNum;
+
+    //A bool for is spawns have been randomised
+    private bool hasRandomisedSpawnsForNight = false;
+    #endregion
 
     private void Start()
     {
@@ -39,20 +48,25 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        for (int i = spawnBudget; i > 0; i -= enemyTax)
+        //Keep spawning enemies until budget is used up
+        for (int i = spawnBudget; i > 0; i -= enemyCost)
         {
             //Get the position to spawn the enemy
             posToSpawnEnemy = WorkoutSpawnPos();
 
+            //For each enemy in the enemies list
             for(int j = 0; j < enemies.Count; j++)
             {
+                //If the enemy's cost is less than the currently available budget
                 if (enemies[j].gameObject.GetComponent<AI>().GetCost() <= i)
                 {
+                    //Add the enemy to the spawnPool
                     spawnPool.Add(enemies[j]);
                 }
             }
-            Debug.Log(spawnPool.Count);
+            //Get a random enemy from the spawn pool and spawn them at the spawn location
             InstantiateEnemy(spawnPool[Random.Range(0, spawnPool.Count)], posToSpawnEnemy);
+            //Reset the spawn pool
             spawnPool.Clear();
         }
         hasSpawnedEnemiesTonight = true;
@@ -147,7 +161,7 @@ public class EnemySpawner : MonoBehaviour
         //Set the enemy's name to equal it's enemy number
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
         //Set the enemy's tax to equal it's value
-        enemyTax = spawnedEnemy.GetComponent<AI>().GetCost();
+        enemyCost = spawnedEnemy.GetComponent<AI>().GetCost();
     }
 
     public void SetSpawnBudget(int budget)
