@@ -81,6 +81,10 @@ public class TurnManager : MonoBehaviour
     {
         return currentTurn;
     }
+    public int GetTurnsTillNight()
+    {
+        return turnsTillNight;
+    }
     public void EndTurn()
     {
         IncrementCurrentTurn();
@@ -119,6 +123,7 @@ public class TurnManager : MonoBehaviour
         source.Stop();
         source.PlayOneShot(dayClip, source.volume);
         UpdateLight();
+        FinishNight?.Invoke();
     }
     public bool GetIsNight()
     {

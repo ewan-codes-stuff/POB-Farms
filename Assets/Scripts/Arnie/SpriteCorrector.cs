@@ -74,7 +74,6 @@ public class SpriteCorrector : MonoBehaviour
             //If it is night
             if(TurnManager.instance.GetIsNight() && !isNight)
             {
-                Debug.Log("Tis night Mother Fucker");
                 //Set is Night bool
                 isNight = true;
                 //Setup the target colours for lerping to night
@@ -87,7 +86,6 @@ public class SpriteCorrector : MonoBehaviour
 
             if(lerpTimer <= timeToLerp)
             {
-                Debug.Log("Lerping colour");
                 lerpTimer += Time.deltaTime;
                 newColour = Vector3.Lerp(startColour, targetColour, lerpTimer / timeToLerp);
                 currentColour = new Color(newColour.x, newColour.y, newColour.z, 1);
