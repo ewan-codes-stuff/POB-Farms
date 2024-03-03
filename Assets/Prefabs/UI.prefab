@@ -2788,6 +2788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3399347997896938871}
   - component: {fileID: 1017735132331183060}
+  - component: {fileID: 3822851388314610778}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -2867,6 +2868,22 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3822851388314610778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096769672401745126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c562de30bfdfed45b848ad2c5abd400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayNightSlider: {fileID: 0}
+  turnManager: {fileID: 0}
+  currentTurn: 0
+  turnsTillNight: 0
 --- !u!1 &2240564769037402505
 GameObject:
   m_ObjectHideFlags: 0
@@ -3101,7 +3118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.13725491, g: 0.14509805, b: 0.29411766, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3747,7 +3764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13656995, g: 0.14318018, b: 0.2924528, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
