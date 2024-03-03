@@ -101,6 +101,8 @@ public class MovementSystem : MonoBehaviour
         mouseIndicator.transform.position = mousePosition;
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
 
+        
+
         if (movePlayer)
         {
             // Lerps the player to move to the tile its targeting
@@ -124,11 +126,34 @@ public class MovementSystem : MonoBehaviour
                     timeElapsed = 0;
                     moveDelayTimer = 0;
                     movePlayer = false;
+
+
                     TurnManager.instance.EndTurn();
                 }
                 
             }
         }
+
+        if (TurnManager.instance.GetIsNight())
+        {
+            if (Player.instance.IsPlayerFrozen())
+            {
+                //CameraScript.instance.StartLerp(9.5f, false);
+                gridVisualization.SetActive(false);
+                cellIndicator.SetActive(false);
+            }
+            else
+            {
+                if (moveDelayTimer == 0 && !movePlayer)
+                {
+                    //CameraScript.instance.StartLerp(5f, true);
+                    cellIndicator.SetActive(true);
+                    gridVisualization.SetActive(true);
+                }
+            }
+
+        }
+
     }
 
 
@@ -226,9 +251,8 @@ public class MovementSystem : MonoBehaviour
                 playerSprite.flipX = true;
             }
         }
-        
 
-        
+
 
         movePlayer = true;
 

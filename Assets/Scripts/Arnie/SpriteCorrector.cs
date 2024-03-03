@@ -18,6 +18,7 @@ public class SpriteCorrector : MonoBehaviour
     {
         gameObject.transform.LookAt(cam.transform);
         gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 225, gameObject.transform.eulerAngles.z);
+
         if (!TurnManager.instance.GetIsNight())
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.white;

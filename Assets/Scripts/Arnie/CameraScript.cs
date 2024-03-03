@@ -14,7 +14,6 @@ public class CameraScript : MonoBehaviour
 
 
     float timeElapsed;
-    float reverseTimeElapsed = 5;
     public float lerpDuration = 3;
 
     public bool zoomOnPlayerMore = false;
@@ -54,41 +53,6 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (zoomOnPlayer)
-        {
-            reverseTimeElapsed = 0;
-
-            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            if (timeElapsed < lerpDuration)
-            {
-                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, orthosize, timeElapsed / lerpDuration);
-                transform.position = Vector3.Lerp(InitialPos, TargetPos, timeElapsed / lerpDuration);
-                timeElapsed += Time.deltaTime;
-            }
-            else
-            {
-                transform.position = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            }
-
-        }
-        else if (!zoomOnPlayer)
-        {
-            timeElapsed = 0;
-
-            Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
-            if (reverseTimeElapsed < lerpDuration)
-            {
-                gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(orthosize, initialSize, reverseTimeElapsed / lerpDuration);
-                transform.position = Vector3.Lerp(TargetPos, InitialPos, reverseTimeElapsed / lerpDuration);
-                reverseTimeElapsed += Time.deltaTime;
-            }
-            else
-            {
-                transform.position = InitialPos;
-            }
-        }*/
-
-        Vector3 TargetPos = new Vector3(PlayerPos.position.x - 7, gameObject.transform.position.y, PlayerPos.transform.position.z - 7);
         if (timeElapsed < lerpDuration)
         {
             gameObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(initialSize, orthosize, timeElapsed / lerpDuration);
