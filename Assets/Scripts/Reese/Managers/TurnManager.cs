@@ -17,7 +17,7 @@ public class TurnManager : MonoBehaviour
 
     private bool isNight;
 
-    public event Action EndTurnEvent, InitiateNight;
+    public event Action EndTurnEvent, InitiateNight, FinishNight;
 
     private AudioSource source;
 
