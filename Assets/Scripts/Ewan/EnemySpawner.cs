@@ -94,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
     private Vector2Int WorkoutSpawnPos()
     {
         //Get a new random number
-        randomNum = Random.Range(0, 13);
+        randomNum = Random.Range(0, 12);
         //If set to spawn on the "Left" or "Right" edges of the grid
         if (xWalls)
         {
@@ -102,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
             while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
             {
                 //Regenerate a new random
-                randomNum = Random.Range(0, 13);
+                randomNum = Random.Range(0, 12);
             }
             //Once a free space is found return the location
             return new Vector2Int(xSpawn, randomNum - 6);
@@ -114,7 +114,7 @@ public class EnemySpawner : MonoBehaviour
             while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
             {
                 //Regenerate a new random
-                randomNum = Random.Range(0, 13);
+                randomNum = Random.Range(0, 12);
             }
             //Once a free space is found return the location
             return new Vector2Int(randomNum - 6, zSpawn);

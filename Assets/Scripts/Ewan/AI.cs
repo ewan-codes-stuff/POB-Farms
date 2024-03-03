@@ -23,6 +23,10 @@ public class AI : Entity
     private bool atEnemy = false;
     #endregion
 
+    //  (-1,1),(0,1),(1,1)
+    //  (-1,0),(0,0),(1,0)      Facing Left
+    //  (-1,-1),(0,-1),(1,-1)
+    //
     #region Initalisation
     //Initalise the AI here
     public override void Init()
@@ -101,6 +105,24 @@ public class AI : Entity
 
         return targetTile;
     }
+    public void LookWhereGoing(Vector3 target, Vector3 startPos)
+    {
+        //if ((target.x > startPos.x && target.z > startPos.z) || (target.x < startPos.x && target.z < startPos.z))
+        //{
+        //    // No need to do anything
+        //}
+        //else
+        //{
+            if ((target.x > startPos.x) || (target.z < startPos.z))
+            {
+                GetComponentInChildren<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
+            }
+        
+    }
 
     #region Coroutines
     public IEnumerator AITurn()
@@ -151,7 +173,7 @@ public class AI : Entity
     }
 
     public IEnumerator Move(Vector3 target)
-    {
+    {        
         // While the player has not met the target position continue moving across a tile
         while ((target - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
@@ -169,6 +191,8 @@ public class AI : Entity
         {
             //Move the AI towards the target position
             transform.position = Vector3.MoveTowards(transform.position, targetEntity.transform.position, speed * Time.deltaTime);
+            //Look at the target it's attacking
+            LookWhereGoing(targetEntity.transform.position, new Vector3(GetGridPosition().x, 0, GetGridPosition().y));
             yield return null;
         }
         //Once at the target set atEnemy to true

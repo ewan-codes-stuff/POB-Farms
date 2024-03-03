@@ -199,7 +199,7 @@ public class PathFinder : MonoBehaviour
             {
                 //Add current position to list of where I've been
                 previousPath.Add(path[0]);
-
+                self.LookWhereGoing(new Vector3(path[0].gridPosition.x, 0, path[0].gridPosition.y), new Vector3(self.GetGridPosition().x, 0, self.GetGridPosition().y));
                 //Remove AI from the previous gird position
                 self.RemoveEntityFromGrids();
 
