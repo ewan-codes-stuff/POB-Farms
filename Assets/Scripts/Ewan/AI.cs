@@ -15,6 +15,9 @@ public class AI : Entity
 
     [SerializeField]
     private float speed = 8f;
+
+    [SerializeField]
+    private GameObject InstantiatedDeath;
     #endregion
 
     #region Private Variables
@@ -216,6 +219,13 @@ public class AI : Entity
     {
         //Remove the AI from the list of AI
         GameManager.instance.aiManager.RemoveAIFromList(gameObject);
+
+        if(InstantiatedDeath != null)
+        {
+            GameObject death = Instantiate(InstantiatedDeath);
+            death.transform.position = gameObject.transform.position;
+        }
+        
         //Run the base Death code
         base.Die();
     }
