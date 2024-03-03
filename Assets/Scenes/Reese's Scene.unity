@@ -2948,6 +2948,78 @@ PrefabInstance:
       propertyPath: enemySpawner
       value: 
       objectReference: {fileID: 1429063924}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[0].inSlope
+      value: 0.21474725
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].inSlope
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].inSlope
+      value: 1.657259
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[0].outSlope
+      value: 0.21474725
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].inWeight
+      value: 0.042980194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].outSlope
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].outSlope
+      value: 1.657259
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[0].outWeight
+      value: 0.04680037
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7215,6 +7287,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 899295387}
+    - target: {fileID: 9057850740576590861, guid: da6dc4d1c9cfc054b93bdb13870c4530, type: 3}
+      propertyPath: movePlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9057850740576590861, guid: da6dc4d1c9cfc054b93bdb13870c4530, type: 3}
       propertyPath: inputManager
       value: 

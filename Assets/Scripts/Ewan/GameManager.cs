@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public Entity house;
 
     [SerializeField]
+    private AnimationCurve difficultyCurve= AnimationCurve.Linear(0,0,1,1);
+
+    [SerializeField]
     private GameObject dangerIndicator;
     private List<GameObject> dangerIndicatorList = new List<GameObject>();
 
@@ -44,6 +47,14 @@ public class GameManager : MonoBehaviour
         }
         TurnManager.instance.EndTurnEvent += ManipulateDangerIndicators;
         TurnManager.instance.SetVolume(PlayerPrefs.GetFloat("masterVolume"));
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GetDifficulty();
+        }
     }
 
     public GridData GetObjectData()
@@ -94,5 +105,10 @@ public class GameManager : MonoBehaviour
                 indicator.transform.position = new Vector3(0.0f,-10.0f,0.0f);
             }
         }
+    }
+
+    private float GetDifficulty() 
+    { 
+        return difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50);
     }
 }
