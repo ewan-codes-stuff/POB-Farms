@@ -11,6 +11,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private int dayLength = 10;
     [SerializeField] private AudioClip dayClip;
     [SerializeField] private AudioClip nightClip;
+    [SerializeField] private float volume = 1f;
     #endregion
 
     #region Private Variables
@@ -64,6 +65,7 @@ public class TurnManager : MonoBehaviour
         {
             SceneManager.LoadScene("Menu");
         }
+        source.volume = (volume / 100);
     }
 
     #region TurnControl
@@ -139,6 +141,13 @@ public class TurnManager : MonoBehaviour
         {
             GameManager.instance.light.RaiseIntensity();
         }
+    }
+    #endregion
+
+    #region Volume Control
+    public void SetVolume(float value)
+    {
+        volume = value;
     }
     #endregion
 }

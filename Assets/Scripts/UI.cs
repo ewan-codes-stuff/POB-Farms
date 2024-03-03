@@ -10,6 +10,8 @@ public class UI : MonoBehaviour
     [SerializeField] TextMeshProUGUI moneyText; // text object for money
     [SerializeField] Slider turnSlider; // bar to show turn progress
     [SerializeField] TextMeshProUGUI turnText; // text that shows current turn number
+    [SerializeField] GameObject pauseMenu; //The pause menu in it's entirety simply sets to active or not active
+                     bool       isGamePaused = false;
 
     public static UI instance;
     private void Awake()
@@ -23,6 +25,11 @@ public class UI : MonoBehaviour
             }
         }
         instance = this;
+    }
+
+    private void Update()
+    {
+        if (Input.GetButton("Pause")){ PauseGame(); }
     }
 
     public void SetHealth(int health)
@@ -40,5 +47,12 @@ public class UI : MonoBehaviour
         turnSlider.value = (float)(remainingTurns / maxTurns);
         if (night) turnSlider.value = 1f - turnSlider.value;
         turnText.text = remainingTurns.ToString();
+    }
+
+    public void PauseGame()
+    {
+        isGamePaused = !isGamePaused;
+        Player.instance.FreezeInputs(isGamePaused);
+        pauseMenu.SetActive(isGamePaused);
     }
 }
