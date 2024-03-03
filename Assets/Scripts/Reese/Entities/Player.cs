@@ -33,6 +33,7 @@ public class Player : Entity
         return wollars;
     }
 
+
     public void DecreaseCurrency(int ammount)
     {
         //Remove Currency from Player

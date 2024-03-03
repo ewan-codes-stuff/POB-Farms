@@ -163,5 +163,10 @@ public class Entity : MonoBehaviour
     {
         return damage;
     }
+
+    public int GetHealth()
+    {
+        return currentHP;
+    }
     #endregion
 }
