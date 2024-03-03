@@ -29,7 +29,7 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Pause")){ PauseGame(); }
+        if (Input.GetButtonDown("Pause")){ PauseGame(); }
     }
 
     public void SetHealth(int health)

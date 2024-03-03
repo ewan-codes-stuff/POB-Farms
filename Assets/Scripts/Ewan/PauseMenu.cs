@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject optionsMenu;
     [SerializeField] private Slider VolumeSlider;
+    bool optionsOpen = false;
 
     private void Start()
     {
@@ -20,16 +22,18 @@ public class PauseMenu : MonoBehaviour
 
     public void OptionsButton()
     {
-        optionsMenu.SetActive(true);
+        optionsMenu.SetActive(!optionsOpen);
+        optionsOpen = !optionsOpen;
     }
 
     public void QuitGame()
     {
-
+        SceneManager.LoadScene("Menu");
     }
 
     public void OnChangeVolume()
     {
         TurnManager.instance.SetVolume(VolumeSlider.value);
+        PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
     }
 }

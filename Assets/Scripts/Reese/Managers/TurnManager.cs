@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
         {
             SceneManager.LoadScene("Menu");
         }
-        source.volume = (volume / 100);
+        source.volume = volume;
     }
 
     #region TurnControl
