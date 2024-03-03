@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
+  damage: 1
   cost: 0
   Ally: 1
 --- !u!1 &6417547750815159814
@@ -481,8 +482,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 6297280050572169306}
     m_Modifications:
     - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.205
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.205
       objectReference: {fileID: 0}
     - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
       propertyPath: m_LocalPosition.x
@@ -490,11 +499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 1469166957889153923, guid: 0ae90fab3e1cac34f95df9cc46ddb460, type: 3}
       propertyPath: m_LocalRotation.w
