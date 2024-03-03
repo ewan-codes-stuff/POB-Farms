@@ -24,19 +24,27 @@ public class InputManager : MonoBehaviour
         HARVEST
     }
 
+    public float delay = 0;
+
     private void Update()
     {
+        delay += Time.deltaTime;
         if (!Player.instance.IsPlayerFrozen())
         {
-            if (Input.GetMouseButtonDown(0))
+            if(delay > 0.25f)
             {
-
-                OnClicked?.Invoke();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    OnClicked?.Invoke();
+                    delay = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
+                {
+                    OnExit?.Invoke();
+                    delay = 0;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
-            {
-                OnExit?.Invoke();
-            }
+            
         }
         
             
