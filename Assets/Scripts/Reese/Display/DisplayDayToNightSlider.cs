@@ -35,8 +35,6 @@ public class DisplayDayToNightSlider : MonoBehaviour
         currentTurn = turnManager.GetCurrentTurn();
         turnsTillNight = turnManager.GetTurnsTillNight();
 
-        Debug.Log(turnManager.GetTurnsTillNight());
-
         dayNightSlider.minValue = currentTurn;
         dayNightSlider.maxValue = turnsTillNight;
     }

@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnChangeVolume()
     {
-        TurnManager.instance.SetVolume(VolumeSlider.value);
+        GameManager.instance.SetVolume(VolumeSlider.value);
         PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
     }
 }

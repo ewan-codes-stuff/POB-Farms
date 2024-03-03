@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
+    #region Serialised Fields
+    [SerializeField] private float volume = 1f;
+
+    [SerializeField] private AnimationCurve difficultyCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    [SerializeField] private GameObject dangerIndicator;
+    #endregion
+
     public static GameManager instance;
     public AIManager aiManager;
     public EnemySpawner enemySpawner;
@@ -12,12 +21,7 @@ public class GameManager : MonoBehaviour
     public LightControl light;
 
     public Entity house;
-
-    [SerializeField]
-    private AnimationCurve difficultyCurve= AnimationCurve.Linear(0,0,1,1);
-
-    [SerializeField]
-    private GameObject dangerIndicator;
+    
     private List<GameObject> dangerIndicatorList = new List<GameObject>();
 
     public Dictionary<Vector2Int, GridTile> tileArray;
@@ -46,7 +50,7 @@ public class GameManager : MonoBehaviour
             newIndicator.transform.position = new Vector3(0.0f, -10.0f, 0.0f);
         }
         TurnManager.instance.EndTurnEvent += ManipulateDangerIndicators;
-        TurnManager.instance.SetVolume(PlayerPrefs.GetFloat("masterVolume"));
+        GameManager.instance.SetVolume(PlayerPrefs.GetFloat("masterVolume"));
     }
 
     private void Update()
@@ -111,4 +115,16 @@ public class GameManager : MonoBehaviour
     { 
         return difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50);
     }
+
+    #region Volume Control
+    public float GetVolume()
+    {
+        return volume;
+    }
+
+    public void SetVolume(float value)
+    {
+        volume = value;
+    }
+    #endregion
 }

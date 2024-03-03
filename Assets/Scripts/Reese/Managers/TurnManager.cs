@@ -11,7 +11,6 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private int dayLength = 10;
     [SerializeField] private AudioClip dayClip;
     [SerializeField] private AudioClip nightClip;
-    [SerializeField] private float volume = 1f;
     #endregion
 
     #region Private Variables
@@ -60,12 +59,6 @@ public class TurnManager : MonoBehaviour
         {
             EndTurn();
         }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("Menu");
-        }
-        source.volume = volume;
     }
 
     #region TurnControl
@@ -114,7 +107,7 @@ public class TurnManager : MonoBehaviour
     {
         isNight = true;
         source.Stop();
-        source.PlayOneShot(nightClip, source.volume);
+        source.PlayOneShot(nightClip, GameManager.instance.GetVolume());
         UpdateLight();
     }
     public void EndNight()
@@ -123,7 +116,7 @@ public class TurnManager : MonoBehaviour
         IncrementCurrentRound();
         turnsTillNight = currentTurn + dayLength;
         source.Stop();
-        source.PlayOneShot(dayClip, source.volume);
+        source.PlayOneShot(dayClip, GameManager.instance.GetVolume());
         UpdateLight();
         FinishNight?.Invoke();
     }
@@ -141,13 +134,6 @@ public class TurnManager : MonoBehaviour
         {
             GameManager.instance.light.RaiseIntensity();
         }
-    }
-    #endregion
-
-    #region Volume Control
-    public void SetVolume(float value)
-    {
-        volume = value;
     }
     #endregion
 }
