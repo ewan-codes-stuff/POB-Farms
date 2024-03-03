@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: -2603263816284228883}
   - component: {fileID: -4539396577605570311}
   m_Layer: 0
-  m_Name: SlimeBigger
+  m_Name: SlimeBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

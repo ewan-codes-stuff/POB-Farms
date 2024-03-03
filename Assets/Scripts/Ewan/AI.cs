@@ -107,12 +107,6 @@ public class AI : Entity
     }
     public void LookWhereGoing(Vector3 target, Vector3 startPos)
     {
-        //if ((target.x > startPos.x && target.z > startPos.z) || (target.x < startPos.x && target.z < startPos.z))
-        //{
-        //    // No need to do anything
-        //}
-        //else
-        //{
             if ((target.x > startPos.x) || (target.z < startPos.z))
             {
                 GetComponentInChildren<SpriteRenderer>().flipX = true;
@@ -121,7 +115,6 @@ public class AI : Entity
             {
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
             }
-        
     }
 
     #region Coroutines

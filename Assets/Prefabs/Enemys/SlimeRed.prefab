@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: -2603263816284228883}
   - component: {fileID: -4539396577605570311}
   m_Layer: 0
-  m_Name: SlimeBigger 1
+  m_Name: SlimeRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   damage: 1
-  cost: 2
+  cost: 3
   Ally: 0
   healthbar: {fileID: 6736542790034274261}
   pathFinder: {fileID: 4420688126500355854}
