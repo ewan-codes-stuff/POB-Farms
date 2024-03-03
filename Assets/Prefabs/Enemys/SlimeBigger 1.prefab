@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 33
-  m_Sprite: {fileID: -1794934635, guid: 565a27a66140c474fa049465b3a604a2, type: 3}
+  m_Sprite: {fileID: -395521255, guid: cbdae95d264662c4780d3d961e8f394d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 655022315969399877}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1904804a55d3f444e904bb0e7c67ca3b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7aa7c9c3d9d682d4d95ad3788536d116, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: -2603263816284228883}
   - component: {fileID: -4539396577605570311}
   m_Layer: 0
-  m_Name: SlimeBigger
+  m_Name: SlimeBigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
