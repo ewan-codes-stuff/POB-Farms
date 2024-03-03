@@ -9,24 +9,42 @@ public class DisplayTurn : MonoBehaviour
 {
     TurnManager turnManager;
 
+    [SerializeField] bool displayRoundInstead = false;
+
     public void Start()
     {
         turnManager = TurnManager.instance;
-        turnManager.EndTurnEvent += UpdateTurnDisplay;
-        UpdateTurnDisplay();
+        turnManager.EndTurnEvent += UpdateTurnRoundDisplay;
+        UpdateTurnRoundDisplay();
     }
 
-    private void UpdateTurnDisplay()
+    private void UpdateTurnRoundDisplay()
     {
-        if (this.gameObject.GetComponent<Text>() != null)
+        if(!displayRoundInstead)
         {
-            //Get the text component of the connected object and update it to equal the current turn
-            this.gameObject.GetComponent<Text>().text = (turnManager.GetCurrentTurn()).ToString();
+            if (this.gameObject.GetComponent<Text>() != null)
+            {
+                //Get the text component of the connected object and update it to equal the current turn
+                this.gameObject.GetComponent<Text>().text = (turnManager.GetCurrentTurn()).ToString();
+            }
+            else if (this.gameObject.GetComponent<TextMeshProUGUI>() != null)
+            {
+                //Get the textMeshPro component of the connected object and update it to equal the current turn
+                this.gameObject.GetComponent<TextMeshProUGUI>().text = (turnManager.GetCurrentTurn()).ToString();
+            }
         }
-        else if (this.gameObject.GetComponent<TextMeshProUGUI>() != null)
+        else
         {
-            //Get the textMeshPro component of the connected object and update it to equal the current turn
-            this.gameObject.GetComponent<TextMeshProUGUI>().text = (turnManager.GetCurrentTurn()).ToString();
+            if (this.gameObject.GetComponent<Text>() != null)
+            {
+                //Get the text component of the connected object and update it to equal the current turn
+                this.gameObject.GetComponent<Text>().text = (turnManager.GetCurrentRound()).ToString();
+            }
+            else if (this.gameObject.GetComponent<TextMeshProUGUI>() != null)
+            {
+                //Get the textMeshPro component of the connected object and update it to equal the current turn
+                this.gameObject.GetComponent<TextMeshProUGUI>().text = (turnManager.GetCurrentRound()).ToString();
+            }
         }
     }
 }

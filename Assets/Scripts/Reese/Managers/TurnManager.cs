@@ -7,23 +7,26 @@ using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
-    [SerializeField] int dayLength = 10;
+    #region Serialized Fields
+    [SerializeField] private int dayLength = 10;
+    [SerializeField] private AudioClip dayClip;
+    [SerializeField] private AudioClip nightClip;
+    #endregion
 
-    public static TurnManager instance;
-
+    #region Private Variables
+    private int currentRound;
     private int currentTurn;
-
     private int turnsTillNight;
-
     private bool isNight;
-
-    public event Action EndTurnEvent, InitiateNight, FinishNight;
-
     private AudioSource source;
+    #endregion
 
-    public AudioClip dayClip;
-    public AudioClip nightClip;
+    #region Public Variables
+    public static TurnManager instance;
+    public event Action EndTurnEvent, InitiateNight, FinishNight;
+    #endregion
 
+    #region Initalisation
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -33,15 +36,16 @@ public class TurnManager : MonoBehaviour
         }
         instance = this;
     }
-
     public void Start()
     {
         ResetCurrentTurn();
+        ResetCurrentRound();
         InitiateNight += StartNight;
         turnsTillNight = dayLength;
 
         source = gameObject.GetComponent<AudioSource>();
     }
+    #endregion
 
     //Debug Checks only
     public void Update()
@@ -62,22 +66,44 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public bool GetIsNight()
+    #region TurnControl
+    private void ResetCurrentTurn()
     {
-        return isNight;
+        currentTurn = 0;
+        isNight = false;
     }
-
+    private void IncrementCurrentTurn()
+    {
+        if ((currentTurn >= turnsTillNight) && !isNight) { InitiateNight?.Invoke(); }
+        currentTurn++;
+    }
     public int GetCurrentTurn()
     {
         return currentTurn;
     }
-
-    private void IncrementCurrentTurn()
+    public void EndTurn()
     {
-        if((currentTurn >= turnsTillNight) && !isNight) { InitiateNight?.Invoke(); }
-        currentTurn++;
+        IncrementCurrentTurn();
+        EndTurnEvent?.Invoke();
     }
+    #endregion
 
+    #region RoundControl
+    private void ResetCurrentRound()
+    {
+        currentRound = 1;
+    }
+    private void IncrementCurrentRound()
+    {
+        currentRound++;
+    }
+    public int GetCurrentRound()
+    {
+        return currentRound;
+    }
+    #endregion
+
+    #region NightControl
     private void StartNight()
     {
         isNight = true;
@@ -85,28 +111,19 @@ public class TurnManager : MonoBehaviour
         source.PlayOneShot(nightClip, source.volume);
         UpdateLight();
     }
-
     public void EndNight()
     {
         isNight = false;
+        IncrementCurrentRound();
         turnsTillNight = currentTurn + dayLength;
         source.Stop();
         source.PlayOneShot(dayClip, source.volume);
         UpdateLight();
     }
-
-    private void ResetCurrentTurn()
+    public bool GetIsNight()
     {
-        currentTurn = 0;
-        isNight = false;
+        return isNight;
     }
-
-    public void EndTurn()
-    {
-        IncrementCurrentTurn();
-        EndTurnEvent?.Invoke();
-    }
-
     private void UpdateLight()
     {
         if (isNight)
@@ -118,4 +135,5 @@ public class TurnManager : MonoBehaviour
             GameManager.instance.light.RaiseIntensity();
         }
     }
+    #endregion
 }
