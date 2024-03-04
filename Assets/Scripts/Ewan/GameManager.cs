@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Difficulty: " + (int)((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + Random.Range(0, 3)));
+            Debug.Log(("Difficulty: " + (int)((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + 1) * (1.5 * TurnManager.instance.GetCurrentRound())));
         }
     }
 
@@ -156,9 +156,12 @@ public class GameManager : MonoBehaviour
     }
     public float GetDifficulty()
     {
-        
-        Debug.Log("Spawn amount: " + (baseEnemyBudget * (int)(difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + Random.Range(0, 3)));
-        return (difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + Random.Range(0,3);
+        float difficulty = (difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) * TurnManager.instance.GetCurrentRound();
+        if (difficulty < 1)
+        {
+            difficulty = 1;
+        }
+        return difficulty;
     }
     public void RoundReward()
     {
