@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         VolumeSlider.onValueChanged.AddListener(delegate { OnChangeVolume(); });
-        VolumeSlider.value = GameManager.instance.GetVolume();
+        VolumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
     }
     public void Resume()
     {
@@ -39,7 +39,10 @@ public class PauseMenu : MonoBehaviour
 
     public void OnChangeVolume()
     {
-        GameManager.instance.SetVolume(VolumeSlider.value);
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            GameManager.instance.SetVolume(VolumeSlider.value);
+        }
         PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
     }
 }
