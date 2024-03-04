@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
         delay += Time.deltaTime;
         if (!Player.instance.IsPlayerFrozen())
         {
-            if(delay > 0.25f)
+            if(delay > 0.5f)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
