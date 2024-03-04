@@ -30,7 +30,7 @@ public class Player : Entity
     public override void Die()
     {
         RemoveEntityFromGrids();
-        FreezeInputs(true);
+        instance.FreezeInputs(true);
         CameraScript.instance.zoomOnPlayer = false;
         UI.instance.DeathScreen.SetActive(true);
     }
