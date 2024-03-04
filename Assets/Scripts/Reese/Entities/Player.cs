@@ -27,6 +27,14 @@ public class Player : Entity
         base.Init();
     }
 
+    public override void Die()
+    {
+        RemoveEntityFromGrids();
+        FreezeInputs(true);
+        CameraScript.instance.zoomOnPlayer = false;
+        UI.instance.DeathScreen.SetActive(true);
+    }
+
     public int GetCurrency()
     {   
         //Getter for currency on player
