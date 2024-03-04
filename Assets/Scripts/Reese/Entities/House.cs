@@ -8,6 +8,6 @@ public class House : Entity
     public override void Die()
     {
         base.Die();
-        SceneManager.LoadScene("Menu");
+        Player.instance.Die();
     }
 }
