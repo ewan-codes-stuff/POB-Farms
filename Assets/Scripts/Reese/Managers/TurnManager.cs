@@ -20,7 +20,7 @@ public class TurnManager : MonoBehaviour
 
     #region Public Variables
     public static TurnManager instance;
-    public event Action EndTurnEvent, InitiateNight, FinishNight;
+    public event Action EndTurnEvent, FinishTurn, InitiateNight, FinishNight;
     #endregion
 
     #region Initalisation
@@ -79,6 +79,11 @@ public class TurnManager : MonoBehaviour
     {
         IncrementCurrentTurn();
         EndTurnEvent?.Invoke();
+    }
+
+    public void CompleteTurn()
+    {
+        FinishTurn?.Invoke();
     }
     #endregion
 

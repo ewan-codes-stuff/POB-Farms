@@ -58,7 +58,7 @@ public class Plant : Entity
         turnManager = TurnManager.instance;
 
         //Add the TurnUpdate to the End Turn event
-        turnManager.FinishNight += TurnUpdate;
+        turnManager.FinishTurn += TurnUpdate;
 
         //Get the turn the plant was placed
         currentTurn = turnManager.GetCurrentTurn();
@@ -126,7 +126,7 @@ public class Plant : Entity
 
     public override void Die()
     {
-        turnManager.EndTurnEvent -= TurnUpdate;
+        turnManager.FinishTurn -= TurnUpdate;
         base.Die();
     }
 }

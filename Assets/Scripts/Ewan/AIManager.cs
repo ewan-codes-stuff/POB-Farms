@@ -122,6 +122,7 @@ public class AIManager : MonoBehaviour
         yield return StartCoroutine(coroutine);
 
         Player.instance.FreezeInputs(false);
+        TurnManager.instance.CompleteTurn();
     }
 
     private IEnumerator RunAI()
