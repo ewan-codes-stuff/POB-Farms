@@ -179,7 +179,7 @@ MonoBehaviour:
   pathFinder: {fileID: 4420688126500355854}
   AIDetectionRadius: 2
   speed: 8
-  InstantiatedDeath: {fileID: 0}
+  InstantiatedDeath: {fileID: 1502417777751113538, guid: 51504e2cd378e6742b99cf5ad2feead7, type: 3}
 --- !u!114 &4420688126500355854
 MonoBehaviour:
   m_ObjectHideFlags: 0
