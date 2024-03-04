@@ -5,8 +5,6 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
     [SerializeField]
-    private int baseEnemyBudget = 3;
-    [SerializeField]
     private List<GameObject> aiList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> enemyList = new List<GameObject>();
@@ -113,7 +111,7 @@ public class AIManager : MonoBehaviour
         isNight = true;
         GameManager.instance.enemySpawner.hasSpawnedEnemiesTonight = false;
 
-        GameManager.instance.enemySpawner.SetSpawnBudget((int)((float)baseEnemyBudget * (1 + GameManager.instance.GetDifficulty())));
+        GameManager.instance.enemySpawner.SetSpawnBudget(GameManager.instance.GetBaseEnemyBudget() * (int)GameManager.instance.GetDifficulty());
     }
 
     #region Coroutines

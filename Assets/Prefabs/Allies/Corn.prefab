@@ -172,12 +172,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 4
-  damage: 1
-  cost: 8
+  damage: 2
+  cost: 18
   Ally: 1
   healthbar: {fileID: 9022856312119359184}
   pathFinder: {fileID: 8292841438106965069}
-  AIDetectionRadius: 2
+  AIDetectionRadius: 4
   speed: 8
   InstantiatedDeath: {fileID: 1502417777751113538, guid: b4bf89214a5b0ff40a3734945a480c7a, type: 3}
 --- !u!114 &8292841438106965069

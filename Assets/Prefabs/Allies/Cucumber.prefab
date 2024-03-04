@@ -103,13 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 4
-  damage: 1
-  cost: 15
+  HP: 5
+  damage: 3
+  cost: 32
   Ally: 1
   healthbar: {fileID: 1556294163660740581}
   pathFinder: {fileID: 4242481429821197226}
-  AIDetectionRadius: 2
+  AIDetectionRadius: 4
   speed: 8
   InstantiatedDeath: {fileID: 1502417777751113538, guid: cf101ec5bf468e2438ecd7c14da55c51, type: 3}
 --- !u!114 &4242481429821197226
