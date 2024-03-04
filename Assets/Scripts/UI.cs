@@ -54,6 +54,7 @@ public class UI : MonoBehaviour
     {
         isGamePaused = !isGamePaused;
         Player.instance.FreezeInputs(isGamePaused);
+        pauseMenu.GetComponent<PauseMenu>().GetRidOfSubMenuOnResume();
         pauseMenu.SetActive(isGamePaused);
     }
 }

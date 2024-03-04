@@ -21,6 +21,11 @@ public class PauseMenu : MonoBehaviour
         UI.instance.PauseGame();
     }
 
+    public void GetRidOfSubMenuOnResume()
+    {
+        optionsMenu.SetActive(false);
+    }
+
     public void OptionsButton()
     {
         optionsMenu.SetActive(!optionsOpen);
