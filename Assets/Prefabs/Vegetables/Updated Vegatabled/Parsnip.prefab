@@ -185,12 +185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fdd51a4a368334f977f76242b494dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 2
+  HP: 3
   damage: 1
-  cost: 10
+  cost: 7
   Ally: 1
+  healthbar: {fileID: 0}
   plantyBoi: {fileID: 977252753491179168, guid: ab5c825fc41f32b44837c86f89911737, type: 3}
-  turnsToGrow: 2
+  turnsToGrow: 3
   growthCurve:
     serializedVersion: 2
     m_Curve:

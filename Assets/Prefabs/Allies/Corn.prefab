@@ -171,9 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 4
+  HP: 3
   damage: 2
-  cost: 18
+  cost: 20
   Ally: 1
   healthbar: {fileID: 9022856312119359184}
   pathFinder: {fileID: 8292841438106965069}
