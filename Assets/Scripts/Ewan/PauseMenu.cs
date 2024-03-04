@@ -13,12 +13,17 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         VolumeSlider.onValueChanged.AddListener(delegate { OnChangeVolume(); });
-        VolumeSlider.value = GameManager.instance.GetVolume();
+        VolumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
     }
     public void Resume()
     {
         optionsMenu.SetActive(false);
         UI.instance.PauseGame();
+    }
+
+    public void GetRidOfSubMenuOnResume()
+    {
+        optionsMenu.SetActive(false);
     }
 
     public void OptionsButton()
@@ -34,7 +39,10 @@ public class PauseMenu : MonoBehaviour
 
     public void OnChangeVolume()
     {
-        GameManager.instance.SetVolume(VolumeSlider.value);
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            GameManager.instance.SetVolume(VolumeSlider.value);
+        }
         PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
     }
 }
