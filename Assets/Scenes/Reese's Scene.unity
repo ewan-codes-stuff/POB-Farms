@@ -1379,6 +1379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayLength: 3
+  maxDayLength: 10
 --- !u!1 &706874306
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,11 +2940,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[4].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[1].value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[4].value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
@@ -2956,7 +2973,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[2].inSlope
-      value: 1.657259
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].inSlope
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[4].inSlope
+      value: 1.6368418
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[0].outSlope
@@ -2972,11 +2997,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[2].inWeight
-      value: 0.33333334
+      value: 0.042980194
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[2].outSlope
-      value: 1.657259
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].inWeight
+      value: 0.042980194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].outSlope
+      value: 1.6368418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[4].inWeight
+      value: 0.042980194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[4].outSlope
+      value: 1.6368418
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[0].outWeight
@@ -2984,6 +3025,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[2].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
+      propertyPath: difficultyCurve.m_Curve.Array.data[3].outWeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
@@ -2996,7 +3045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[2].tangentMode
-      value: 34
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

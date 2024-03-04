@@ -158,13 +158,13 @@ public class GameManager : MonoBehaviour
     }
     public float GetDifficulty()
     {
-        return ((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + 1) * TurnManager.instance.GetCurrentRound();
+        return (difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + Random.Range(0,3);
     }
     public void RoundReward()
     {
         if (Player.instance != null)
         {
-            Player.instance.AddCurrency((int)(baseRoundReward * (GetDifficulty())));
+            Player.instance.AddCurrency((int)(baseRoundReward * (1.2 * TurnManager.instance.GetCurrentRound())));
         }
     }
 }
