@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-
 public class Plant : Entity
 {
     #region Serialized Fields
