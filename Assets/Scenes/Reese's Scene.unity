@@ -2345,21 +2345,25 @@ PrefabInstance:
       value: EnemySpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
+      propertyPath: minEnemyCost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: fe8d671b34f3abc4ab7a02d364b7ec2d, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: fe8d671b34f3abc4ab7a02d364b7ec2d, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[2]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: 6ccb012a676838048b934fcf25f299ae, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: 6ccb012a676838048b934fcf25f299ae, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[3]
       value: 
