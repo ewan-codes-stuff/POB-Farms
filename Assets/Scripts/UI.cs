@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
     [SerializeField] Slider turnSlider; // bar to show turn progress
     [SerializeField] TextMeshProUGUI turnText; // text that shows current turn number
     [SerializeField] GameObject pauseMenu; //The pause menu in it's entirety simply sets to active or not active
+    [SerializeField] public GameObject DeathScreen; //The pause menu in it's entirety simply sets to active or not active
                      bool       isGamePaused = false;
 
     public static UI instance;
