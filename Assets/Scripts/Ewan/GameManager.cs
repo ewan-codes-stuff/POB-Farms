@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AnimationCurve difficultyCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
+    [SerializeField]
+    private int baseEnemyBudget = 2;
+
+    [SerializeField] private float baseRoundReward = 10;
+
     [SerializeField] private GameObject dangerIndicator;
     #endregion
 
@@ -65,7 +70,9 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetDifficulty();
+            Debug.Log("Enemy budget: " + (baseEnemyBudget * (int)GameManager.instance.GetDifficulty()));
+            Debug.Log("Current Difficulty: " + ((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + 1) * TurnManager.instance.GetCurrentRound());
+            Debug.Log("Current Difficulty to int: " + (int)(((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + 1) * TurnManager.instance.GetCurrentRound()));
         }
     }
 
@@ -119,11 +126,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float GetDifficulty() 
-    { 
-        return difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50);
-    }
-
     #region Audio Control
 
     public AudioSource GetAudio()
@@ -149,4 +151,20 @@ public class GameManager : MonoBehaviour
         source.volume = volume;
     }
     #endregion
+
+    public int GetBaseEnemyBudget()
+    {
+        return baseEnemyBudget;
+    }
+    public float GetDifficulty()
+    {
+        return ((difficultyCurve.Evaluate((float)TurnManager.instance.GetCurrentRound() / 50) * 10) + 1) * TurnManager.instance.GetCurrentRound();
+    }
+    public void RoundReward()
+    {
+        if (Player.instance != null)
+        {
+            Player.instance.AddCurrency((int)(baseRoundReward * (GetDifficulty())));
+        }
+    }
 }

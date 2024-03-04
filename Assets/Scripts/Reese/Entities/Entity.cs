@@ -81,7 +81,7 @@ public class Entity : MonoBehaviour
         RemoveEntityFromGrids();
         if(GameManager.instance != null && !Ally)
         {
-            Player.instance.AddCurrency((int)(cost * (1 + GameManager.instance.GetDifficulty())));
+            Player.instance.AddCurrency((int)(cost * (GameManager.instance.GetDifficulty())));
         }
         GameObject.Destroy(gameObject);
     }

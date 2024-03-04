@@ -171,14 +171,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a851987b512e5f40ae579318682be66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 5
-  damage: 1
-  cost: 3
+  HP: 10
+  damage: 2
+  cost: 10
   Ally: 0
   healthbar: {fileID: 6736542790034274261}
   pathFinder: {fileID: 4420688126500355854}
-  AIDetectionRadius: 1
+  AIDetectionRadius: 2
   speed: 8
+  InstantiatedDeath: {fileID: 0}
 --- !u!114 &4420688126500355854
 MonoBehaviour:
   m_ObjectHideFlags: 0

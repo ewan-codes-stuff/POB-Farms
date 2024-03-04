@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class TurnManager : MonoBehaviour
 {
     #region Serialized Fields
-    [SerializeField] private int dayLength = 10;
+    [SerializeField] private int dayLength = 4;
+    [SerializeField] private int maxDayLength = 10;
     #endregion
 
     #region Private Variables
@@ -45,11 +46,6 @@ public class TurnManager : MonoBehaviour
     //Debug Checks only
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EndNight();
-        }
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             EndTurn();
@@ -115,6 +111,7 @@ public class TurnManager : MonoBehaviour
         isNight = false;
         IncrementCurrentRound();
         turnsTillNight = currentTurn + dayLength;
+        GameManager.instance.RoundReward();
         GameManager.instance.GetAudio().Stop();
         GameManager.instance.PlayDayAudio();
         UpdateLight();
