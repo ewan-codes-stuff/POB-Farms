@@ -99,7 +99,16 @@ public class AI : Entity
         }
         if (targetList.Count != 0)
         {
-            targetTile = targetList[Random.Range(0, targetList.Count)];
+            float checkValue = 10.0f;
+            foreach (GridTile tile in targetList)
+            {
+                float currentDistance = Vector2Int.Distance(tile.gridPosition, GetGridPosition());
+                if (checkValue > currentDistance)
+                {
+                    targetTile = tile;
+                    checkValue = currentDistance;
+                }
+            }
             return targetTile;
         }
         //If it can't find any plants or the player then it'll default to the player's base.
