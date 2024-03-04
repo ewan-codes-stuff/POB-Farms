@@ -7,6 +7,9 @@ public class Menu : MonoBehaviour
 {
     [SerializeField]
     private string GameScene = "Reese's Scene";
+    [SerializeField]
+    private AudioSource audio;
+
 
     public void PlayGame()
     {
@@ -16,5 +19,10 @@ public class Menu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void Update()
+    {
+        audio.volume = PlayerPrefs.GetFloat("masterVolume");
     }
 }
