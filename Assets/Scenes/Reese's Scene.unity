@@ -2345,21 +2345,25 @@ PrefabInstance:
       value: EnemySpawner
       objectReference: {fileID: 0}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
+      propertyPath: minEnemyCost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: a15fd87c0588cc44390d794ecf052c68, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: fe8d671b34f3abc4ab7a02d364b7ec2d, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: fe8d671b34f3abc4ab7a02d364b7ec2d, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[2]
       value: 
-      objectReference: {fileID: 4396423196737141551, guid: 6ccb012a676838048b934fcf25f299ae, type: 3}
+      objectReference: {fileID: 4477718068816043802, guid: 6ccb012a676838048b934fcf25f299ae, type: 3}
     - target: {fileID: 2461035846196752171, guid: 977a29c01015fd84b9d99cadf4eed87b, type: 3}
       propertyPath: enemies.Array.data[3]
       value: 
@@ -2965,7 +2969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[0].inSlope
-      value: 0.21474725
+      value: 0.5480529
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[1].inSlope
@@ -2985,7 +2989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[0].outSlope
-      value: 0.21474725
+      value: 0.5480529
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[1].inWeight
@@ -3021,7 +3025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[0].outWeight
-      value: 0.04680037
+      value: 0.045845263
       objectReference: {fileID: 0}
     - target: {fileID: 7101334597106271687, guid: 0a68f74a77eb5ee4087902e1e2d9d6f5, type: 3}
       propertyPath: difficultyCurve.m_Curve.Array.data[1].outWeight
@@ -7985,12 +7989,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 511018681}
-    - target: {fileID: 5610538349838543050, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
-      propertyPath: m_text
-      value: 'POWER: 1
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 6110068620926059116, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -8015,10 +8013,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 511018681}
-    - target: {fileID: 7730461637754899508, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
-      propertyPath: m_text
-      value: 'TURNS: 2'
-      objectReference: {fileID: 0}
     - target: {fileID: 7934614753081152313, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8118,14 +8112,6 @@ PrefabInstance:
     - target: {fileID: 8224326036178272096, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550830128914730633, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
-      propertyPath: m_text
-      value: 'POWER: 1'
-      objectReference: {fileID: 0}
-    - target: {fileID: 9094557101283935146, guid: c1de02363260e6040919bf7bd65be74b, type: 3}
-      propertyPath: m_text
-      value: 'TURNS: 3 '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

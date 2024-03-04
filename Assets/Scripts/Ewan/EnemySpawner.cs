@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     #region Serialized Fields
-    [SerializeField]
-    private List<AI> enemies;
+    [SerializeField] private List<GameObject> enemies;
     #endregion
 
     #region Public Variables
@@ -17,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     //Budget used for spawning enemies in
     private int spawnBudget;
     //Stores a list of enemies that can be spawned based on the budget
-    private List<AI> spawnPool;
+    private List<GameObject> spawnPool;
     //Used to hold edges of board for spawning
     private int xSpawn;
     private int zSpawn;
@@ -25,6 +26,10 @@ public class EnemySpawner : MonoBehaviour
     private bool xWalls = false;
     //Stores the location to spawn the enemy in
     private Vector2Int posToSpawnEnemy;
+
+    [SerializeField] private int[] setSpawnPositions = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+    [SerializeField] private List<int> availableSpawnLocations;
+    [SerializeField] private int minEnemyCost;
 
     //Stores the spawned enemy
     private GameObject spawnedEnemy;
@@ -36,6 +41,8 @@ public class EnemySpawner : MonoBehaviour
     //Random number store for use in many places
     private int randomNum;
 
+    private bool canSpawnEnemies;
+
     //A bool for is spawns have been randomised
     private bool hasRandomisedSpawnsForNight = false;
     #endregion
@@ -43,33 +50,60 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         TurnManager.instance.EndTurnEvent += ChooseSpawnSide;
-        spawnPool = new List<AI>();
+        spawnPool = new List<GameObject>();
     }
 
     public void SpawnEnemies()
     {
+        canSpawnEnemies = true;
+        availableSpawnLocations = setSpawnPositions.ToList<int>();
+
         //Keep spawning enemies until budget is used up
-        for (int i = spawnBudget; i > 0; i -= enemyCost)
+        while(canSpawnEnemies)
         {
             //Get the position to spawn the enemy
             posToSpawnEnemy = WorkoutSpawnPos();
 
-            //For each enemy in the enemies list
-            for(int j = 0; j < enemies.Count; j++)
+            if (posToSpawnEnemy == new Vector2Int(0, 0))
             {
-                //If the enemy's cost is less than the currently available budget
-                if (enemies[j].gameObject.GetComponent<AI>().GetCost() <= i)
-                {
-                    //Add the enemy to the spawnPool
-                    spawnPool.Add(enemies[j]);
-                }
+                canSpawnEnemies = false;
             }
-            //Get a random enemy from the spawn pool and spawn them at the spawn location
-            InstantiateEnemy(spawnPool[Random.Range(0, spawnPool.Count)], posToSpawnEnemy);
-            //Reset the spawn pool
-            spawnPool.Clear();
+            else if(spawnBudget >= minEnemyCost)
+            {
+                //For each enemy in the enemies list
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    //If the enemy's cost is less than the currently available budget
+                    if (enemies[j].gameObject.GetComponent<AI>().GetCost() <= spawnBudget)
+                    {
+                        //Add the enemy to the spawnPool
+                        spawnPool.Add(enemies[j]);
+                    }
+                }
+                
+                //Get a random enemy from the spawn pool and spawn them at the spawn location
+                if (spawnPool.Count > 0)
+                {
+                    Debug.Log(spawnBudget);
+                    InstantiateEnemy(spawnPool[UnityEngine.Random.Range(0, spawnPool.Count)], posToSpawnEnemy);
+                }
+                else
+                {
+                    canSpawnEnemies = false;
+                }
+                //Reset the spawn pool
+                spawnPool.Clear();
+            }
+            else
+            {
+                canSpawnEnemies = false;
+                hasSpawnedEnemiesTonight = true;
+            }
         }
-        hasSpawnedEnemiesTonight = true;
+        if (spawnBudget < minEnemyCost)
+        {
+            hasSpawnedEnemiesTonight = true;
+        }
         hasRandomisedSpawnsForNight = false;
     }
 
@@ -94,7 +128,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (!hasRandomisedSpawnsForNight)
         {
-            randomNum = Random.Range(1, 5);
+            randomNum = UnityEngine.Random.Range(1, 5);
             switch (randomNum)
             {
                 case 1:
@@ -120,35 +154,61 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector2Int WorkoutSpawnPos()
     {
-        //Get a new random number
-        randomNum = Random.Range(0, 12);
-        //If set to spawn on the "Left" or "Right" edges of the grid
-        if (xWalls)
+        if(availableSpawnLocations.Count > 0)
         {
-            //if the randomly chosen tile is already occupided
-            while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
+            //Get a new random number
+            randomNum = availableSpawnLocations[UnityEngine.Random.Range(0, availableSpawnLocations.Count)];
+            //If set to spawn on the "Left" or "Right" edges of the grid
+            if (xWalls)
             {
-                //Regenerate a new random
-                randomNum = Random.Range(0, 12);
+                //if the randomly chosen tile is already occupided
+                while (GameManager.instance.tileArray[new Vector2Int(xSpawn, randomNum - 6)].entity != null)
+                {
+                    //Remove Position from available positions
+                    availableSpawnLocations.Remove(randomNum);
+                    //Regenerate a new random
+                    if (availableSpawnLocations.Count > 0)
+                    {
+                        randomNum = availableSpawnLocations[UnityEngine.Random.Range(0, availableSpawnLocations.Count)];
+                    }
+                    else
+                    {
+                        return new Vector2Int(0, 0);
+                    }
+                }
+                //Once a free space is found return the location
+                return new Vector2Int(xSpawn, randomNum - 6);
             }
-            //Once a free space is found return the location
-            return new Vector2Int(xSpawn, randomNum - 6);
+            //If not the "Left" or "Right" edges
+            else
+            {
+                //Check random "Top" / "Bottom" edge positions for if they are occupided
+                while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
+                {
+                    //Remove Position from available positions
+                    availableSpawnLocations.Remove(randomNum);
+                    //Regenerate a new random
+                    if (availableSpawnLocations.Count > 0)
+                    {
+                        randomNum = availableSpawnLocations[UnityEngine.Random.Range(0, availableSpawnLocations.Count)];
+                    }
+                    else
+                    {
+                        return new Vector2Int(0, 0);
+                    }
+                }
+                //Once a free space is found return the location
+                return new Vector2Int(randomNum - 6, zSpawn);
+            }
         }
-        //If not the "Left" or "Right" edges
         else
         {
-            //Check random "Top" / "Bottom" edge positions for if they are occupided
-            while (GameManager.instance.tileArray[new Vector2Int(randomNum - 6, zSpawn)].entity != null)
-            {
-                //Regenerate a new random
-                randomNum = Random.Range(0, 12);
-            }
-            //Once a free space is found return the location
-            return new Vector2Int(randomNum - 6, zSpawn);
+
+            return new Vector2Int(0, 0);
         }
     }
 
-    private void InstantiateEnemy(AI EnemyToSpawn, Vector2Int pos)
+    private void InstantiateEnemy(GameObject EnemyToSpawn, Vector2Int pos)
     {
         //Spawn an enemy under the floor at the grid tile position
         spawnedEnemy = Instantiate(EnemyToSpawn.gameObject, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
@@ -160,8 +220,8 @@ public class EnemySpawner : MonoBehaviour
         enemyIDCounter += 1;
         //Set the enemy's name to equal it's enemy number
         spawnedEnemy.name = "Enemy " + enemyIDCounter;
-        //Set the enemy's tax to equal it's value
-        enemyCost = spawnedEnemy.GetComponent<AI>().GetCost();
+        //Remove the enemy's cost from the spawn budget
+        spawnBudget -= spawnedEnemy.GetComponent<AI>().GetCost();
     }
 
     public void SetSpawnBudget(int budget)
