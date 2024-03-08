@@ -31,6 +31,7 @@ public class UI : MonoBehaviour
     private void Update()
     {
         if (Input.GetButtonDown("Pause")){ PauseGame(); }
+        Screen.SetResolution(Display.main.renderingWidth, Display.main.renderingHeight, false);
     }
 
     public void SetHealth(int health)
