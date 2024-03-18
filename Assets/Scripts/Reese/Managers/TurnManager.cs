@@ -43,15 +43,6 @@ public class TurnManager : MonoBehaviour
     }
     #endregion
 
-    //Debug Checks only
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            EndTurn();
-        }
-    }
-
     #region TurnControl
     private void ResetCurrentTurn()
     {
